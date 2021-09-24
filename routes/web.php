@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/trang', function () {
+    return view('home_layout');
+});
