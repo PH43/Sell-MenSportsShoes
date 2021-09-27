@@ -12,8 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/trang', function () {
     return view('home_layout');
 });
+//Trang Admin Login
+Route::get('/login','LoginController@index');
+Route::post('/auth-login','LoginController@login_dashboard');
+Route::get('/dashboard','LoginController@show_dashboard');
+Route::get('/logout','LoginController@logout');
+Route::get('/register-auth','UsersController@register_auth');
+Route::post('/register-save','UsersController@register_save');
+//End Trang Admin
+
+//Brand Product
+
+//End Brand Product
