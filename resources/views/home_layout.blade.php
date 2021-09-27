@@ -58,29 +58,6 @@
                         <div class="logo pull-left">
                             <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
                         </div>
-                        <!-- <div class="btn-group pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    USA
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canada</a></li>
-                                    <li><a href="#">UK</a></li>
-                                </ul>
-                            </div>
-                            
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    DOLLAR
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canadian Dollar</a></li>
-                                    <li><a href="#">Pound</a></li>
-                                </ul>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
@@ -135,8 +112,8 @@
                         <div class="search_box pull-right" style="width: 70%;">
                             <form method="post" action="{{URL::to('/search')}}">
                                 {{csrf_field()}}
-                            <input style="width: 200px;" type="text" name="keywords_submit" placeholder="Search"/>
-                            <input type="submit" name="submit_search" class="btn btn-primary btn-sm" style="margin-top:0; color: #666;width: 55px;" value="Search">
+                            <input style="width: 200px;" type="text" name="keywords_submit" placeholder="Nhập tên sản phẩm"/>
+                            <input type="submit" name="submit_search" class="btn btn-primary" style="margin-top:0; color: #666;width: 73px;" value="Tiềm Kiếm" >
                             </form>
 
                         </div>

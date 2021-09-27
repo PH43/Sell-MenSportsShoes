@@ -2522,4 +2522,9 @@ h2.title {
 img.girl.img-responsive {
     width: 97%;
 }
-
+.search1{
+background: #8b5c7e url(../images/search-icon.png) no-repeat 10px 8px;
+    padding: 0 5px 0 30px;
+    color: #fff;
+    border-radius: 100px;
+}
