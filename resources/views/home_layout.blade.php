@@ -137,7 +137,7 @@
                         <div class="carousel-inner">
                             <div class="item active">
                                 <div class="col-sm-6">
-                                    <h1><span>CT</span>-SHOPPER</h1>
+                                    <h1><span>CT</span>-SHOPP</h1>
                                     <h2>Hàng Chất Lượng</h2>
                                     <p>Cam Kết Bán Hàng Chính Hãng<br>
                                         Bán hàng trên toàn quốc<br>
@@ -153,7 +153,7 @@
                             </div>
                             <div class="item">
                                 <div class="col-sm-6">
-                                    <h1><span>CT</span>-SHOPPER</h1>
+                                    <h1><span>CT</span>-SHOPP</h1>
                                     <h2>100% Thiết Kế Theo Nhu Cầu</h2>
                                     <p>Thiết Kế Tối Tân Theo Thời Đại</p>
                                     <button type="button" class="btn btn-default get">Get it now</button>
@@ -163,10 +163,9 @@
                                     <img src="{{URL::to('frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
-                            
                             <div class="item">
                                 <div class="col-sm-6">
-                                    <h1><span>CT</span>-SHOPPER</h1>
+                                    <h1><span>CT</span>-SHOPP</h1>
                                     <h2>Mẫu mới</h2>
                                     <p>Trẻ Trung Năng Động</p>
                                     <button type="button" class="btn btn-default get">Get it now</button>
@@ -175,10 +174,8 @@
                                     <img src="{{URL::to('frontend/images/giay1.jpg')}}" class="girl img-responsive" alt="" />
                                     <!-- <img src="{{URL::to('frontend/images/pricing.png')}}" class="pricing" alt="" /> -->
                                 </div>
-                            </div>
-                            
+                            </div>  
                         </div>
-                        
                         <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
                             <i class="fa fa-angle-left"></i>
                         </a>
@@ -222,7 +219,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
@@ -247,27 +243,18 @@
                                     <h4 class="panel-title"><a href="#">giày trẻ en</a></h4>
                                 </div>
                             </div>
-                            
                         </div><!--/category-products-->
-
-
                         <!--category-products-->
-                           
-                        
-                        
                         </div>
                         <!--brands_products-->
                         
                         <div class="brands_products">                           
                          <h2>Thương hiệu sản phẩm</h2>
-                        
-
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><!-- <a href=""> <span class="pull-right">(5)</span></a> --></li>
                                 </ul>
                             </div>
-                        
                         </div>
                         <!--/brands_products-->
 
@@ -288,7 +275,7 @@
     </section>
     
     <footer id="footer"><!--Footer-->
-        <div class="footer-top">
+        <!-- <div class="footer-top">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-2">
@@ -366,7 +353,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         
         <div class="footer-widget">
             <div class="container">

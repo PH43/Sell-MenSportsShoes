@@ -8,46 +8,32 @@ use DB;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Session;
+use Auth;
 session_start();
 
 class LoginController extends Controller
 {
-    //không cho đăng nhập vào dashboard
-    public function AuthLogin(){
-      $admin_id=Session::get('admin_id');
-      if ($admin_id) {
-           return Redirect::to('/dashboard');
-         }else{
-            return Redirect::to('/login')->send();
-         }
-    }
-
     public function index(){
        return view('admin.login_admin');
     }
     public function show_dashboard(){
-       $this->AuthLogin();
        return view('admin_layout');
     }
     public function login_dashboard(Request $request){
-      $admin_email = $request->admin_email;
-      $admin_password=md5($request->admin_password);
-      // dd($admin_password);
-      $result =Users::all()->where('email',$admin_email)->where('password',$admin_password)->where('flag',1)->first(); // first de goi ra 1 users
-      if ($result==true) {
-         Session::put('admin_name',$result->name);
-         Session::put('admin_id',$result->id);
-         Session::put('admin_password',$result->password);
-         return Redirect::to('/dashboard');
-      }else{
-         Session::put('message','mật khẩu hoặc email nhập sai');
-         return Redirect::to('/login');
-      }
+        $this->validate($request,[
+            'admin_email' => 'required|email|max:255', 
+            'admin_password' => 'required|max:255'
+        ]);
+        if(Auth::attempt(['email'=>$request->admin_email,'password'=>$request->admin_password,'flag'=>1 ])){
+             Session::put('admin_name',null);
+            return redirect('/dashboard');
+        }else{
+            return redirect('/login')->with('message','Lỗi đăng nhập authentication');
+        }
     }
+
     public function logout(){
-         $this->AuthLogin();
-         Session::put('admin_name',null);
-         Session::put('admin_id',null);
+         Auth::logout();
          return Redirect::to('/login');
           }
 }

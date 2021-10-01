@@ -33,7 +33,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
     <a href="index.html" class="logo">
-        ADMIN-PVC
+        <?php
+           $name=Auth::user()->name;
+           if($name){
+           	echo 'HELLO';
+           }
+           
+        ?> 
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -53,8 +59,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <img alt="" src="{{URL::to('backend/images/2.png')}}">
                 <span class="username">
  					<?php
-                        $name=Session::get('admin_name');
-                        echo $name;
+                        $name=Auth::user()->name;
+				           if($name){
+				           	echo $name.'-AD';
+				           }
                      ?> 
                 </span>
                 <b class="caret"></b>
@@ -132,6 +140,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
 						<li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li>
 						<li><a href="{{URL::to('/all-product')}}">Liệt kê sản phẩm</a></li>
+                    </ul>
+                </li>
+                <!-- kiểm tra coi id đang đăng nhập có những quyền nào -->
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Users</span>
+                    </a>
+                    <ul class="sub">
+						<!-- <li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li> -->
+						<li><a href="{{URL::to('/all-users')}}">Liệt kê Users</a></li>
                     </ul>
                 </li>
              
