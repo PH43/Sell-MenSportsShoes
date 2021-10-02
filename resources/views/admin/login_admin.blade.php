@@ -24,16 +24,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="log-w3">
 <div class="w3layouts-main">
 	<h2 style="color: white;">Đăng nhập ngay</h2>
-	 <?php
-	$message=Session::get('message');
-	$message1=Session::get('admin_password');
-	// dd($message1);
-	if ($message) {
-	 	echo '<span class="textalert">'.$message.'</span>';
-	 	Session::put('message',null);
-	 } 
-	 ?>	
-		<form action="{{URL::to('/auth-login')}}" method="post">
+	@if ($errors->any())
+    <div class="alert alert-danger">
+        There were some errors with your request.
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+		<form action="{{ route('admin.login') }}" method="post">
 			{{ csrf_field() }}
 			<!-- nay de lay truong token ma hoa md5 -->
 			<input type="text" class="ggg" name="admin_email" placeholder="Điền email" required="">

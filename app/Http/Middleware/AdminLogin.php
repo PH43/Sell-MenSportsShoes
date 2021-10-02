@@ -17,14 +17,13 @@ class AdminLogin
     public function handle($request, Closure $next)
     {   
         if (Auth::Check()) {
-            // $user=Auth::user();
-            // if ($user->) {
-            //     // code...
-            // }
             return $next($request);
-        }else{
-            return redirect('/login');
+        } else {
+            return redirect('admin/login');
         }
-        
     }
 }
+
+// Middleware đóng vai trò như là 1 lễ tân
+// Khi vô văn phòng => gặp lễ tân => Nếu lễ tân cho mình vô văn hòng => mới dô,
+        // lễ tân ko cho thì ra ngoài
