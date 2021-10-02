@@ -34,7 +34,7 @@ class UsersController extends Controller
         $admin->flag =1;
         $admin->password = md5($data['admin_password']);
         $admin->save();
-        return redirect('/login')->with('message','Đăng ký thành công');
+        return redirect('/admin/login')->with('message','Đăng ký thành công');
     }
     
     public function index_users(){
@@ -54,7 +54,7 @@ class UsersController extends Controller
 
     }
     public function assign_roles(Request $request){
-        if(Auth::id()==$request->id){
+        if(Auth::id()==$request->admin_id){
             return redirect()->back()->with('message','Bạn không được phân quyền chính mình');
         }
 

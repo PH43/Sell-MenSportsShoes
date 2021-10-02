@@ -53,7 +53,7 @@
         </thead>
         <tbody>
           @foreach($admin as $key => $user)
-            <form action="{{url('/assign-roles')}}" method="POST">
+            <form action="{{ route('admin.assign') }}" method="POST">
               @csrf
               <tr>
                
@@ -75,7 +75,7 @@
                   
                     
                  <p><input type="submit" value="Phân quyền" class="btn btn-sm btn-default"></p>
-                 <p><a style="margin:5px 0;" class="btn btn-sm btn-danger" href="{{URL::to('/delete-user-roles/'.$user->id)}}">Xóa users</a></p>
+                 <p><a style="margin:5px 0;" class="btn btn-sm btn-danger" href="{{URL::to('/admin/delete-user-roles/'.$user->id)}}">Xóa users</a></p>
                   <p><a style="margin:5px 0;" class="btn btn-sm btn-success" href="{{url('/impersonate/'.$user->id)}}">Chuyển quyền</a></p>
                 
               </td> 

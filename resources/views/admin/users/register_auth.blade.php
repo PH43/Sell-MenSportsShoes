@@ -31,7 +31,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	 	Session::put('message',null);
 	 } 
 	 ?>	
-		<form action="{{URL::to('/register-save')}}" method="post">
+		<form action="{{URL::to('/admin/register-save')}}" method="post">
 			{{ csrf_field() }}
 			<!-- nay de lay truong token ma hoa md5 -->
 			<input type="text" class="ggg" name="admin_name" placeholder="Điền tên" required="" value="{{old('admin_name')}}">

@@ -19,6 +19,6 @@ class AdminPermission
           if(Auth::user()->hasRole(['admin'])){
             return $next($request);
         }
-        return redirect('/all-users');
+        return redirect('/admin/all-users');
     }
 }
