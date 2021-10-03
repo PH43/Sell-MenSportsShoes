@@ -32,7 +32,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <header class="header fixed-top clearfix">
 <!--logo start-->
 <div class="brand">
-    <a href="index.html" class="logo">
+    <a href="{{URL::to('/admin/dashboard')}}" class="logo">
         <?php
            $name=Auth::user()->name;
            if($name){
@@ -50,9 +50,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="top-nav clearfix">
     <!--search & user info start-->
     <ul class="nav pull-right top-menu">
-        <li>
-            <input type="text" class="form-control search" placeholder=" Search">
-        </li>
+	        <!-- <li>
+	            <input type="text" class="form-control search" placeholder=" Search">
+	        </li> -->
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -61,7 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  					<?php
                         $name=Auth::user()->name;
 				           if($name){
-				           	echo $name.'-AD';
+				           	echo $name;
 				           }
                      ?> 
                 </span>
@@ -87,20 +87,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- sidebar menu start-->
         <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
-                <li>
+                <!-- <li>
                     <a class="active" href="{{URL::to('/dashboard')}}">
                         <i class="fa fa-dashboard"></i>
                         <span>Tổng quan</span>
                     </a>
-                </li>
+                </li> -->
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
                         <span>Danh mục sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{ route('admin.show-category') }}">Thêm danh mục sản phẩm</a></li>
-						<li><a href="{{ route('admin.show-product') }}">Liệt kê danh mục sản phẩm</a></li>
+						<li><a href="{{ route('admin.create-category') }}">Thêm danh mục</a></li>
+						<li><a href="{{ route('admin.show-category') }}">Liệt kê danh mục</a></li>
                     </ul>
                 </li>
 
@@ -110,8 +110,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Thương hiệu sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{URL::to('/add-brand-product')}}">Thêm thương hiệu sản phẩm</a></li>
-						<li><a href="{{URL::to('/all-brand-product')}}">Liệt kê thương hiệu sản phẩm</a></li>
+						<li><a href="{{URL::to('/admin/brand/create-brand')}}" >Thêm Thương Hiệu</a></li> 
+						<li><a href="{{URL::to('/admin/brand/show-all-brand')}}">Liệt Kê Thương Hiệu </a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">

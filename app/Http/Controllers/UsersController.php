@@ -76,4 +76,16 @@ class UsersController extends Controller
      public function add_users(){
         return view('admin.users.add_users');
     }
+    public function store_users(Request $request){
+        $data = $request->all();
+        $admin = new Admin();
+        $admin->admin_name = $data['admin_name'];
+        $admin->admin_phone = $data['admin_phone'];
+        $admin->admin_email = $data['admin_email'];
+        $admin->admin_password = md5($data['admin_password']);
+        $admin->roles()->attach(Roles::where('name','sub_admin')->first());
+        $admin->save();
+        Session::put('message','Thêm users thành công');
+        return Redirect::to('users');
+    }
 }

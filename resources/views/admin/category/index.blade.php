@@ -1,1 +1,0 @@
-<h1>This is file index of folder category in admin</h1>
