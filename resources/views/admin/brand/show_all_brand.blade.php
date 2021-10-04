@@ -12,12 +12,14 @@
       <div class="col-sm-4">
       </div>
       <div class="col-sm-3">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
+        <form method="get">
+          <div class="input-group">
+            <input type="text" class="input-sm form-control"  name="search" value="{{ request('search') }}" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="button">Go!</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-responsive">
@@ -48,7 +50,7 @@
           <tr>
             <td><?= $i++;?></td>
             <td>{{$brand_pro->name}}</td>
-            <td>{{$brand_pro->desc}}</td>
+            <td>{!! $brand_pro->desc !!}</td>
 
             <!-- ẩn hiện-status của thương hiệu(tạm chưa dùng đến)
             <td><span class="text-ellipsis">
@@ -64,7 +66,7 @@
                ?>
             </span></td> -->
 
-            <td><span class="text-ellipsis">10/2/2021</span></td>
+            <td><span class="text-ellipsis">{{ $brand_pro->created_at }}</span></td>
 
             <!-- Sửa và Xóa -->
             <td>
@@ -85,11 +87,7 @@
         <div class="col-sm-5 text-center">
         </div>
         <div class="col-sm-7 text-right text-center-xs">                
-          <ul class="pagination pagination-sm m-t-none m-b-none">
-            <li><a href=""><i class="fa fa-chevron-left"></i></a></li>
-            <li><a href="">1</a></li>
-            <li><a href=""><i class="fa fa-chevron-right"></i></a></li>
-          </ul>
+           {{ $all_brand->links() }}
         </div>
       </div>
     </footer>
