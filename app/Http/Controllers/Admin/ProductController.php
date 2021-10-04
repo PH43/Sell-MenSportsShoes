@@ -1,9 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
+use App\Brand;
+use App\Category;
 use App\Product;
+use Session;
+use DB;
 use Illuminate\Http\Request;
+use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
@@ -15,7 +20,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('admin.product.index');
+        $all_product=Product::with('brand','category')->orderBy('id','DESC')->paginate(5);
+        foreach ($all_product as $key => $value) {
+            $name=$value->brand->name;
+        }
+        // dd($name);
+        return view('admin.product.show_all_product')->with(compact('all_product'));
     }
 
     public function search(Request $request)
@@ -50,18 +60,40 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $cate_product=Category::all();
+        $brand_product=Brand::all();
+        return view('admin.product.add_product')->with(compact('cate_product','brand_product'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function validation($request){
+        return $this->validate($request,[
+            'name' => 'required|max:255|min:2', 
+            'price' => 'required|max:50',
+            'desc' => 'required|max:255',
+            'image' => 'required|max:255',
+        ]);
+    }
     public function store(Request $request)
     {
-        //
+        $this->validation($request);
+        $data=$request->all();
+        $data['category_id']=$request->category;
+        $data['brand_id']=$request->brand;
+        $data['status']=$request->status;
+        $get_img= $request-> file('image');
+        if ($get_img) {
+            $get_img_name=$get_img->getClientOriginalName();
+            //tách tên ảnh với đuôi ra bởi dấu .
+            $name_img=current(explode('.',$get_img_name));
+            //hàm lấy tên ảnh.random từ 0-99 và thêm đuôi img ,jpn np.. phía sau
+            $new_image=$name_img.rand(0,99).'.'.$get_img->getClientOriginalExtension();
+            $get_img->move('public/upload/product',$new_image);
+            $data['image']=$new_image;
+            Product::create($data);
+        // cau lech dua du lieu vao DB;
+            Session::put('message','Thêm sản phẩm thành công');
+            return Redirect::to('/admin/product/all-product');
+        }
     }
 
     /**

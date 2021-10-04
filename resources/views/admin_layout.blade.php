@@ -114,6 +114,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<li><a href="{{URL::to('/admin/brand/show-all-brand')}}">Liệt Kê Thương Hiệu </a></li>
                     </ul>
                 </li>
+                 <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Sản Phẩm</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{route('admin.add-product')}}">Thêm sản phẩm</a></li>
+						<li><a href="{{route('admin.show-product')}}">Liệt kê sản phẩm</a></li>
+                    </ul>
+                </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
@@ -121,25 +131,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </a>
                     <ul class="sub">
 						<li><a href="{{URL::to('/manager-order')}}">Quản lý đơn hàng</a></li>
-						
-                      
                     </ul>
                     <ul class="sub">
 						<li><a href="{{url::to('manager-order')}}">Quản lý đơn hàng</a></li>
-						
-                      
-                    </ul>
-                </li>
-                
-               
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-book"></i>
-                        <span>Sản Phẩm</span>
-                    </a>
-                    <ul class="sub">
-						<li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li>
-						<li><a href="{{URL::to('/all-product')}}">Liệt kê sản phẩm</a></li>
                     </ul>
                 </li>
                 <!-- kiểm tra coi id đang đăng nhập có những quyền nào -->
@@ -149,7 +143,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Users</span>
                     </a>
                     <ul class="sub">
-						<!-- <li><a href="{{URL::to('/add-product')}}">Thêm sản phẩm</a></li> -->
 						<li><a href="{{URL::to('admin/all-users')}}">Liệt kê Users</a></li>
                     </ul>
                 </li>
