@@ -50,7 +50,6 @@
             <td>{{$brand_pro->name}}</td>
             <td>{{$brand_pro->desc}}</td>
 
-            <!-- <td>mô tả desc</td> -->
             <!-- ẩn hiện-status của thương hiệu(tạm chưa dùng đến)
             <td><span class="text-ellipsis">
               <?php 

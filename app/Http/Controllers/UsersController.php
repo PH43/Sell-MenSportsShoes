@@ -18,22 +18,18 @@ class UsersController extends Controller
     }
     public function validation($request){
         return $this->validate($request,[
-            'admin_name' => 'required|max:50|min:10', 
-            'admin_phone' => 'required|max:20|min:8', 
-            'admin_email' => 'required|email|max:60', 
-            'admin_password' => 'required|max:225', 
+            'name' => 'required|max:50|min:10', 
+            'phone' => 'required|max:20|min:8', 
+            'email' => 'required|email|max:60', 
+            'password' => 'required|max:225', 
         ]);
     }
     public function register_save(Request $request){
         $this->validation($request);
         $data = $request->all();
-        $admin = new Users();
-        $admin->name = $data['admin_name'];
-        $admin->phone = $data['admin_phone'];
-        $admin->email = $data['admin_email'];
-        $admin->flag =1;
-        $admin->password = md5($data['admin_password']);
-        $admin->save();
+        $data['flag'] =1;
+        $data['password'] = md5($data['password']);
+        Users::create($data);
         return redirect('/admin/login')->with('message','Đăng ký thành công');
     }
     
@@ -78,14 +74,10 @@ class UsersController extends Controller
     }
     public function store_users(Request $request){
         $data = $request->all();
-        $admin = new Admin();
-        $admin->admin_name = $data['admin_name'];
-        $admin->admin_phone = $data['admin_phone'];
-        $admin->admin_email = $data['admin_email'];
-        $admin->admin_password = md5($data['admin_password']);
-        $admin->roles()->attach(Roles::where('name','sub_admin')->first());
-        $admin->save();
+        $data['password'] = md5($request->password);
+        $data['flag']=1;
+        Users::create($data)->roles()->attach(Roles::where('roles_name','sub_admin')->first());
         Session::put('message','Thêm users thành công');
-        return Redirect::to('users');
+        return Redirect::to('admin/all-users');
     }
 }

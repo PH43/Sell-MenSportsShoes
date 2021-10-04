@@ -20,19 +20,19 @@
                                     {{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên users</label>
-                                    <input type="text" name="admin_name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
+                                    <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Email</label>
-                                    <input type="text" name="admin_email" class="form-control" id="exampleInputEmail1" placeholder="Slug">
+                                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="email">
                                 </div>
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">Phone</label>
-                                    <input type="text" name="admin_phone" class="form-control" id="exampleInputEmail1" placeholder="Slug">
+                                    <input type="number" name="phone" class="form-control" id="exampleInputEmail1" placeholder="Slug">
                                 </div>
                                     <div class="form-group">
                                     <label for="exampleInputEmail1">Password</label>
-                                    <input type="text" name="admin_password" class="form-control" id="exampleInputEmail1" placeholder="Slug">
+                                    <input type="password" name="password" class="form-control" id="exampleInputEmail1" placeholder="Slug">
                                 </div>
                                 <button type="submit" name="add_category_product" class="btn btn-info">Thêm users</button>
                                 </form>

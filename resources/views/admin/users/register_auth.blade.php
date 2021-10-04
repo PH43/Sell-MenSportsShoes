@@ -34,10 +34,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<form action="{{URL::to('/admin/register-save')}}" method="post">
 			{{ csrf_field() }}
 			<!-- nay de lay truong token ma hoa md5 -->
-			<input type="text" class="ggg" name="admin_name" placeholder="Điền tên" required="" value="{{old('admin_name')}}">
-			<input type="email" class="ggg" name="admin_email" placeholder="Điền email" required="">
-			<input type="number" class="ggg" name="admin_phone" placeholder="Điền số điện thoại" required="">
-			<input type="password" class="ggg" name="admin_password" placeholder="Điền password" required="">
+			<input type="text" class="ggg" name="name" placeholder="Điền tên" required="" value="{{old('admin_name')}}">
+			<input type="email" class="ggg" name="email" placeholder="Điền email" required="">
+			<input type="number" class="ggg" name="phone" placeholder="Điền số điện thoại" required="">
+			<input type="password" class="ggg" name="password" placeholder="Điền password" required="">
 
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng kí" name="register">

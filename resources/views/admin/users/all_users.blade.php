@@ -69,9 +69,13 @@
                   
                     
                  <p><input type="submit" value="Phân quyền" class="btn btn-sm btn-default"></p>
-                 <p><a style="margin:5px 0;" onclick="return confirm('Bạn muốn xóa Users này?')" class="btn btn-sm btn-danger" href="{{URL::to('/admin/delete-user-roles/'.$user->id)}}">Xóa users</a></p>
-                  <p><a style="margin:5px 0;" class="btn btn-sm btn-success" href="{{url('/impersonate/'.$user->id)}}">Chuyển quyền</a></p>
-                
+                 <a href="{{URL::to('/admin/edit-users/'.$user->id)}}" class="active" ui-toggle-class="">
+                  <i class="fa fa-pencil-square-o text-success text-active"></i></a><br>
+                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{URL::to('/admin/delete-user-roles/'.$user->id)}}">
+                  <i style="text-align: center;" class="fa fa-times text-danger text"></i></a>
+
+                 <!-- <p><a style="margin:5px 0;" onclick="return confirm('Bạn muốn xóa Users này?')" class="btn btn-sm btn-danger" href="{{URL::to('/admin/delete-user-roles/'.$user->id)}}">Xóa</a></p>
+                  <p><a style="margin:5px 0;" class="btn btn-sm btn-success" href="{{url('/impersonate/'.$user->id)}}">Sửa</a></p> -->
               </td> 
 
               </tr>
