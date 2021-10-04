@@ -11,7 +11,7 @@
 |
 */
 
-use App\Http\Controllers\Frontend\ProductController;
+// use App\Http\Controllers\Frontend\ProductController;
 
 
 //Trang Admin 
@@ -35,7 +35,7 @@ Route::group(['prefix' => 'admin'], function() {
          });
 
          Route::group(['middleware'=>'auth.roles'], function(){
-            Route::get('all-users','UsersController@index_users');
+            Route::get('all-users','UsersController@index_users'); 
             // Route::get('add-users','UserController@add_users')
             // Route::post('store-users','UserController@store_users');
          });
@@ -61,4 +61,7 @@ Route::get('/', function () {
    return view('home_layout');
 });
 
-Route::get('/products', [ProductController::class, 'search']);
+// Route::get('/products', [ProductController::class, 'search']);
+Route::namespace('Frontend')->group(function () {
+   Route::get('/products', 'ProductController@search');
+});

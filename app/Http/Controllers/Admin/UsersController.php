@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Users;
@@ -8,8 +8,9 @@ use App\Roles;
 use App\Http\Requests;
 Use Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\Controller;
 use Session;
-session_start();
+
 
 class UsersController extends Controller
 {

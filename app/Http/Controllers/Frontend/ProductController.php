@@ -20,7 +20,6 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        dd('Tuan');
         $search = $request->search;
         $sortBy = $request->sort_by;
         $order = $request->order ? 'DESC': 'ASC';
@@ -42,6 +41,7 @@ class ProductController extends Controller
         }
 
         $products = $query->get();
+        dd($products->toArray());
     }
 
     /**

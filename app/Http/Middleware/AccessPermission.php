@@ -19,6 +19,6 @@ class AccessPermission
         if(Auth::user()->hasAnyRoles(['admin','sub_admin'])){
             return $next($request);
         }
-        return redirect('/dashboard');
+        return redirect('/admin/dashboard');
     }
 }
