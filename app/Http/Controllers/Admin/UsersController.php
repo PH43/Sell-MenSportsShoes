@@ -19,23 +19,19 @@ class UsersController extends Controller
     }
     public function validation($request){
         return $this->validate($request,[
-            'admin_name' => 'required|max:50|min:10', 
-            'admin_phone' => 'required|max:20|min:8', 
-            'admin_email' => 'required|email|max:60', 
-            'admin_password' => 'required|max:225', 
+            'name' => 'required|max:50|min:10', 
+            'phone' => 'required|max:20|min:8', 
+            'email' => 'required|email|max:60', 
+            'password' => 'required|max:225', 
         ]);
     }
     public function register_save(Request $request){
         $this->validation($request);
         $data = $request->all();
-        $admin = new Users();
-        $admin->name = $data['admin_name'];
-        $admin->phone = $data['admin_phone'];
-        $admin->email = $data['admin_email'];
-        $admin->flag =1;
-        $admin->password = md5($data['admin_password']);
-        $admin->save();
-        return redirect('/login')->with('message','Đăng ký thành công');
+        $data['flag'] =1;
+        $data['password'] = md5($data['password']);
+        Users::create($data);
+        return redirect('/admin/login')->with('message','Đăng ký thành công');
     }
     
     public function index_users(){
@@ -55,7 +51,7 @@ class UsersController extends Controller
 
     }
     public function assign_roles(Request $request){
-        if(Auth::id()==$request->id){
+        if(Auth::id()==$request->admin_id){
             return redirect()->back()->with('message','Bạn không được phân quyền chính mình');
         }
 
@@ -76,5 +72,13 @@ class UsersController extends Controller
     }
      public function add_users(){
         return view('admin.users.add_users');
+    }
+    public function store_users(Request $request){
+        $data = $request->all();
+        $data['password'] = md5($request->password);
+        $data['flag']=1;
+        Users::create($data)->roles()->attach(Roles::where('roles_name','sub_admin')->first());
+        Session::put('message','Thêm users thành công');
+        return Redirect::to('admin/all-users');
     }
 }
