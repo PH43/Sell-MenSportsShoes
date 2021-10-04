@@ -46,7 +46,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<!-- <a href="/register-admin"><input type="submit" value="Đăng kí   " name="Resgiter"></a> -->
 				
 		</form>
-		<a href="{{URL::to('/register-auth')}}">Đăng kí  |</a>
+		<a href="{{URL::to('/admin/register-auth')}}">Đăng kí  |</a>
 
 		<a href="{{URL::to('/login-google')}}">Đăng nhập Google</a>
 		<!-- <p>tạo tài khoản mới<a href="registration.html">Create an account</a></p> -->
