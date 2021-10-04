@@ -16,7 +16,11 @@ class CategoryController extends Controller
     public function index()
     {
         // return view('admin.category.index');
-        $all_category=Category::all();
+        if (request('search')) {
+            $all_category=Category::where('name', 'like', '%'.request('search').'%')->paginate(20);
+        } else {
+            $all_category=Category::paginate(20);
+        }
         return view('admin.category.show_all_category')->with(compact('all_category'));
     }
 

@@ -13,10 +13,15 @@
       </div>
       <div class="col-sm-3">
         <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
+        <form method="get">
+          <div class="input-group">
+            <input type="text" class="input-sm form-control"  name="search" value="{{ request('search') }}" placeholder="Search">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">Go!</button>
+            </span>
+          </div>
+        </form>
+         
         </div>
       </div>
     </div>
@@ -48,8 +53,8 @@
           <tr>
             <td><?= $i++;?></td>
             <td>{{$cate_pro->name}}</td>
-            <td>{{$cate_pro->desc}}</td>
-            <td><span class="text-ellipsis">10/2/2021</span></td>
+            <td>{!! $cate_pro->desc !!}</td>
+            <td><span class="text-ellipsis">{{$cate_pro->created_at}}</span></td>
 
             <!-- Sửa và Xóa -->
             <td>
