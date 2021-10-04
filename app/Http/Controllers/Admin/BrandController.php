@@ -15,7 +15,11 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $all_brand=Brand::all();
+        if (request('search')) {
+            $all_brand=Brand::where('name', 'like', '%'.request('search').'%')->paginate(20);
+        } else {
+            $all_brand=Brand::paginate(20);
+        }
         return view('admin.brand.show_all_brand')->with(compact('all_brand'));
     }
 
@@ -28,6 +32,8 @@ class BrandController extends Controller
     {
         return view('admin.brand.add_brand');
     }
+
+
 
     /**
      * Store a newly created resource in storage.
