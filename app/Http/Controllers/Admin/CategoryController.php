@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -34,15 +35,15 @@ class CategoryController extends Controller
         return view('admin.category.add_category');
     }
 
-    public function validation($request){
-        return $this->validate($request,[
-            'name' => 'required|max:100|unique:categories|min:2', 
-            'desc' => 'required|max:255',
-        ]);
-    }
-    public function store(Request $request)
+    // public function validation($request){
+    //     return $this->validate($request,[
+    //         'name' => 'required|max:100|unique:categories|min:2', 
+    //         'desc' => 'required|max:255',
+    //     ]);
+    // }
+    public function store(CreateCategoryRequest $request)
     {
-        $this->validation($request);
+        // $this->validation($request);
         $data = $request->all();
         Category::create($data);
         return redirect('/admin/category/show-all-category')->with('message','Thêm Danh Mục Mới Thành Công');
