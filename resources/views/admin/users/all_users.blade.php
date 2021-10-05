@@ -60,8 +60,10 @@
                 </td>
                 <td>{{ $user->phone }}</td>
                 <!-- <td>{{ $user->password }}</td> -->
-
+                
                 <td><input type="checkbox" name="admin_role" {{$user->hasRole('admin') ? 'checked' : ''}}></td>
+
+                
                 <td><input type="checkbox" name="sub_admin_role"  {{$user->hasRole('sub_admin') ? 'checked' : ''}}></td>
                 <td><input type="checkbox" name="shipper_role"  {{$user->hasRole('shipper') ? 'checked' : ''}}></td>
               
@@ -73,11 +75,7 @@
                   <i class="fa fa-pencil-square-o text-success text-active"></i></a><br>
                 <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{URL::to('/admin/delete-user-roles/',$user->id)}}">
                   <i style="text-align: center;" class="fa fa-times text-danger text"></i></a>
-
-                 <!-- <p><a style="margin:5px 0;" onclick="return confirm('Bạn muốn xóa Users này?')" class="btn btn-sm btn-danger" href="{{URL::to('/admin/delete-user-roles/'.$user->id)}}">Xóa</a></p>
-                  <p><a style="margin:5px 0;" class="btn btn-sm btn-success" href="{{url('/impersonate/'.$user->id)}}">Sửa</a></p> -->
               </td> 
-
               </tr>
             </form>
           @endforeach
