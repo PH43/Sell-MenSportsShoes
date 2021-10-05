@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-------- END SEO--------------->
 
@@ -16,6 +16,7 @@
     <link href="{{asset('frontend/css/main.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('frontend/css/main.css')}}">
     <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet">
+    
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -268,7 +269,37 @@
                 <div class="col-sm-9 padding-right">
                     <div class="fb-like" data-href="" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
                     
-                @yield('conten')
+                    @foreach ($products as $product)
+                    <div class="col-sm-4">
+							<div class="product-image-wrapper">
+								<div class="single-products">
+									<div class="productinfo text-center">
+										<a href="#">
+                                        <img src="{{ asset('public/upload/product/'.$product->image) }}" alt="" />
+                                        </a>
+										<h2>{{ format_money($product->price) }}đ</h2>
+										<p>{{ $product->name }}</p>
+										<a href="#" class="btn btn-default add-to-cart" data-product-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									</div>
+                                   
+                                    <div class="product-overlay">
+                                        <div class="overlay-content">
+                                            <h2>{{ format_money($product->price) }}đ</h2>
+                                            <p>{{ $product->name }}</p>
+                                            <a href="#" class="btn btn-default add-to-cart" data-product-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                        </div>
+                                    </div>
+                                   
+								</div>
+								<div class="choose">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+										<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -454,5 +485,7 @@
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v11.0" nonce="unTRHKsY"></script>
     
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script src="{{ asset('public/js/add-to-cart.js') }}"> </script>
 </body>
 </html>

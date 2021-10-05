@@ -75,8 +75,12 @@ Route::group(['prefix' => 'admin'], function() {
 
 
 //Trang Fronend
-Route::get('/', function () {
-   return view('home_layout');
+Route::namespace('Frontend')->group(function() {
+   Route::get('/', 'HomeController@index')->name('frontend.home');
+   Route::group(['prefix' => 'product'], function() {
+      Route::post('/add-to-cart', 'ProductController@addToCart')->name('web.add-to-cart');
+   });
 });
+
 
 Route::get('/products', [ProductController::class, 'search']);
