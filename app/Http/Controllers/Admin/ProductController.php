@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddProductRequest;
 
 class ProductController extends Controller
 {
@@ -71,7 +72,8 @@ class ProductController extends Controller
             'image' => 'required|max:255',
         ]);
     }
-    public function store(Request $request)
+    
+    public function store(AddProductRequest $request)
     {
         $this->validation($request);
         $data=$request->all();
@@ -88,7 +90,6 @@ class ProductController extends Controller
             Product::create($data);
         // cau lech dua du lieu vao DB;
             Session::put('message','Thêm sản phẩm thành công');
-            return Redirect::to('/admin/product/show-all-product');
         }
     }
 

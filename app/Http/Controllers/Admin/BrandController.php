@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Brand;
+use App\Http\Requests\CreateBrandRequest;
 
 class BrandController extends Controller
 {
@@ -15,7 +16,11 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $all_brand=Brand::all();
+        if (request('search')) {
+            $all_brand=Brand::where('name', 'like', '%'.request('search').'%')->paginate(20);
+        } else {
+            $all_brand=Brand::paginate(20);
+        }
         return view('admin.brand.show_all_brand')->with(compact('all_brand'));
     }
 
@@ -29,21 +34,23 @@ class BrandController extends Controller
         return view('admin.brand.add_brand');
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function validation($request){
-        return $this->validate($request,[
-            'name' => 'required|max:100|unique:brands|min:2', 
-            'desc' => 'required|max:255',
-        ]);
-    }
-    public function store(Request $request)
+    // public function validation($request){
+    //     return $this->validate($request,[
+    //         'name' => 'required|max:100|unique:brands|min:2', 
+    //         'desc' => 'required|max:255',
+    //     ]);
+    // }
+    public function store(CreateBrandRequest $request)
     {
-        $this->validation($request);
+        // $this->validation($request);
         $data = $request->all();
         Brand::create($data);
         return redirect('/admin/brand/show-all-brand')->with('message','Thêm Thương Hiệu Mới Thành Công');
