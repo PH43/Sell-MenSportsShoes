@@ -5,10 +5,12 @@
     </div>
 </div>
     <div class="row w3-res-tb">
-      <a href="{{ route('admin.add-product') }}" class="btn btn-sm btn-success">Thêm Sản Phẩm</a>
+     
       <div class="col-sm-4">
+         <a href="{{ route('admin.add-product') }}" class="btn btn-sm btn-success">Thêm Sản Phẩm</a>
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-4"></div>
+      <div class="col-sm-4">
         <div class="input-group">
           <input type="text" class="input-sm form-control" placeholder="Search">
           <span class="input-group-btn">
@@ -38,37 +40,44 @@
             <th>Mô tả sản phẩm</th>
             <th>Danh mục</th>
             <th>Thương hiệu</th>
-            <th>Size 40</th>
             <th>Size 42</th>
+            <!-- <th>Size 41</th> -->
             <th>Size 44</th>
+            <!-- <th>Size 43</th> -->
+            <th>Size 46</th>
             <th style="width:40px;" >Ẩn/Hiện</th>
             <th style="font-weight: bold;">Ngày thêm</th>
             <th style="font-weight: bold;"></th>
           </tr>
         </thead>
         <tbody>
-           @foreach($all_product as $key => $product) 
+           @foreach($all_product as $product) 
           <tr>
             <td style="vertical-align: middle;"><?= $i++;  ?></td>
-            <td style="vertical-align: middle;">{{$product->name}}</td>
+            <td style="vertical-align: middle;"><a href="{{route('admin.size-product',$product->id)}}">{{$product->name}}</a></td>
 
             <th><img width="80" height="70" src="{{URL::to('/public/upload/product/'.$product->image)}}"></th>
-            <td style="vertical-align: middle;">{{number_format($product->price).'.Đ'}}</td>
+            <td style="vertical-align: middle;">{{number_format($product->price).'đ'}}</td>
             <td style="vertical-align: middle;">{{$product->desc}}</td>
             <th style="vertical-align: middle;">{{$product->category->name}}</th>
             <th style="vertical-align: middle;">{{$product->brand->name}}</th>
-            <th style="vertical-align: middle;">4</th>
-            <th style="vertical-align: middle;">5</th>
-            <th style="vertical-align: middle;">1</th>
+
+            @foreach($product->size as $key => $sizes)
+              <td style="vertical-align: middle;" ><input style="width: 40px" type="number" name="'size_{{$sizes->number_size}}" value="<?=  $qly=($sizes->number_size)?$sizes->pivot->quantity : 0 ?>" ></td>
+            @endforeach
+
+
+
+
             <!-- Ẩn hiện -->
 	            <td style="vertical-align: middle;"><span class="text-ellipsis">
 	              <?php 
-	                if ($product->product_status == 1) {
+	                if ($product->status == 0) {
 	              ?>    
-	                  <a href="{{route('admin.active-product',$product->id)}}"><span class="fa fa-thumbs-down"></span></a>
+	                  <a href="{{route('admin.active-product',$product->id)}}"><span class="fa fa-thumb-styling fa fa-thumbs-down"></span></a>
 
 	              <?php  } else { ?>
-	              <a href="{{URL::to('admin.unactive-product',$product->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
+	              <a href="{{route('admin.unactive-product',$product->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
 	              <?php    
 	                }
 	               ?>

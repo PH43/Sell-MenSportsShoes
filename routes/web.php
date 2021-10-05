@@ -64,9 +64,12 @@ Route::group(['prefix' => 'admin'], function() {
                Route::get('/show-all-product', 'ProductController@index')->name('admin.show-product'); // =>admin/product
                Route::get('/add-product','ProductController@create')->name('admin.add-product');
                Route::post('/save-product','ProductController@store')->name('admin.save-new-product');
-               Route::get('/edit-product','ProductController@edit')->name('admin.edit-product');
-               Route::post('/update-product','ProductController@update')->name('admin.update-product');
-               Route::get('/delete-product','ProductController@edit')->name('admin.delete-product');
+               Route::get('/edit-product/{id}','ProductController@edit_product')->name('admin.edit-product');
+               Route::post('/update-product/{id}','ProductController@update')->name('admin.update-product');
+               Route::get('/active-product/{id}','ProductController@active_product')->name('admin.active-product');
+               Route::get('/unactive-product/{id}','ProductController@unactive_product')->name('admin.unactive-product');
+               Route::get('/delete-product/{id}','ProductController@destroy')->name('admin.delete-product');
+               Route::get('/size','ProductController@size')->name('admin.size-product');
             }); //End Product
          }); //End các controler nằm trong thư mục Admin
       }); //End Middelware admin và sub_admin

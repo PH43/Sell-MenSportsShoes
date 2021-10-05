@@ -19,4 +19,7 @@ class Product extends Model
     public function category(){
         return $this->belongsto(Category::class,'category_id','id');
     }
+    public function size(){
+        return $this->belongsToMany(Size::class,'products_sizes','product_id','size_id')->withPivot('quantity');
+    }
 }
