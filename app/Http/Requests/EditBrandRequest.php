@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBrandRequest extends FormRequest
+class EditBrandRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CreateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:brands,name',
+            'name' => 'required',
             'desc' => 'required',
         ];
     }
@@ -33,7 +33,6 @@ class CreateBrandRequest extends FormRequest
     {
         return [
             'name.required' => 'Bạn chưa nhập Thương Hiệu',
-            'name.unique' => 'Thương Hiệu này đã tồn tại',
             'desc.required' => 'Bạn chưa nhập Mô Tả',
         ];
     }

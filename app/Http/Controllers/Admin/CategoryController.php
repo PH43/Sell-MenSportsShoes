@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -83,24 +84,12 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditCategoryRequest $request, $id)
     {
         $data=$request->all();
         $category=Category::findOrfail($id);
-       
-        if ($category->name == $data['name']) {
-            $category->name = $data['name'];
-            $category->desc = $data['desc'];
-            $category->save();
-            return redirect('/admin/category/show-all-category')->with('message','Update Danh Mục Thành Công');
-        } else {
-            $this->validation($request);
-            $data_update = $request->all();
-            $category->name = $data_update['name'];
-            $category->desc = $data_update['desc'];
-            $category->save();
-            return redirect('/admin/category/show-all-category')->with('message','Update Danh Mục Thành Công');
-        }
+        $category->update($data);
+        return redirect('/admin/category/show-all-category')->with('message','Update Danh Mục Thành Công');
     }
     /**
      * Remove the specified resource from storage.
