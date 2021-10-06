@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Brand;
 use App\Http\Requests\CreateBrandRequest;
+use App\Http\Requests\EditBrandRequest;
 
 class BrandController extends Controller
 {
@@ -82,25 +83,13 @@ class BrandController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditBrandRequest $request, $id)
     {   
         $data=$request->all();
         $brand=Brand::findOrfail($id);
-       
-        if ($brand->name == $data['name']) {
-            $brand->name = $data['name'];
-            $brand->desc = $data['desc'];
-            $brand->save();
-            return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
-        } else {
-            $this->validation($request);
-            $data_update = $request->all();
-            $brand->name = $data_update['name'];
-            $brand->desc = $data_update['desc'];
-            $brand->save();
-            return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
-        }
-    }
+        $brand->update($data);
+        return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
+    }  
 
     /**
      * Remove the specified resource from storage.

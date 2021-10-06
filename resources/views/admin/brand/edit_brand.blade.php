@@ -23,13 +23,22 @@
                                 	{{ csrf_field() }}
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tên danh mục</label>
-                                    <input type="text" value="{{$edit_brand->name}}"  name="name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" required>
+                                    <input type="text" value="{{$edit_brand->name}}"  name="name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" >
                                 </div>
+
+                                @if ($errors->has('name'))
+                                    <p style="color:red;">{{$errors->first('name') }}</p>
+                                @endif
+
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả danh mục</label>
-                                    <textarea class="form-control"  style="resize: none;" rows="5" name="desc" id="ckeditor5" placeholder="Mô tả danh mục" required>{{$edit_brand->desc}}</textarea>
+                                    <textarea class="form-control"  style="resize: none;" rows="5" name="desc" id="ckeditor5" placeholder="Mô tả danh mục" >{{$edit_brand->desc}}</textarea>
                                 </div>
                                 <button type="submit" name="update_brand_product" class="btn btn-info">Cập nhập thương hiệu</button>
+
+                                @if ($errors->has('desc'))
+                                    <p style="color:red;">{{$errors->first('desc') }}</p>
+                                @endif
                             </form>
                             </div>
 

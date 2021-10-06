@@ -32,9 +32,9 @@ class CreateCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Bạn chưa nhập Category',
-            'name.unique' => 'Category này đã tồn tại',
-            'desc.required' => 'Bạn chưa nhập Description',
+            'name.required' => 'Bạn chưa nhập Danh Mục',
+            'name.unique' => 'Danh Mục này đã tồn tại',
+            'desc.required' => 'Bạn chưa nhập Mô Tả',
         ];
     }
 }
