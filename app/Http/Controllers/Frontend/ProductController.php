@@ -20,7 +20,7 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        dd('Tuan');
+        // dd('Tuan');
         $search = $request->search;
         $sortBy = $request->sort_by;
         $order = $request->order ? 'DESC': 'ASC';
@@ -50,4 +50,15 @@ class ProductController extends Controller
 
         // 
     }
+    public function search_pc(Request $request){
+        $keywords=$request->keywords_submit; 
+        if ($keywords!=null) {
+            $search_product=Product::where('name','like','%'.$keywords.'%')
+                ->paginate(6);
+            return view('frontend.search.search')->with(compact('search_product'));
+        }else{
+            Redirect::to('/');
+        }
+    }
+
 }

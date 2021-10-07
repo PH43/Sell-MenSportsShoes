@@ -7,7 +7,7 @@
 
     <!-------- END SEO--------------->
 
-    <title>Shop Bán Giày Nam</title>
+    <title>Shop Giày CT-SHOPPER</title>
     <link href="{{asset('frontend/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('frontend/css/prettyPhoto.css')}}" rel="stylesheet">
@@ -64,22 +64,22 @@
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
                                 <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i>Tài Khoản</a></li>
-                                <!-- <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li> -->
-                               
-
                               <!--   <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Checkout-TT</a></li> -->
-                                 
 
                                 <li><a href="{{URL::to('/payment')}}"><i class="fa fa-lock"></i>Thanh Toán</a></li>
                                 
                                <!--  <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-lock"></i>Checkout-TT</a></li> -->
                                 
-                                <li><a href="{{URL::to('/home/show')}}"><i class="fa fa-shopping-cart"></i>Giỏ Hàng</a></li>
+                                <li><a href="{{('/home/show')}}"><i class="fa fa-shopping-cart"></i>Giỏ Hàng</a></li>
                                 
+                                @if( (Auth::user()) or Session::get('customer_id') )
+                                    <li><a href="{{route('home.logout-customer',Auth::id())}}"><i class="fa fa-lock"></i>Đăng xuất</a></li>
+                                @else
+                                    <li><a href="{{route('home.login-register-customer')}}"><i class="fa fa-lock"></i>Đăng nhập</a></li>
+                                @endif
+
                                  
-                              <!--   <li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i>Logout</a></li> -->
-                                 
-                                <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-lock"></i>Đăng nhập</a></li>
+                                
                                
                             </ul>
                         </div>
@@ -139,16 +139,14 @@
                             <div class="item active">
                                 <div class="col-sm-6">
                                     <h1><span>CT</span>-SHOPP</h1>
-                                    <h2>Hàng Chất Lượng</h2>
-                                    <p>Cam Kết Bán Hàng Chính Hãng<br>
-                                        Bán hàng trên toàn quốc<br>
-                                        Đổi sản phẩm trong 365 ngày<br>
-                                        Thương hiệu uy tín- bảo hành dài lâu<br>
+                                    <h2>Cam Kết Bán Hàng Chính Hãng.</h2>
+                                    <p>Bán hàng trên toàn quốc<br>
+                                        Đổi sản phẩm trong 365 ngày.
                                         Miễn phí vận chuyển nội thành</p>
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{URL::to('frontend/images/sli2.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{URL::to('frontend/images/giay1.jpg')}}" class="girl img-responsive" alt="" />
                                     <img src="{{URL::to('frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
@@ -160,7 +158,7 @@
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="{{URL::to('frontend/images/sli1.jpg')}}" class="girl img-responsive" alt="" />
+                                    <img src="{{URL::to('frontend/images/giay1.jpg')}}" class="girl img-responsive" alt="" />
                                     <img src="{{URL::to('frontend/images/pricing.png')}}"  class="pricing" alt="" />
                                 </div>
                             </div>
@@ -205,17 +203,16 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordian" href="#mens">
                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Giày Nam
+                                            Giày Thể Thao Nam
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="mens" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Dép lào</a></li>
-                                            <li><a href="#">Giày leo núi</a></li>
-                                            <li><a href="#">Giày thể thao</a></li>
-                                            <li><a href="#">Giày tăng chìu cao</a></li>
+                                            @foreach($cate_product as $category)
+                                            <li><a href="{{route('home.show-product-category',$category->id)}}">{{$category->name}}</a></li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
@@ -225,23 +222,28 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordian" href="#womens">
                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Giày thể thao nữ
+                                            Giày Thể Thao Nữ
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="womens" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Giày cao gót</a></li>
                                             <li><a href="#">Giày thể thao nữ</a></li>
-                                            <li><a href="#">Dép xỏ ngón</a></li>
+                                            <li><a href="#">Giày thể thao nữ</a></li>
+                                            <li><a href="#">Giày thể thao nữ</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">giày trẻ en</a></h4>
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#chill">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Giày Trẻ Em
+                                        </a>
+                                    </h4>
                                 </div>
                             </div>
                         </div><!--/category-products-->
@@ -251,11 +253,13 @@
                         
                         <div class="brands_products">                           
                          <h2>Thương hiệu sản phẩm</h2>
+                         @foreach($brand_product as $brand)
                             <div class="brands-name">
                                 <ul class="nav nav-pills nav-stacked">
-                                    <li><!-- <a href=""> <span class="pull-right">(5)</span></a> --></li>
+                                    <li><a href="{{route('home.show-product-brand',$brand->id)}}"> <span class="pull-right"></span>{{$brand->name}}</a></li>
                                 </ul>
                             </div>
+                        @endforeach
                         </div>
                         <!--/brands_products-->
 
@@ -268,38 +272,8 @@
                 </div>
                 <div class="col-sm-9 padding-right">
                     <div class="fb-like" data-href="" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
-                    
-                    @foreach ($products as $product)
-                    <div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-									<div class="productinfo text-center">
-										<a href="#">
-                                        <img src="{{ asset('public/upload/product/'.$product->image) }}" alt="" />
-                                        </a>
-										<h2>{{ format_money($product->price) }}đ</h2>
-										<p>{{ $product->name }}</p>
-										<a href="#" class="btn btn-default add-to-cart" data-product-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-									</div>
-                                   
-                                    <div class="product-overlay">
-                                        <div class="overlay-content">
-                                            <h2>{{ format_money($product->price) }}đ</h2>
-                                            <p>{{ $product->name }}</p>
-                                            <a href="#" class="btn btn-default add-to-cart" data-product-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                    </div>
-                                   
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-                    @endforeach
+                    <!-- layout-home -->
+                   @yield('conten')
                 </div>
             </div>
         </div>

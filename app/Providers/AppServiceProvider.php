@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Providers;
-
+use App\Brand;
+use App\Category;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        require_once __DIR__ . '/../helpers/helper.php';
+        view()->composer('home_layout', function($view){
+        $cate_product=Category::orderBy('id','desc')->get();
+        $brand_product=Brand::orderBy('id','desc')->get();
+        $view->with(compact('brand_product','cate_product'));
+        });
     }
 }

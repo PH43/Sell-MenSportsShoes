@@ -90,6 +90,7 @@ class ProductController extends Controller
             Product::create($data);
         // cau lech dua du lieu vao DB;
             Session::put('message','Thêm sản phẩm thành công');
+            return Redirect::to('/admin/product/show-all-product');
         }
     }
 
@@ -104,10 +105,6 @@ class ProductController extends Controller
             // $retVal = (condition) ? a : b ;
         }
     }
-
-
-
-
 
     public function active_product($id)
     {
