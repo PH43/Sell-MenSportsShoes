@@ -42,12 +42,12 @@ class BrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function validation($request){
-    //     return $this->validate($request,[
-    //         'name' => 'required|max:100|unique:brands|min:2', 
-    //         'desc' => 'required|max:255',
-    //     ]);
-    // }
+    public function validation($request){
+        return $this->validate($request,[
+            'name' => 'required|max:100|unique:brands|min:2', 
+            'desc' => 'required|max:255',
+        ]);
+    }
     public function store(CreateBrandRequest $request)
     {
         // $this->validation($request);
