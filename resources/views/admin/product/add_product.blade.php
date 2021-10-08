@@ -6,42 +6,48 @@
                         <header class="panel-heading">
                             Thêm sản phẩm
                         </header>
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+                        
                         <div class="panel-body">
-                        	<?php
-								$message=Session::get('message');
-								if ($message) {
-								 	echo '<span class="textalert">'.$message.'</span>';
-								 	Session::put('message',null);
-								 }
-							 ?>	
+                        		
                             <div class="position-center">
                                 <form role="form" action="{{route('admin.save-new-product')}}" method="post" enctype="multipart/form-data">
                                 	{{ csrf_field() }}
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Tên sản phẩm</label>
-                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="exampleInputEmail1" placeholder="Tên" required>
+                                    <label for="exampleInputEmail1">Tên sản phẩm</label><span style="color:red;"> *</span>
+                                    <input type="text" name="name" value="{{ old('name') }}" class="form-control" id="exampleInputEmail1" placeholder="Tên">
                                 </div>
+
+                                @if ($errors->has('name'))
+                                    <p style="color:red;">{{$errors->first('name') }}</p>
+                                @endif
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Giá sản phẩm</label>
-                                    <input type="number" name="price" value="{{ old('price') }}" class="form-control" id="exampleInputEmail1" placeholder="Giá" required>
+                                    <label for="exampleInputEmail1">Giá sản phẩm</label><span style="color:red;"> *</span>
+                                    <input type="number" name="price" value="{{ old('price') }}" class="form-control" id="exampleInputEmail1" placeholder="Giá">
                                 </div>
+
+                                @if ($errors->has('price'))
+                                    <p style="color:red;">{{$errors->first('price') }}</p>
+                                @endif
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Hình ảnh sản phẩm</label>
-                                    <input type="file" name="image" class="form-control" id="exampleInputEmail1" required>
+                                    <label for="exampleInputEmail1">Hình ảnh sản phẩm</label><span style="color:red;"> *</span>
+                                    <input type="file" name="image" class="form-control" id="exampleInputEmail1">
                                 </div>
+
+                                @if ($errors->has('image'))
+                                    <p style="color:red;">{{$errors->first('image') }}</p>
+                                @endif
+
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Mô tả sản phẩm</label>
-                                    <textarea class="form-control" value="{{ old('desc') }}" style="resize: none;" rows="5" name="desc" id="ckeditor1" placeholder="Mô tả sản phẩm" required></textarea>
+                                    <label for="exampleInputPassword1">Mô tả sản phẩm</label><span style="color:red;"> *</span>
+                                    <textarea class="form-control" style="resize: none;" rows="5" name="desc" id="ckeditor1" placeholder="Mô tả sản phẩm" >{{ old('desc') }}</textarea>
                                 </div>
+
+                                @if ($errors->has('desc'))
+                                    <p style="color:red;">{{$errors->first('desc') }}</p>
+                                @endif
+
                                 <div class="form-group">
                                 	<label for="exampleInputPassword1">Danh mục sản phẩm</label>
                                     <select name="category" class="form-control input-sm m-bot15">
