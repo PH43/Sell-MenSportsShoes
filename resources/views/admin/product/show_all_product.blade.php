@@ -40,11 +40,6 @@
             <th>Mô tả sản phẩm</th>
             <th>Danh mục</th>
             <th>Thương hiệu</th>
-            <th>Size 42</th>
-            <!-- <th>Size 41</th> -->
-            <th>Size 44</th>
-            <!-- <th>Size 43</th> -->
-            <th>Size 46</th>
             <th style="width:40px;" >Ẩn/Hiện</th>
             <th style="font-weight: bold;">Ngày thêm</th>
             <th style="font-weight: bold;"></th>
@@ -58,13 +53,13 @@
 
             <th><img width="80" height="70" src="{{URL::to('/public/upload/product/'.$product->image)}}"></th>
             <td style="vertical-align: middle;">{{number_format($product->price).'đ'}}</td>
-            <td style="vertical-align: middle;">{{$product->desc}}</td>
+            <td style="vertical-align: middle;">{!!$product->desc!!}</td>
             <th style="vertical-align: middle;">{{$product->category->name}}</th>
             <th style="vertical-align: middle;">{{$product->brand->name}}</th>
 
-            @foreach($product->size as $key => $sizes)
+            <!-- @foreach($product->size as $key => $sizes)
               <td style="vertical-align: middle;" ><input style="width: 40px" type="number" name="'size_{{$sizes->number_size}}" value="<?=  $qly=($sizes->number_size)?$sizes->pivot->quantity : 0 ?>" ></td>
-            @endforeach
+            @endforeach -->
 
 
 

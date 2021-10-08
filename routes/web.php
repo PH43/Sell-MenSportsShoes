@@ -80,8 +80,21 @@ Route::group(['prefix' => 'admin'], function() {
 //Trang Fronend
 Route::namespace('Frontend')->group(function() {
    Route::get('/', 'HomeController@index')->name('frontend.home');
-   Route::group(['prefix' => 'product'], function() {
-      Route::post('/add-to-cart', 'ProductController@addToCart')->name('web.add-to-cart');
+   Route::group(['prefix' => 'home'], function() {
+      Route::get('/product-detail', 'HomeController@product_detail')->name('home.product-detail');
+      Route::get('/show-product-category/{id}', 'HomeController@show_product_category')->name('home.show-product-category');
+
+      Route::get('/show-product-brand/{id}', 'HomeController@show_product_category')->name('home.show-product-brand');
+
+      Route::get('/login-register_customer', 'HomeController@login_register_customer')->name('home.login-register-customer');
+
+      Route::get('/logout-customer', 'HomeController@logout')->name('home.logout-customer');
+
+      Route::post('/add-customer', 'HomeController@add_customer')->name('home.add-customer');
+
+      Route::post('/login-customer', 'HomeController@login_customer')->name('home.login-customer');
+
+      Route::post('/add-to-cart', 'ProductController@addToCart')->name('home.add-to-cart');
    });
 });
 

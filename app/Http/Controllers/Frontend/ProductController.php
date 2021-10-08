@@ -58,4 +58,15 @@ class ProductController extends Controller
         }
         return response()->json(['status' => 200, 'message' => 'Add to cart successfully']);
     }
+    public function search_pc(Request $request){
+        $keywords=$request->keywords_submit; 
+        if ($keywords!=null) {
+            $search_product=Product::where('name','like','%'.$keywords.'%')
+                ->paginate(6);
+            return view('frontend.search.search')->with(compact('search_product'));
+        }else{
+            Redirect::to('/');
+        }
+    }
+
 }
