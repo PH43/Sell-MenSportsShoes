@@ -39,28 +39,10 @@ class HomeController extends Controller
             ->Where('products.status',1)
             ->whereNotin('products.id',[$id])
             ->paginate(3);
-
-
-        // $product_lienquan=Product::with('category')->Where('products.status',1)->orWhere('categories.id',$id_category)->whereNotin('products.id',[$id])->get();
-        // echo ($product_lienquan);
         return view('frontend.home.product_detail')->with(compact('product_lienquan','product_detail','sizes'));
 
     }
-    public function detail_product($product_id){
-        $all_product = DB::table('tbl_product')
-            ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-            ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')
-            ->where('tbl_product.product_id',$product_id)->get();
-         foreach ($all_product as $key => $value) {
-                $category_id=$value->category_id;
-            }   
-        $product_lienquan=DB::table('tbl_product')
-            ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-            ->where('tbl_category_product.category_id',$category_id)
-            ->whereNotin('tbl_product.product_id',[$product_id])
-            ->get(); 
-        return view('pages.product.detail_product')->with('details_product',$all_product)->with('product_lienquan',$product_lienquan);
-    }
+    
     public function login_register_customer(){
         return view('frontend.home.register_customer');
     }
