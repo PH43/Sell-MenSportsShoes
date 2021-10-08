@@ -24,8 +24,8 @@ class EditBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'desc' => 'required',
+            'name' => 'required|min:3|max:255',
+            'desc' => 'required|min:3|max:255',
         ];
     }
 

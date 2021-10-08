@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Frontend;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use App\Services\AddToCartService;
+use App\Http\Requests\AddToCartRequest;
 
 class ProductController extends Controller
 {
@@ -20,7 +23,6 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        // dd('Tuan');
         $search = $request->search;
         $sortBy = $request->sort_by;
         $order = $request->order ? 'DESC': 'ASC';
@@ -44,11 +46,17 @@ class ProductController extends Controller
         $products = $query->get();
     }
 
-    public function addToCart(Request $request)
+    public function addToCart(AddToCartRequest $request, AddToCartService $cartService)
     {
         $productId = $request->productId;
-
-        // 
+        $quantity = $request->quantity ?? 1;
+        if (session()->has('cart')) {
+            $cartService->updateCart($productId, $quantity, session('cart'));
+        } else {
+            $cart = $cartService->addToCart($productId, $quantity);
+            session(['cart' => $cart]);
+        }
+        return response()->json(['status' => 200, 'message' => 'Add to cart successfully']);
     }
     public function search_pc(Request $request){
         $keywords=$request->keywords_submit; 
