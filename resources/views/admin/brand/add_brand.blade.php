@@ -11,8 +11,8 @@
                         <form role="form" action="{{route('save-new-brand-product')}}" method="post">
                             {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Tên thương hiệu</label>
-                            <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Tên thương hiệu">
+                            <label for="exampleInputEmail1">Tên thương hiệu</label><span style="color:red;"> *</span>
+                            <input type="text" name="name" value="{{old('name')}}" class="form-control" id="exampleInputEmail1" placeholder="Tên thương hiệu">
                         </div>
                         
                         @if ($errors->has('name'))
@@ -20,8 +20,8 @@
                         @endif
 
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Mô tả thương hiệu</label>
-                            <textarea class="form-control" style="resize: none;" rows="5" name="desc" id="ckeditor6"placeholder="Mô tả thương hiệu"></textarea>
+                            <label for="exampleInputPassword1">Mô tả thương hiệu</label><span style="color:red;"> *</span>
+                            <textarea class="form-control" style="resize: none;" rows="5" name="desc" id="ckeditor6"placeholder="Mô tả thương hiệu">{{old('desc')}}</textarea>
                         </div>
 
                         @if ($errors->has('desc'))

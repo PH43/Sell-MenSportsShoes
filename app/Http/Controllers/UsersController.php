@@ -9,6 +9,7 @@ use App\Http\Requests;
 Use Auth;
 use Illuminate\Support\Facades\Redirect;
 use Session;
+use App\Http\Requests\CreateUserRequest;
 session_start();
 
 class UsersController extends Controller
@@ -72,7 +73,7 @@ class UsersController extends Controller
      public function add_users(){
         return view('admin.users.add_users');
     }
-    public function store_users(Request $request){
+    public function store_users(CreateUserRequest $request){
         $data = $request->all();
         $data['password'] = md5($request->password);
         $data['flag']=1;

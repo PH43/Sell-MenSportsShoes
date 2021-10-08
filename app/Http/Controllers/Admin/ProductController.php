@@ -63,15 +63,6 @@ class ProductController extends Controller
         $brand_product=Brand::all();
         return view('admin.product.add_product')->with(compact('cate_product','brand_product'));
     }
-
-    public function validation($request){
-        return $this->validate($request,[
-            'name' => 'required|max:255|min:2', 
-            'price' => 'required|max:50',
-            'desc' => 'required|max:255',
-            'image' => 'required|max:255',
-        ]);
-    }
     
     public function store(AddProductRequest $request)
     {
@@ -142,7 +133,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(AddProductRequest $request,$id)
     {
         // $this->validation($request);
         $data=$request->all();

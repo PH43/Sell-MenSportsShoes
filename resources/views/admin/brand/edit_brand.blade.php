@@ -22,8 +22,8 @@
                                     
                                 	{{ csrf_field() }}
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Tên danh mục</label>
-                                    <input type="text" value="{{$edit_brand->name}}"  name="name" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" >
+                                    <label for="exampleInputEmail1">Tên danh mục</label><span style="color:red;"> *</span>
+                                    <input type="text" value="{{$edit_brand->name}}"  name="name" value="{{old('name')}}" class="form-control" id="exampleInputEmail1" placeholder="Tên danh mục" >
                                 </div>
 
                                 @if ($errors->has('name'))
@@ -31,7 +31,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Mô tả danh mục</label>
+                                    <label for="exampleInputPassword1">Mô tả danh mục</label><span style="color:red;"> *</span>
                                     <textarea class="form-control"  style="resize: none;" rows="5" name="desc" id="ckeditor5" placeholder="Mô tả danh mục" >{{$edit_brand->desc}}</textarea>
                                 </div>
                                 <button type="submit" name="update_brand_product" class="btn btn-info">Cập nhập thương hiệu</button>

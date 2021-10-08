@@ -13,6 +13,9 @@ class Product extends Model
     ];
     protected $primaryKey = 'id';
     protected $table = 'products';
+    protected $casts = [
+        'price' => 'float',
+    ];
     public function brand(){
         return $this->belongsto(Brand::class,'brand_id','id');
     }

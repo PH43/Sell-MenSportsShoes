@@ -11,23 +11,21 @@
                         <form role="form" action="{{route('save-new-category-product')}}" method="post">
                             {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Tên danh mục</label>
-                            <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="Tên thương hiệu">
+                            <label for="exampleInputEmail1">Tên danh mục</label><span style="color:red;"> *</span>
+                            <input type="text" name="name" value="{{old('name')}}" class="form-control" id="exampleInputEmail1" placeholder="Tên thương hiệu">
                         </div>
 
-                        @if ($errors->has('name')){
+                        @if ($errors->has('name'))
                             <p style="color:red">{{$errors->first('name')}}</p>
-                        }
                         @endif
 
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Mô tả danh mục</label>
-                            <textarea class="form-control" style="resize: none;" rows="5" name="desc" id="ckeditor6"placeholder="Mô tả thương hiệu"></textarea>
+                            <label for="exampleInputPassword1">Mô tả danh mục</label><span style="color:red;"> *</span>
+                            <textarea class="form-control"  style="resize: none;" rows="5" name="desc" id="ckeditor6" placeholder="Mô tả thương hiệu">{{old('desc')}}</textarea>
                         </div>
                         
-                        @if ($errors->has('desc')){
+                        @if ($errors->has('desc'))
                             <p style="color:red">{{$errors->first('desc')}}</p>
-                        }
                         @endif
 
                         <button type="submit" name="add_brand_product" class="btn btn-info">Thêm danh mục</button>
