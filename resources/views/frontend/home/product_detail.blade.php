@@ -1,10 +1,9 @@
-@extends('welcome')
+@extends('home_layout')
 @section('conten') 
 <div class="product-details"><!--product-details-->
-	@foreach($details_product as $key => $value)
 	<div class="col-sm-5">
 		<div class="view-product">
-			<img src="{{URL::to('public/upload/product/'.$value->product_image)}}" alt="" />
+			<img src="{{URL::to('public/upload/product/'.$product_detail->image)}}" alt="" />
 			<h3>ZOOM</h3>
 		</div>
 		<div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -29,56 +28,59 @@
 	</div>
 	<div class="col-sm-7">
 		<div class="product-information"><!--/product-information-->
-			<img src="{{URL::to('public/frontend/images/new.jpg')}}" class="newarrival" alt="" />
-			<h2>{{$value->product_name}}</h2>
-			<p>{{$value->product_id}}</p>
-			<img src="{{URL::to('public/frontend/images/rating.png')}}" alt="" />
-
+			<!-- <img src="{{URL::to('public/frontend/images/new.jpg')}}" class="newarrival" alt="" /> -->
+			<h2>{{$product_detail->name}}</h2>
 			<form method="POST" action="{{URL::to('/home/show-cart')}}">
 				{{ csrf_field() }}
 				<!-- {{ method_field('POST') }} -->
 				<span>
-					<span>{{number_format($value->product_price).' '.'$'}}</span>
-					<label>Số lượng:</label>
-					<input name="qty" type="number" min="1" max="10" required="">
-					<input type="hidden" name="ProductId_hidden" value="{{$value->product_id}}">
+					<span>{{number_format($product_detail->price).' '.'đ'}}</span><br><br>
+
+					<label id="size">Size:</label>
+					<select style="width: 50px" name="number_size">
+						@foreach($sizes as $size )
+						<option  value="{{$size->id}}">{{$size->number_size}}</option>
+						@endforeach
+					</select>
+					<br><br>
+					<label id="size">Số lượng:</label>
+					<input name="qty" type="number" min="1" max="10" value="1" required="">
+					<input type="hidden" name="ProductId_hidden" value="{{$product_detail->id}}"><br><br>
 					<button type="submit" class="btn btn-fefault cart">
 						<i class="fa fa-shopping-cart"></i>
 						Add to cart
 					</button>
 				</span>
 			</form>
-			<p><b>Tình Trạng Sản Phẩm:</b>Còn hàng/Hết hàng</p>
-			<p><b>Điều kiện:</b>Hàng mới 100%</p>
-			<p><b>Thương hiệu sản phẩm:</b>{{$value->brand_name}}</p>
-			<p><b>Danh mục sản phẩm:</b>{{$value->category_name}}</p>
+			<p><b>Hàng mới 100%</b></p>
+			<p><b>Thương hiệu:</b><a href="">{{$product_detail->brand->name}}</a></p>
+			<p><b>Danh mục:</b><a href="">{{$product_detail->category->name}}</a></p>
 			<a href="#"><img src="{{URL::to('public/frontend/images/share.png')}}" class="share img-responsive"  alt="" /></a>
 		</div><!--/product-information-->
 	</div>
-	@endforeach
 </div><!--/product-details-->
 
 <div class="category-tab shop-details-tab"><!--category-tab-->
 	<div class="col-sm-12">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#details" data-toggle="tab">Mô tả sản phẩm</a></li>
-			<li><a href="#companyprofile" data-toggle="tab">Chi tiết sản phẩm/Thông số kỹ thuật</a></li>
+<!-- 			<li><a href="#companyprofile" data-toggle="tab">Chi tiết sản phẩm/Thông số kỹ thuật</a></li> -->
 			<li><a href="#reviews" data-toggle="tab">Đánh giá sản phẩm</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
 		<div class="tab-pane fade active in" id="details" >
 			<div class="col-sm-7">
-				<p>{!!$value->product_desc!!}</p>
+				<h2 id="desc">{!!$product_detail->desc!!}</h2>
 			</div> 
 		</div> 
 
 		
-		<div class="tab-pane fade " id="companyprofile" >
+		<!-- <div class="tab-pane fade " id="companyprofile" >
 			<div class="col-sm-7">
-				<p>{!!$value->product_content!!}</p>
+				<p>  </p>
 			</div> 
-		</div>
+		</div> -->
 				
 		<div class="tab-pane fade" id="reviews" >
 			<div class="col-sm-12">
@@ -118,10 +120,10 @@
                     <div class="prod-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
-                                <a href="{{URL::to('home/chi-tiet-sp/'.$lienquan->product_id)}}">
-                                <img height="200" src="{{URL::to('public/upload/product/'.$lienquan->product_image)}}" alt="" /></a>
-                                <h2>{{number_format($lienquan->product_price).' $'}}</h2>
-                                <p>{{$lienquan->product_name}}</p>
+                                <a href="{{route('home.product-detail',$lienquan->id)}}">
+                                <img height="200" src="{{URL::to('public/upload/product/'.$lienquan->image)}}" alt="" /></a>
+                                <h2>{{number_format($lienquan->price).' đ'}}</h2>
+                                <p>{{$lienquan->name}}</p>
                                 <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                         </div>
@@ -132,12 +134,7 @@
 			</div>		
 			@endforeach
 		</div>
-		 <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-			<i class="fa fa-angle-left"></i>
-		  </a>
-		  <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-			<i class="fa fa-angle-right"></i>
-		  </a>			
+		 {!!$product_lienquan->render()!!}			
 	</div>
 </div><!--/recommended_items-->
 @endsection

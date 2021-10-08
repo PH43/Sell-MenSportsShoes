@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Product;
+use App\Category;
+use App\Brand;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -58,6 +60,25 @@ class ProductController extends Controller
             return view('frontend.search.search')->with(compact('search_product'));
         }else{
             Redirect::to('/');
+        }
+    }
+    public function show_product_brand($id){
+        $products=Brand::findorfail($id)->join('products','products.brand_id','=','brands.id')->Where('brands.id',$id)->Where('products.status',1)->paginate(6);
+        $name=Brand::findorfail($id);
+        if($products){
+            return view('frontend.brand.show_product_brand')->with(compact('products','name')) ;
+        }else{
+            return view('frontend.erros.erros');
+        }
+        
+    }
+    public function show_product_category($id){
+        $products=Category::findorfail($id)->join('products','products.category_id','=','categories.id')->Where('categories.id',$id)->Where('products.status',1)->paginate(6);
+        $name=Category::findorfail($id);
+        if($products){
+            return view('frontend.category.show_product_category')->with(compact('products','name')) ;
+        }else{
+            return view('frontend.erros.erros');
         }
     }
 
