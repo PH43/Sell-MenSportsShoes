@@ -81,10 +81,10 @@ Route::group(['prefix' => 'admin'], function() {
 Route::namespace('Frontend')->group(function() {
    Route::get('/', 'HomeController@index')->name('frontend.home');
    Route::group(['prefix' => 'home'], function() {
-      Route::get('/product-detail', 'HomeController@product_detail')->name('home.product-detail');
-      Route::get('/show-product-category/{id}', 'HomeController@show_product_category')->name('home.show-product-category');
+      Route::get('/product-detail/{id}', 'HomeController@product_detail')->name('home.product-detail');
+      Route::get('/show-product-category/{id}', 'ProductController@show_product_category')->name('home.show-product-category');
 
-      Route::get('/show-product-brand/{id}', 'HomeController@show_product_category')->name('home.show-product-brand');
+      Route::get('/show-product-brand/{id}', 'ProductController@show_product_brand')->name('home.show-product-brand');
 
       Route::get('/login-register_customer', 'HomeController@login_register_customer')->name('home.login-register-customer');
 

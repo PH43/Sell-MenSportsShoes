@@ -1289,7 +1289,7 @@ h2.title {
   font-family: 'Roboto', sans-serif;
   font-size: 15px;
   margin-bottom: 10px;
-  margin-left: 20px;
+  margin-left: 4px;
 }
 
 
@@ -2527,4 +2527,11 @@ background: #8b5c7e url(../images/search-icon.png) no-repeat 10px 8px;
     padding: 0 5px 0 30px;
     color: #fff;
     border-radius: 100px;
+}
+#size {
+    color: black;
+    font-size: 20px;
+}
+#desc{
+  font-size: 18px;
 }
