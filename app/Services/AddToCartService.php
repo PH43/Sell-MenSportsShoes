@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Services;
+
+use App\Product;
+use App\Cart;
+use App\CartItem;
+
+class AddToCartService
+{
+    public function addToCart($productId, $quantity = 1)
+    {
+        $product = Product::find($productId);
+        $cart = Cart::create([
+            'subtotal' => $product->price,
+            'total' => $product->price,
+        ]);
+        $cartItems = CartItem::create([
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => $quantity,
+        ]);
+        return $cart;
+    }
+
+    public function updateCart($productId, $quantity = 1, $cart)
+    {
+        
+        $cartItems = $cart->cartItems;
+        foreach ($cartItems as $item) {
+            if ($item->product_id == $productId) {
+                // Update quantity
+                $item->update([
+                    'quantity' => $item->quantity + $quantity,
+                ]);
+                $cart->update([
+                    'subtotal' => $cart->subtotal + ($item->price * $quantity),
+                    'total' => $item->total + ($item->price * $quantity),
+                ]);
+                break;
+            } else {
+                $product = Product::find($productId);
+                CartItem::create([
+                    'cart_id' => $cart->id,
+                    'product_id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->price,
+                    'quantity' => $quantity,
+                ]);
+                break;
+            }
+        }
+    }
+}

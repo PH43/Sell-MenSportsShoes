@@ -74,7 +74,17 @@
                                 
                                <!--  <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-lock"></i>Checkout-TT</a></li> -->
                                 
-                                <li><a href="{{URL::to('/home/show')}}"><i class="fa fa-shopping-cart"></i>Giỏ Hàng</a></li>
+                                <li><a href="{{URL::to('/home/show')}}"><i class="fa fa-shopping-cart"></i>Giỏ Hàng
+                                    (<span class="" id="cartQuantity">
+
+
+                                        @if(session()->has('cart'))
+                                        {{ session('cart')->cartItems->sum('quantity') }}
+                                        @else
+                                        0
+                                        @endif
+                                        </span>)
+                                </a></li>
                                 
                                  
                               <!--   <li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i>Logout</a></li> -->
@@ -486,6 +496,7 @@
     
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('public/js/add-to-cart.js') }}"> </script>
 </body>
 </html>

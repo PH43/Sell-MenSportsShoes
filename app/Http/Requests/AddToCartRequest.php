@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateBrandRequest extends FormRequest
+class AddToCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,17 +24,14 @@ class CreateBrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:brands,name|min:3|max:255',
-            'desc' => 'required|min:3|max:255',
+            'quantity' => 'required|min:1|max:10',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Bạn chưa nhập Thương Hiệu',
-            'name.unique' => 'Thương Hiệu này đã tồn tại',
-            'desc.required' => 'Bạn chưa nhập Mô Tả',
+            'quantity.required' => 'Bạn chưa nhập nhập số lượng',
         ];
     }
 }
