@@ -124,7 +124,7 @@
                                 <img height="200" src="{{URL::to('public/upload/product/'.$lienquan->image)}}" alt="" /></a>
                                 <h2>{{number_format($lienquan->price).' đ'}}</h2>
                                 <p>{{$lienquan->name}}</p>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                <a href="{{route('home.add-to-cart',$product->id)}}" class="btn btn-default add-to-cart" data-product-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                             </div>
                         </div>
                     </div>

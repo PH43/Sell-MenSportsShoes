@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('brand_id')->references('id')->on('brands');
             $table->string('image');
+            $table->integer('inventory')->default(1);
             $table->timestamps();
         });
     }

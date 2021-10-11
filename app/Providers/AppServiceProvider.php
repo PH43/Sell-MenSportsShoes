@@ -3,6 +3,7 @@
 namespace App\Providers;
 use App\Brand;
 use App\Category;
+use App\Cart;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,7 +28,8 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('home_layout', function($view){
         $cate_product=Category::orderBy('id','desc')->get();
         $brand_product=Brand::orderBy('id','desc')->get();
-        $view->with(compact('brand_product','cate_product'));
+        $cart = Cart::all();
+        $view->with(compact('brand_product','cate_product','cart'));
         });
     }
 }

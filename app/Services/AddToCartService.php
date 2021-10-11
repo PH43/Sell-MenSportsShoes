@@ -11,6 +11,8 @@ class AddToCartService
     public function addToCart($productId, $quantity = 1)
     {
         $product = Product::find($productId);
+        // $subtotal += $product->price * $quantity;
+        // $total += $product->price * $quantity;
         $cart = Cart::create([
             'subtotal' => $product->price,
             'total' => $product->price,
@@ -28,7 +30,7 @@ class AddToCartService
     public function updateCart($productId, $quantity = 1, $cart)
     {
         
-        $cartItems = $cart->cartItems;
+        $cartItems = $cart->cartItems()->get();
         foreach ($cartItems as $item) {
             if ($item->product_id == $productId) {
                 // Update quantity

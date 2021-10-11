@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use App\Services\AddToCartService;
 use App\Http\Requests\AddToCartRequest;
+use App\Cart;
 
 class ProductController extends Controller
 {
@@ -52,13 +53,17 @@ class ProductController extends Controller
     {
         $productId = $request->productId;
         $quantity = $request->quantity ?? 1;
-        if (session()->has('cart')) {
-            $cartService->updateCart($productId, $quantity, session('cart'));
-        } else {
-            $cart = $cartService->addToCart($productId, $quantity);
-            session(['cart' => $cart]);
-        }
-        return response()->json(['status' => 200, 'message' => 'Add to cart successfully']);
+        $product = Product::find($productId);
+        // if ($product->inventory > 1) {
+            if (session()->has('cart')) {
+                $cartService->updateCart($productId, $quantity, session('cart'));
+            } else {
+                $cart = $cartService->addToCart($productId, $quantity);
+                session(['cart' => $cart]);
+            }
+            return response()->json(['status' => 200, 'message' => 'Add to cart successfully']);
+        // }
+        // return response()->json(['status' => 201, 'message' => 'San pham ko du trong kho']);
     }
     public function search_pc(Request $request){
         $keywords=$request->keywords_submit; 
@@ -70,7 +75,14 @@ class ProductController extends Controller
             Redirect::to('/');
         }
     }
-    public function show_product_brand($id){
+
+    public function show_cart()
+    {
+        $cart = session('cart');
+        return view('frontend.cart.cart')->with(compact('cart'));   
+    }
+    
+        public function show_product_brand($id){
         $products=Brand::findorfail($id)->join('products','products.brand_id','=','brands.id')->Where('brands.id',$id)->Where('products.status',1)->paginate(6);
         $name=Brand::findorfail($id);
         if($products){

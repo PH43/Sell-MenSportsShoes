@@ -70,18 +70,22 @@
                                 
                                <!--  <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-lock"></i>Checkout-TT</a></li> -->
                                 
-
-                                <li><a href="{{URL::to('/home/show')}}"><i class="fa fa-shopping-cart"></i>Giỏ Hàng
+                                
+                                <li>
+                                @foreach ($cart as $car)    
+                                <a href="{{route('home.show-cart')}}">
+                                @endforeach     
+                                <i class="fa fa-shopping-cart"></i>Giỏ Hàng
                                     (<span class="" id="cartQuantity">
 
-
                                         @if(session()->has('cart'))
-                                        {{ session('cart')->cartItems->sum('quantity') }}
+                                        {{ session('cart')->cartItems()->sum('quantity') }}
                                         @else
                                         0
                                         @endif
                                         </span>)
-                                </a></li>    
+                                </a></li>
+                               
                                 
                                 @if( (Auth::user()) or Session::get('customer_id') )
                                     <li><a href="{{route('home.logout-customer',Auth::id())}}"><i class="fa fa-lock"></i>Đăng xuất</a></li>
