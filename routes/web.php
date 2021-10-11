@@ -95,8 +95,18 @@ Route::namespace('Frontend')->group(function() {
       Route::post('/login-customer', 'HomeController@login_customer')->name('home.login-customer');
 
       Route::post('/add-to-cart', 'ProductController@addToCart')->name('home.add-to-cart');
+      Route::get('/cart', 'ProductController@show_cart')->name('home.show-cart');
    });
 });
 
 
 Route::get('/products', [ProductController::class, 'search']);
+
+// Route::get('test', function() {
+//    $cart = session('cart');
+//    dd($cart->cartItems()->get());
+// });
+
+Route::get('test', function() {
+   session()->forget('cart');
+});

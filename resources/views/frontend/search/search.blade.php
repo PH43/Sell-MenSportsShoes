@@ -12,7 +12,7 @@
                                             <img height="200" src="{{URL::to('public/upload/product/'.$product->image)}}" alt="" /></a>
                                             <h2>{{number_format($product->price).' đ'}}</h2>
                                             <p>{{$product->name}}</p>
-                                            <a href="{{route('home.add-to-cart',$product->id)}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a href="{{route('home.add-to-cart',$product->id)}}" class="btn btn-default add-to-cart" data-product-id="{{ $product->id }}"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                         </div>
                                 </div>
                                 <div class="choose">

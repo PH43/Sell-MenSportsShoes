@@ -11,7 +11,7 @@ $(document).ready(function() {
         let productId =$(this).data('product-id');
         let quantity = $('#quantity').val() ? $('#quantity').val() : 1;
         $.ajax({
-            url: '/product/add-to-cart',
+            url: '/home/add-to-cart',
             method: 'POST',
             data: {
                 productId,
@@ -19,9 +19,13 @@ $(document).ready(function() {
             },
             success: function(data) {
                 console.log(data);
-                swal({icon: "success", title: "Thông báo!", text: "Đã thêm sản phẩm vào giỏ hàng thành công!"});
-                let currentQuantity = $('#cartQuantity').text();
-                $('#cartQuantity').text(parseInt(currentQuantity) + parseInt(quantity));
+                if (data.status == 200) {
+                    swal({icon: "success", title: "Thông báo!", text: data.message});
+                    let currentQuantity = $('#cartQuantity').text();
+                    $('#cartQuantity').text(parseInt(currentQuantity) + parseInt(quantity));
+                } else {
+                    swal({icon: "warning", title: "Thông báo!", text: data.message});
+                }
             },
             error: function(err) {
                 console.log({err});
