@@ -62,7 +62,10 @@ class HomeController extends Controller
         $data['password'] = md5($data['password']);
         // DB::table('users')->insertGetId($data);
         $id=Users::insertGetId($data);
+        $name=Users::findorfail($id);
+        // dd($name);
         Session::put('customer_id',$id);
+        Session::put('customer_name',$name->name);
         if ($id) {
             return redirect('/');
         }else{
@@ -85,6 +88,7 @@ class HomeController extends Controller
     public function logout(){
         Auth::logout();
         Session::put('customer_id',null);
+        Session::put('customer_name',null);
         return Redirect::to('/');
     }
 }

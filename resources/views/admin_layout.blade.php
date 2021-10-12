@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{asset('backend/css/bootstrap.min.css')}}" >
@@ -128,6 +129,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
+                        <span>Bình luân</span>
+                    </a>
+                    <ul class="sub">
+						<li><a href="{{route('admin.show-list-comment')}}">Liệt kê bình luận</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
                         <span>Đơn hàng</span>
                     </a>
                     <ul class="sub">
@@ -165,7 +175,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <!-- footer -->
 		  <div class="footer">
 			<div class="wthree-copyright">
-			  <p>© 2017 Visitors. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+			  <p>© 2021 Hello Phạm Văn Cường <a href="http://w3layouts.com">W3layouts</a></p>
 			</div>
 		  </div>
   <!-- / footer -->
@@ -199,6 +209,51 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	    CKEDITOR.replace('ckeditor7');
 	</script>
 
+<script type="text/javascript">
+    $('.comment_duyet_btn').click(function(){
+        var status = $(this).data('status');
+
+        var id = $(this).data('comment_id');
+        var product_id = $(this).attr('id');
+        if(status==0){
+            var alert = 'Thay đổi thành duyệt thành công';
+        }else{
+            var alert = 'Thay đổi thành bỏ duyệt thành công';
+        }
+          $.ajax({
+                url:"{{url('/admin/allow-comments')}}",
+                method:"POST",
+
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{status:status,id:id,product_id:product_id},
+                success:function(data){
+                    location.reload();
+                   $('#notify_comment').html('<span class="text text-alert">'+alert+'</span>');
+                }
+            });
+    });
+    $('.btn-reply-comment').click(function(){
+        var id = $(this).data('comment_id');
+        var desc = $('.reply_comment_'+id).val();
+        var product_id = $(this).data('product_id');
+          $.ajax({
+                url:"{{url('/admin/reply-comment')}}",
+                method:"POST",
+
+                headers:{
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data:{desc:desc,id:id,product_id:product_id},
+                success:function(data){
+                    location.reload();
+                    $('.reply_comment_'+id).val('');
+                   $('#notify_comment').html('<span class="text text-alert">Trả lời bình luận thành công</span>');
+                }
+            });
+    });
+</script>
 
 <script src="{{asset('backend/js/jquery.scrollTo.js')}}"></script>
 <!-- morris JavaScript -->	

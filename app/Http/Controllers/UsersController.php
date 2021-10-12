@@ -54,7 +54,6 @@ class UsersController extends Controller
         if(Auth::id()==$request->admin_id){
             return redirect()->back()->with('message','Bạn không được phân quyền chính mình');
         }
-
         $user = Users::where('email',$request->admin_email)->first();
         $user->roles()->detach();
 
@@ -80,5 +79,8 @@ class UsersController extends Controller
         Users::create($data)->roles()->attach(Roles::where('roles_name','sub_admin')->first());
         Session::put('message','Thêm users thành công');
         return Redirect::to('admin/all-users');
+    }
+     public function delete_users(){
+        // return view('admin.users.add_users');
     }
 }
