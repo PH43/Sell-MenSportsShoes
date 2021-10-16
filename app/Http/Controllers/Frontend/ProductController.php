@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use App\Services\AddToCartService;
 use App\Http\Requests\AddToCartRequest;
 use App\Cart;
+use App\CartItem;
 
 class ProductController extends Controller
 {
@@ -54,16 +55,16 @@ class ProductController extends Controller
         $productId = $request->productId;
         $quantity = $request->quantity ?? 1;
         $product = Product::find($productId);
-        // if ($product->inventory > 1) {
+        if ($product->inventory > 0 && $quantity < $product->inventory) {
             if (session()->has('cart')) {
                 $cartService->updateCart($productId, $quantity, session('cart'));
             } else {
                 $cart = $cartService->addToCart($productId, $quantity);
                 session(['cart' => $cart]);
             }
-            return response()->json(['status' => 200, 'message' => 'Add to cart successfully']);
-        // }
-        // return response()->json(['status' => 201, 'message' => 'San pham ko du trong kho']);
+            return response()->json(['status' => 200, 'message' => 'Thêm vào giỏ hàng thành công!']);
+        }
+        return response()->json(['status' => 201, 'message' => 'Sản phẩm không đủ trong kho!']);
     }
     public function search_pc(Request $request){
         $keywords=$request->keywords_submit; 
@@ -175,5 +176,15 @@ class ProductController extends Controller
     //     echo $output;
 
     // }
+
+    public function delete_cart_item($id)
+    {
+        
+        $cartItem = CartItem::findorfail($id);
+        $cartItem->delete();
+     
+        // Session::put('message','Xóa Phẩm Thành Công');
+        return redirect()->back()->with('message','Xóa Vật Phẩm Thành Công');
+    }
 
 }

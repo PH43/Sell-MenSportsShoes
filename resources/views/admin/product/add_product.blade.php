@@ -64,6 +64,16 @@
 			                            @endforeach
 		                       		 </select>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Số lượng trong kho:</label><span style="color:red;"> *</span>
+                                    <input type="number" name="inventory" value="{{ old('inventory') }}" class="form-control"  id="exampleInputEmail1" placeholder="Số lượng trong kho">
+                                </div>
+
+                                @if ($errors->has('inventory'))
+                                    <p style="color:red;">{{$errors->first('inventory') }}</p>
+                                @endif
+
                                 <div class="form-group">
                                 	<label for="exampleInputPassword1">Hiển thị</label>
                                     <select name="status" class="form-control input-sm m-bot15">
@@ -71,6 +81,7 @@
 			                            <option value="1">Hiện</option>
 		                       		 </select>
                                 </div>
+                                
                                 <button type="submit" name="add_product" class="btn btn-info">Thêm Sản Phẩm</button>
                             </form>
                             </div>

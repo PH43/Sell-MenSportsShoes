@@ -45,42 +45,56 @@ Route::group(['prefix' => 'admin'], function() {
          Route::get('/','DashboardController@index')->name('dashboard.index'); // => admin
          Route::get('dashboard', 'DashboardController@index')->name('dashboard.dashboard'); // =>admin/dashboard
       });   
-         //admin và sub_admin đều vào dc
-         Route::group(['middleware'=>'auth.roles'], function(){
-            Route::get('all-users','UsersController@index_users');
-            //Controller trong admin
-            Route::namespace('Admin')->group(function() {
-               Route::group(['prefix' => 'category'], function() {
-                  Route::get('/show-all-category', 'CategoryController@index')->name('admin.show-category'); // =>admin/category
-                  Route::get('create-category', 'CategoryController@create')->name('admin.create-category');
-                  Route::post('save-category', 'CategoryController@store')->name('save-new-category-product');
-                  Route::get('/edit-category/{id}', 'CategoryController@edit');
-                  Route::post('/update-category/{id}', 'CategoryController@update')->name('update-category');
-                  Route::get('/delete-category/{id}', 'CategoryController@destroy')->name('delete-category');
-               }); //End Category
 
-               Route::group(['prefix' => 'brand'], function() {
-                  Route::get('/show-all-brand', 'BrandController@index')->name('admin.show-brand'); // =>admin/brand
-                  Route::get('create-brand', 'BrandController@create'); // =>admin/brand/create
-                  Route::post('save-brand', 'BrandController@store')->name('save-new-brand-product');
-                  Route::get('/edit-brand/{id}', 'BrandController@edit');
-                  Route::post('/update-brand/{id}', 'BrandController@update')->name('update-brand');
-                  Route::get('/delete-brand/{id}', 'BrandController@destroy')->name('delete-brand');
-               }); //End Brand
+      //admin và sub_admin đều vào dc
+      Route::group(['middleware'=>'auth.roles'], function(){
+         Route::get('all-users','UsersController@index_users');
+         //Controller trong admin
+         Route::namespace('Admin')->group(function() {
+            Route::group(['prefix' => 'category'], function() {
+               Route::get('/show-all-category', 'CategoryController@index')->name('admin.show-category'); // =>admin/category
+               Route::get('create-category', 'CategoryController@create')->name('admin.create-category');
+               Route::post('save-category', 'CategoryController@store')->name('save-new-category-product');
+               Route::get('/edit-category/{id}', 'CategoryController@edit');
+               Route::post('/update-category/{id}', 'CategoryController@update')->name('update-category');
+               Route::get('/delete-category/{id}', 'CategoryController@destroy')->name('delete-category');
+            }); //End Category
 
-               Route::group(['prefix' => 'product'], function() {
-                  Route::get('/show-all-product', 'ProductController@index')->name('admin.show-product'); // =>admin/product
-                  Route::get('/add-product','ProductController@create')->name('admin.add-product');
-                  Route::post('/save-product','ProductController@store')->name('admin.save-new-product');
-                  Route::get('/edit-product/{id}','ProductController@edit_product')->name('admin.edit-product');
-                  Route::post('/update-product/{id}','ProductController@update')->name('admin.update-product');
-                  Route::get('/active-product/{id}','ProductController@active_product')->name('admin.active-product');
-                  Route::get('/unactive-product/{id}','ProductController@unactive_product')->name('admin.unactive-product');
-                  Route::get('/delete-product/{id}','ProductController@destroy')->name('admin.delete-product');
-                  Route::get('/size','ProductController@size')->name('admin.size-product');
-               }); //End Product
-            }); //End các controler nằm trong thư mục Admin
-         }); //End Middelware admin và sub_admin
+            Route::group(['prefix' => 'brand'], function() {
+               Route::get('/show-all-brand', 'BrandController@index')->name('admin.show-brand'); // =>admin/brand
+               Route::get('create-brand', 'BrandController@create'); // =>admin/brand/create
+               Route::post('save-brand', 'BrandController@store')->name('save-new-brand-product');
+               Route::get('/edit-brand/{id}', 'BrandController@edit');
+               Route::post('/update-brand/{id}', 'BrandController@update')->name('update-brand');
+               Route::get('/delete-brand/{id}', 'BrandController@destroy')->name('delete-brand');
+            }); //End Brand
+
+            Route::group(['prefix' => 'product'], function() {
+               Route::get('/show-all-product', 'ProductController@index')->name('admin.show-product'); // =>admin/product
+               Route::get('/add-product','ProductController@create')->name('admin.add-product');
+               Route::post('/save-product','ProductController@store')->name('admin.save-new-product');
+               Route::get('/edit-product/{id}','ProductController@edit_product')->name('admin.edit-product');
+               Route::post('/update-product/{id}','ProductController@update')->name('admin.update-product');
+               Route::get('/active-product/{id}','ProductController@active_product')->name('admin.active-product');
+               Route::get('/unactive-product/{id}','ProductController@unactive_product')->name('admin.unactive-product');
+               Route::get('/delete-product/{id}','ProductController@destroy')->name('admin.delete-product');
+               Route::get('/size','ProductController@size')->name('admin.size-product');
+            }); //End Product
+
+            Route::group(['prefix' => 'order'], function() {
+               Route::get('/show-all-order', 'OrderController@index')->name('admin.show-order'); 
+               Route::get('/order-detail/{order}', 'OrderController@edit')->name('admin.order-detail'); // =>admin/product
+               Route::get('/update/{id}', 'OrderController@update')->name('admin.update-order');
+               
+               Route::get('/active-order/{id}','ProductController@active_order')->name('admin.active-order');
+               Route::get('/unactive-order/{id}','ProductController@unactive_order')->name('admin.unactive-order');
+               Route::get('/delete-order/{id}','ProductController@destroy')->name('admin.delete-order');
+               
+            }); //End Order
+
+         }); //End các controler nằm trong thư mục Admin
+      }); //End Middelware admin và sub_admin
+
    }); //End Login mới vào trang Dashboard
 }); //End Trang Admin
 
@@ -105,7 +119,11 @@ Route::namespace('Frontend')->group(function() {
 
 
       Route::post('/add-to-cart', 'ProductController@addToCart')->name('home.add-to-cart');
+      Route::get('/delete-cart-item/{id}', 'ProductController@delete_cart_item')->name('home.delete_cart_item');
       Route::get('/cart', 'ProductController@show_cart')->name('home.show-cart');
+      
+      Route::get('/orders', 'OrderController@create')->name('orders.create');
+      Route::post('/orders', 'OrderController@store')->name('orders.store');
    });
 });
 //comment người dùng
@@ -118,9 +136,13 @@ Route::get('/products', [ProductController::class, 'search']);
 
 // Route::get('test', function() {
 //    $cart = session('cart');
-//    dd($cart->cartItems()->get());
+//    // dd($cart->cartItems()->get()->toArray());
+//    dd($cart->toArray());
 // });
 
-Route::get('test', function() {
-   session()->forget('cart');
-});
+// Route::get('test', function() {
+//    // $cart = session('cart')
+//    // session()->forget('cart');
+//    dd(session('cart')->id);
+// });
+

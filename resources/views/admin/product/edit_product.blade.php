@@ -73,6 +73,15 @@
                                     @endforeach
                                  </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Số lượngs trong kho:</label><span style="color:red;"> *</span>
+                                <input type="text" name="inventory" value="{{$edit_product->inventory}}" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm trong kho ">
+                            </div>
+
+                            @if ($errors->has('inventory'))
+                                <p style="color:red;">{{$errors->first('inventory') }}</p>
+                            @endif
                             <button type="submit" name="update_product" class="btn btn-info">Cập nhập sản phẩm</button>
                         </form>
                         </div>
