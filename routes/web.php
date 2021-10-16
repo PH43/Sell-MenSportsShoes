@@ -25,18 +25,27 @@ Route::group(['prefix' => 'admin'], function() {
 
    //Middelware khi login mới dc vào
    Route::group(['middleware'=>'admin_login'], function() {
-
+       
       //Users và phân quyền chỉ có Admin mới dc quyền này
       Route::group(['middleware'=>'admin.roles'],function(){
          Route::post('assign-roles','UsersController@assign_roles')->name('admin.assign');
          Route::get('delete-user-roles/{id}','UsersController@delete_user_roles');
          Route::get('add-users','UsersController@add_users');
          Route::post('store-users','UsersController@store_users')->name('save-add-users');
+         //comment
+         Route::get('list-comments','CommentsController@list_comment')->name('admin.show-list-comment');
+         // Route::get('list-comments','CommentsController@list_comment')->name('admin.list-comments');
+         // Route::get('list-comments','CommentsController@list_comment')->name('admin.list-comments');
+         Route::post('allow-comments','CommentsController@allow_comment')->name('admin.allow-comments');
+         Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
+         Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
       });
+
       Route::namespace('Admin')->group(function() {
          Route::get('/','DashboardController@index')->name('dashboard.index'); // => admin
          Route::get('dashboard', 'DashboardController@index')->name('dashboard.dashboard'); // =>admin/dashboard
       });   
+
       //admin và sub_admin đều vào dc
       Route::group(['middleware'=>'auth.roles'], function(){
          Route::get('all-users','UsersController@index_users');
@@ -85,6 +94,7 @@ Route::group(['prefix' => 'admin'], function() {
 
          }); //End các controler nằm trong thư mục Admin
       }); //End Middelware admin và sub_admin
+
    }); //End Login mới vào trang Dashboard
 }); //End Trang Admin
 
@@ -98,13 +108,15 @@ Route::namespace('Frontend')->group(function() {
 
       Route::get('/show-product-brand/{id}', 'ProductController@show_product_brand')->name('home.show-product-brand');
 
+   //login người dùng
       Route::get('/login-register_customer', 'HomeController@login_register_customer')->name('home.login-register-customer');
-
       Route::get('/logout-customer', 'HomeController@logout')->name('home.logout-customer');
-
       Route::post('/add-customer', 'HomeController@add_customer')->name('home.add-customer');
-
       Route::post('/login-customer', 'HomeController@login_customer')->name('home.login-customer');
+
+
+
+
 
       Route::post('/add-to-cart', 'ProductController@addToCart')->name('home.add-to-cart');
       Route::get('/delete-cart-item/{id}', 'ProductController@delete_cart_item')->name('home.delete_cart_item');
@@ -114,6 +126,10 @@ Route::namespace('Frontend')->group(function() {
       Route::post('/orders', 'OrderController@store')->name('orders.store');
    });
 });
+//comment người dùng
+      // Route::get('/load-comment/{id}', 'CommentsController@load_comment')->name('home.load-comments');
+      Route::post('/load-comment', 'CommentsController@load_comment')->name('home.load-comment');
+      Route::post('/send-comment', 'CommentsController@send_comment')->name('home.send-comment');
 
 
 Route::get('/products', [ProductController::class, 'search']);

@@ -53,8 +53,8 @@
 				</span>
 			</form>
 			<p><b>Hàng mới 100%</b></p>
-			<p><b>Thương hiệu:</b><a href="">{{$product_detail->brand->name}}</a></p>
-			<p><b>Danh mục:</b><a href="">{{$product_detail->category->name}}</a></p>
+			<p><b>Thương hiệu: </b><a href=""> {{$product_detail->brand->name}}</a></p>
+			<p><b>Danh mục: </b><a href=""> {{$product_detail->category->name}}</a></p>
 			<a href="#"><img src="{{URL::to('public/frontend/images/share.png')}}" class="share img-responsive"  alt="" /></a>
 		</div><!--/product-information-->
 	</div>
@@ -81,31 +81,50 @@
 				<p>  </p>
 			</div> 
 		</div> -->
-				
-		<div class="tab-pane fade" id="reviews" >
-			<div class="col-sm-12">
-				<ul>
-					<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>
-					<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>
-					<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>
-				</ul>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-				<p><b>Write Your Review</b></p>
-				
-				<form action="#">
-					<span>
-						<input type="text" placeholder="Your Name"/>
-						<input type="email" placeholder="Email Address"/>
-					</span>
-					<textarea name="" ></textarea>
-					<b>Rating: </b> <img src="images/product-details/rating.png" alt="" />
-					<button type="button" class="btn btn-default pull-right">
-						Submit
-					</button>
-				</form>
-			</div>
-		</div>
 		
+		<div class="tab-pane fade in" id="reviews" >
+								<div class="col-sm-10">
+									<ul>
+										<li><a href=""><i class="fa fa-user"></i>Admin-CTShop</a></li>
+										<li><a href=""><i class="fa fa-clock-o"></i>20:20</a></li>
+										<li><a href=""><i class="fa fa-calendar-o"></i>16.10.2021</a></li>
+									</ul>
+									<style type="text/css">
+										.style_comment {
+										    border: 1px solid #ddd;
+										    border-radius: 10px;
+										    background: #F0F0E9;
+										}
+									</style>
+									<form>
+										 @csrf
+										<input type="hidden" name="product_id" class="product_id" value="{{$product_detail->id}}">
+										 <div id="comment_show"></div>
+									</form>
+									
+									<p><b>Viết đánh giá của bạn</b></p>
+      
+									<form action="#">
+										<span>
+											@if(Auth::check())
+											<input style="width:100%;margin-left: 0" type="hidden" class="name" value="{{Auth::user()->name}}" />
+											@elseif(Session::get('customer_name'))
+
+											<input style="width:100%;margin-left: 0" type="text" class="name" value="{{Session::get('customer_name')}}" />
+											@else
+											<input style="width:100%;margin-left: 0" type="text" class="name" maxlength="100" placeholder="Tên"/>
+											@endif
+										</span>
+										<textarea name="desc" maxlength="255" class="comment_content" placeholder="Nội dung bình luận"></textarea>
+										<div id="notify_comment"></div>
+										
+										<button type="button" class="btn btn-default pull-right send-comment">
+											Gửi bình luận
+										</button>
+
+									</form>
+								</div>
+							</div>
 	</div>
 </div><!--/category-tab-->
 
