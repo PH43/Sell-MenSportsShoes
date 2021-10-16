@@ -15,9 +15,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $items = Order::paginate(20);
-        return view('admin.order.index', compact('items'));
+        $orders = Order::paginate(20);
+        return view('admin.order.show_all_order', compact('orders'));
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -59,7 +61,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return view('admin.order.edit', compact('order'));
+        // dd($order->orderItems()->get());
+        return view('admin.order.show_order_items', compact('order'));
     }
 
     /**
@@ -69,9 +72,12 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $data = $request->only('status');
+        $order = Order::findOrfail($id);
+        $order->update($data);
+        return redirect()->back()->with('message','Update Thành Công');
     }
 
     /**

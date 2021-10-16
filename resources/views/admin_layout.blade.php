@@ -131,11 +131,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Đơn hàng</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{URL::to('/manager-order')}}">Quản lý đơn hàng</a></li>
+						<li><a href="{{route('admin.show-order')}}">Quản lý đơn hàng</a></li>
                     </ul>
-                    <ul class="sub">
+                    <!-- <ul class="sub">
 						<li><a href="{{url::to('manager-order')}}">Quản lý đơn hàng</a></li>
-                    </ul>
+                    </ul> -->
                 </li>
                 <!-- kiểm tra coi id đang đăng nhập có những quyền nào -->
                 <li class="sub-menu">

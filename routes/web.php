@@ -71,6 +71,18 @@ Route::group(['prefix' => 'admin'], function() {
                Route::get('/delete-product/{id}','ProductController@destroy')->name('admin.delete-product');
                Route::get('/size','ProductController@size')->name('admin.size-product');
             }); //End Product
+
+            Route::group(['prefix' => 'order'], function() {
+               Route::get('/show-all-order', 'OrderController@index')->name('admin.show-order'); 
+               Route::get('/order-detail/{order}', 'OrderController@edit')->name('admin.order-detail'); // =>admin/product
+               Route::get('/update/{id}', 'OrderController@update')->name('admin.update-order');
+               
+               Route::get('/active-order/{id}','ProductController@active_order')->name('admin.active-order');
+               Route::get('/unactive-order/{id}','ProductController@unactive_order')->name('admin.unactive-order');
+               Route::get('/delete-order/{id}','ProductController@destroy')->name('admin.delete-order');
+               
+            }); //End Order
+
          }); //End các controler nằm trong thư mục Admin
       }); //End Middelware admin và sub_admin
    }); //End Login mới vào trang Dashboard
@@ -95,7 +107,11 @@ Route::namespace('Frontend')->group(function() {
       Route::post('/login-customer', 'HomeController@login_customer')->name('home.login-customer');
 
       Route::post('/add-to-cart', 'ProductController@addToCart')->name('home.add-to-cart');
+      Route::get('/delete-cart-item/{id}', 'ProductController@delete_cart_item')->name('home.delete_cart_item');
       Route::get('/cart', 'ProductController@show_cart')->name('home.show-cart');
+      
+      Route::get('/orders', 'OrderController@create')->name('orders.create');
+      Route::post('/orders', 'OrderController@store')->name('orders.store');
    });
 });
 
@@ -104,9 +120,13 @@ Route::get('/products', [ProductController::class, 'search']);
 
 // Route::get('test', function() {
 //    $cart = session('cart');
-//    dd($cart->cartItems()->get());
+//    // dd($cart->cartItems()->get()->toArray());
+//    dd($cart->toArray());
 // });
 
-Route::get('test', function() {
-   session()->forget('cart');
-});
+// Route::get('test', function() {
+//    // $cart = session('cart')
+//    // session()->forget('cart');
+//    dd(session('cart')->id);
+// });
+

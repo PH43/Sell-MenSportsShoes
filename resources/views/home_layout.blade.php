@@ -72,19 +72,17 @@
                                 
                                 
                                 <li>
-                                @foreach ($cart as $car)    
-                                <a href="{{route('home.show-cart')}}">
-                                @endforeach     
-                                <i class="fa fa-shopping-cart"></i>Giỏ Hàng
-                                    (<span class="" id="cartQuantity">
-
-                                        @if(session()->has('cart'))
-                                        {{ session('cart')->cartItems()->sum('quantity') }}
-                                        @else
-                                        0
-                                        @endif
-                                        </span>)
-                                </a></li>
+                                    <a href="{{route('home.show-cart')}}">
+                                        <i class="fa fa-shopping-cart"></i>Giỏ Hàng
+                                            (<span id="cartQuantity">
+                                                @if(session()->has('cart'))
+                                                    {{ session('cart')->cartItems()->sum('quantity') }}
+                                                @else
+                                                    0
+                                                @endif
+                                            </span>)
+                                    </a>
+                                </li>
                                
                                 
                                 @if( (Auth::user()) or Session::get('customer_id') )

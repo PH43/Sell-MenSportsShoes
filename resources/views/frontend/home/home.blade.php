@@ -1,6 +1,15 @@
 @extends('home_layout')
-@section('conten') 
+@section('conten')
+    
+
     <div class="features_items">
+    @if (session('message'))
+    <p style="color:green;"><strong>
+    @php
+        echo  session("message")
+    @endphp
+</strong></p>
+    @endif
     <!--features_items-->
         <h2 class="title text-center">Sản phẩm mới</h2>
         @foreach($products as $key => $product)

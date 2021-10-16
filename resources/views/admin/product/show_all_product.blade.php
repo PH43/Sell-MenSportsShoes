@@ -40,6 +40,7 @@
             <th>Mô tả sản phẩm</th>
             <th>Danh mục</th>
             <th>Thương hiệu</th>
+            <th>Số lượng trong kho</th>
             <th style="width:40px;" >Ẩn/Hiện</th>
             <th style="font-weight: bold;">Ngày thêm</th>
             <th style="font-weight: bold;"></th>
@@ -56,6 +57,7 @@
             <td style="vertical-align: middle;">{!!$product->desc!!}</td>
             <th style="vertical-align: middle;">{{$product->category->name}}</th>
             <th style="vertical-align: middle;">{{$product->brand->name}}</th>
+            <th style="vertical-align: middle;">{{$product->inventory}}</th>
 
             <!-- @foreach($product->size as $key => $sizes)
               <td style="vertical-align: middle;" ><input style="width: 40px" type="number" name="'size_{{$sizes->number_size}}" value="<?=  $qly=($sizes->number_size)?$sizes->pivot->quantity : 0 ?>" ></td>
