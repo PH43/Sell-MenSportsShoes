@@ -114,8 +114,14 @@
 											@else
 											<input style="width:100%;margin-left: 0" type="text" class="name" maxlength="100" placeholder="Tên"/>
 											@endif
+											@if ($errors->has('name'))
+			                                    <p style="color:red;">{{$errors->first('name') }}</p>
+			                                @endif
 										</span>
-										<textarea name="desc" maxlength="255" class="comment_content" placeholder="Nội dung bình luận"></textarea>
+										<textarea name="desc" maxlength="255" min="10" class="comment_content" required placeholder="Nội dung bình luận"></textarea>
+											@if ($errors->has('desc'))
+			                                    <p style="color:red;">{{$errors->first('desc') }}</p>
+			                                @endif
 										<div id="notify_comment"></div>
 										
 										<button type="button" class="btn btn-default pull-right send-comment">

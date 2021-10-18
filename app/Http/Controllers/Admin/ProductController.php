@@ -66,7 +66,7 @@ class ProductController extends Controller
     
     public function store(AddProductRequest $request)
     {
-        $this->validation($request);
+        // $this->validation($request);
         $data=$request->all();
         $data['category_id']=$request->category;
         $data['brand_id']=$request->brand;
@@ -92,8 +92,6 @@ class ProductController extends Controller
                 $quan=$value->pivot->quantity;
                 echo $quan;
             }
-                
-            // $retVal = (condition) ? a : b ;
         }
     }
 

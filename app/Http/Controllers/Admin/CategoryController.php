@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
+use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
@@ -36,15 +37,19 @@ class CategoryController extends Controller
         return view('admin.category.add_category');
     }
 
-    // public function validation($request){
-    //     return $this->validate($request,[
-    //         'name' => 'required|max:100|unique:categories|min:2', 
-    //         'desc' => 'required|max:255',
-    //     ]);
-    // }
+    public function validation($request){
+        return $this->validate($request,[
+            'name' => 'required|max:100|unique:categories,name|min:2', 
+            'desc' => 'required|max:255',
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên Danh mục',
+            'name.unique' => 'Danh mục này đã tồn tại',
+            'desc.required' => 'Bạn chưa nhập Mô Tả',
+        ]);
+    }
     public function store(CreateCategoryRequest $request)
     {
-        // $this->validation($request);
         $data = $request->all();
         Category::create($data);
         return redirect('/admin/category/show-all-category')->with('message','Thêm Danh Mục Mới Thành Công');
@@ -84,12 +89,28 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(EditCategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data=$request->all();
         $category=Category::findOrfail($id);
-        $category->update($data);
-        return redirect('/admin/category/show-all-category')->with('message','Update Danh Mục Thành Công');
+
+       if ($category->name==$request->name) {
+            $this->validate($request,[
+            'name' => 'required|max:100', 
+            'desc' => 'required|max:255'
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên',
+            'desc.required' => 'Bạn chưa nhập Mô tả',
+        ]);
+            $data=$request->all();
+            $category->update($data);
+            return redirect('/admin/category/show-all-category')->with('message','Update danh mục thành công');  
+        }else{
+            $this->validation($request);
+            $data=$request->all();
+            $category->update($data);
+            return redirect('/admin/category/show-all-category')->with('message','Update danh mục thành công');
+        }
     }
     /**
      * Remove the specified resource from storage.
@@ -100,7 +121,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $brand_delete=Category::findOrfail($id);
-        $brand_delete->delete();
-        return redirect()->back()->with('message','Xóa Danh Mục Thành Công');
+        $xoa=Product::where('category_id',$id)->get()->toArray();
+         if ($xoa==null) {
+            $brand_delete->delete();
+            return redirect()->back()->with('message','Xóa Danh Mục Thành Công');
+        } else {
+             return redirect()->back()->with('message','Không thể xóa Danh mục này');
+        }     
     }
 }

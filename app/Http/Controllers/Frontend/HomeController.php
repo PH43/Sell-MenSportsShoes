@@ -31,14 +31,7 @@ class HomeController extends Controller
         $product_detail = Product::findOrfail($id);
         $id_category=$product_detail->category->id;
         $sizes=Size::all();
-
-        // $product_lienquan=Category::join('product')->Where('products.status',1)->whereNotin('products.id',[$id])->get();
-        $product_lienquan=DB::table('products')
-            ->join('categories','categories.id','=','products.category_id')
-            ->where('categories.id',$id_category)
-            ->Where('products.status',1)
-            ->whereNotin('products.id',[$id])
-            ->paginate(3);
+        $product_lienquan=Product::where('category_id',$id_category)->Where('status',1)->whereNotin('id',[$id])->paginate(3);
         return view('frontend.home.product_detail')->with(compact('product_lienquan','product_detail','sizes'));
 
     }
@@ -49,21 +42,29 @@ class HomeController extends Controller
     public function validation($request){
         return $this->validate($request,[
             'name' => 'required|max:50|min:4', 
-            'phone' => 'required|max:20|min:8', 
-            'email' => 'required|email|max:60', 
-            'password' => 'required|max:225', 
+            'phone' => 'required|numeric|digits:10', 
+            'email' => 'required|email|unique:users,email|max:60', 
+            'password' => 'required|max:225|min:6',
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên thành viên',
+            'name.max' => 'Tên quá dài',
+            'email.required' => 'Bạn chưa nhập email',
+            'email.unique' => 'Email này đã tồn tại',
+            'phone.required' => 'Bạn chưa nhập số điện thoại',
+            'phone.digits' => 'Số điện thoại phải là 10 số',
+            'phone.numeric' => 'Số điện thoại không dc nhập chữ',
+            'password.required' => 'Bạn chưa nhập Mật khẩu',
+            'password.min' => 'Mật khẩu quá ngắn',
         ]);
     }
     public function add_customer(Request $request){
         $this->validation($request);
         $data = $request->except('_token');
-        // dd($data);
         $data['flag'] =0;
         $data['password'] = md5($data['password']);
-        // DB::table('users')->insertGetId($data);
         $id=Users::insertGetId($data);
         $name=Users::findorfail($id);
-        // dd($name);
         Session::put('customer_id',$id);
         Session::put('customer_name',$name->name);
         if ($id) {
@@ -77,11 +78,23 @@ class HomeController extends Controller
         $this->validate($request,[
             'email' => 'required|email|max:255', 
             'password' => 'required|max:255'
+        ],
+        [
+            'email.required' => 'Bạn chưa nhập email',
+            'password.required' => 'Bạn chưa nhập Mật khẩu',
         ]);
-        if(Auth::attempt(['email'=>$request->email,'password'=>$request->password ])){
+        
+        $email=$request->email;
+        $password=md5($request->password);
+        // dd($password);
+        $login=Users::where('email',$email)->Where('password', $password)->first();
+        if($login)
+        {
+            Session::put('customer_id',$login->id);
+            Session::put('customer_name',$login->name);
             return redirect('/');
         }else{
-            return redirect()->back()->with('message','Lỗi đăng nhập');
+            return redirect()->back()->with('message','Sai email hoặc mật khẩu');
         }
     }
 

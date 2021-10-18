@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Brand;
+use App\Product;
 use App\Http\Requests\CreateBrandRequest;
 use App\Http\Requests\EditBrandRequest;
 
@@ -45,8 +46,13 @@ class BrandController extends Controller
      */
     public function validation($request){
         return $this->validate($request,[
-            'name' => 'required|max:100|unique:brands|min:2', 
+            'name' => 'required|max:100|unique:brands,name|min:2', 
             'desc' => 'required|max:255',
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên Thương Hiệu',
+            'name.unique' => 'Thương Hiệu này đã tồn tại',
+            'desc.required' => 'Bạn chưa nhập Mô Tả',
         ]);
     }
     public function store(CreateBrandRequest $request)
@@ -67,8 +73,6 @@ class BrandController extends Controller
     public function edit($id)
     {
         $edit_brand=Brand::find($id);
-        // $ida=$edit_brand->id;
-        // dd($ida);
         if ($edit_brand) {
             return view('admin.brand.edit_brand')->with(compact('edit_brand'));
         }else{
@@ -76,31 +80,39 @@ class BrandController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(EditBrandRequest $request, $id)
+    public function update(Request $request, $id)
     {   
-        $data=$request->all();
         $brand=Brand::findOrfail($id);
-        $brand->update($data);
-        return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
+        if ($brand->name==$request->name) {
+            $this->validate($request,[
+            'name' => 'required|max:100', 
+            'desc' => 'required|max:255'
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên',
+            'desc.required' => 'Bạn chưa nhập Mô tả',
+        ]);
+            $data=$request->all();
+            $brand->update($data);
+            return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');  
+        }else{
+            $this->validation($request);
+            $data=$request->all();
+            $brand->update($data);
+            return redirect('/admin/brand/show-all-brand')->with('message','Update Thương Hiệu Thành Công');
+        }
     }  
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $brand_delete=Brand::findOrfail($id);
-        $brand_delete->delete();
-        return redirect()->back()->with('message','Xóa Thương Hiệu Thành Công');
+        $xoa=Product::where('brand_id',$id)->get()->toArray();
+        // dd($xoa);
+        if ($xoa==null) {
+            $brand_delete->delete();
+            return redirect()->back()->with('message','Xóa Thương Hiệu Thành Công');
+        } else {
+             return redirect()->back()->with('message','Không thể xóa Thương Hiệu này');
+        }
     }
 }

@@ -64,7 +64,9 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
+                                 @if( (Auth::user()) or Session::get('customer_id') )
                                 <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i>Tài Khoản</a></li>
+                                @endif
                               <!--   <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Checkout-TT</a></li> -->
 
                                 <li><a href="{{URL::to('/payment')}}"><i class="fa fa-lock"></i>Thanh Toán</a></li>
@@ -120,11 +122,14 @@
                         </div>
                     </div>
                     <div class="col-sm-5">
-                        <div class="search_box pull-right" style="width: 70%;">
+                        <div class="search_box pull-right" style="width: 55%;">
                             <form method="post" action="{{URL::to('/search')}}">
                                 {{csrf_field()}}
-                            <input style="width: 200px;" type="text" name="keywords_submit" placeholder="Nhập tên sản phẩm"/>
-                            <input type="submit" name="submit_search" class="btn btn-primary" style="margin-top:0; color: #666;width: 73px;" value="Tiềm Kiếm" >
+                            <div class="search_box">
+                                <input style="width: 170px;" type="text" name="keywords_submit" id="keywords" placeholder="Nhập tên sản phẩm"/>
+                                <div id="search_ajax"></div>
+                                <input type="submit" name="submit_search" class="btn btn-primary" style="float: right;margin-top: -35px; color: #666;width: 70px;" value="Tiềm Kiếm" >
+                             </div>
                             </form>
 
                         </div>
@@ -460,11 +465,11 @@
         CKEDITOR.replace('ckeditor1');
     </script>
     <script src="{{asset('backend/js/formValidation.min.js')}}"></script>
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
         $.validate({
 
         });
-    </script>
+    </script> -->
 
     <!-- Đánh giá sao sản phẩm -->
     <!-- <script type="text/javascript">
@@ -544,12 +549,14 @@
         $('.send-comment').click(function(){
             var product_id = $('.product_id').val();
             var name = $('.name').val();
+            var created_at=new Date();
+            // alert(created_at);
             var desc = $('.comment_content').val();
             var _token = $('input[name="_token"]').val();
             $.ajax({
               url:"{{url('/send-comment')}}",
               method:"POST",
-              data:{product_id:product_id,name:name,desc:desc, _token:_token},
+              data:{product_id:product_id,name:name,desc:desc,created_at:created_at, _token:_token},
               success:function(data){
                 
                 $('#notify_comment').html('<span class="text text-success">Thêm bình luận thành công, bình luận đang chờ duyệt</span>');
@@ -557,10 +564,39 @@
                 $('#notify_comment').fadeOut(9000);
                 // $('.name').val('');
                 $('.comment_content').val('');
+                // location.reload();
               }
             });
         });
     });
+</script>
+<script type="text/javascript">
+    $('#keywords').keyup(function(){
+        var query = $(this).val();
+
+          if(query != '')
+            {
+             var _token = $('input[name="_token"]').val();
+
+             $.ajax({
+              url:"{{url('/home/search-ajax')}}",
+              method:"POST",
+              data:{query:query, _token:_token},
+              success:function(data){
+               $('#search_ajax').fadeIn();  
+                $('#search_ajax').html(data);
+              }
+             });
+            }else{
+
+                $('#search_ajax').fadeOut();  
+            }
+    });
+
+    $(document).on('click', '.li_search_ajax', function(){  
+        $('#keywords').val($(this).text());  
+        $('#search_ajax').fadeOut();  
+    }); 
 </script>
 
     <div id="fb-root"></div>
