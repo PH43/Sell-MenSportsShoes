@@ -21,8 +21,14 @@ class UsersController extends Controller
         return $this->validate($request,[
             'name' => 'required|max:50|min:10', 
             'phone' => 'required|max:20|min:8', 
-            'email' => 'required|email|max:60', 
+            'email' => 'required|email|unique:users,email|max:60', 
             'password' => 'required|max:225', 
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên thành viên',
+            'email.required' => 'Bạn chưa nhập email',
+            'email.unique' => 'Email này đã tồn tại',
+            'password.required' => 'Bạn chưa nhập Mật khẩu',
         ]);
     }
     public function register_save(Request $request){
@@ -35,7 +41,7 @@ class UsersController extends Controller
     }
     
     public function index_users(){
-         $admin = Users::with('roles')->orderBy('id','DESC')->paginate(4);
+         $admin = Users::with('roles')->where('flag',1)->orderBy('id','DESC')->paginate(4);
         return view('admin.users.all_users')->with(compact('admin'));
     }
     public function delete_user_roles($admin_id){
@@ -76,11 +82,28 @@ class UsersController extends Controller
         $data = $request->all();
         $data['password'] = md5($request->password);
         $data['flag']=1;
-        Users::create($data)->roles()->attach(Roles::where('roles_name','sub_admin')->first());
+        Users::create($data);
         Session::put('message','Thêm users thành công');
         return Redirect::to('admin/all-users');
     }
-     public function delete_users(){
-        // return view('admin.users.add_users');
+     public function edit_users($id){
+
+        $edit_user=Users::findorfail($id);
+
+        return view('admin.users.edit_user')->with(compact('edit_user'));
+    }
+    public function update_user(Request $request,$id){
+
+        
+        $edit_user=Users::findorfail($id);
+        if ($edit_user->email== $request->email) {
+            $data=$request->all();
+            $edit_user->update($data);
+        }else{
+            $this->validation($request);
+            $data=$request->all();
+            $edit_user->save($data);
+        }
+        return Redirect::to('admin/all-users')->with('message','Update thành công');
     }
 }

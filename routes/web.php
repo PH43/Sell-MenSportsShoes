@@ -32,11 +32,11 @@ Route::group(['prefix' => 'admin'], function() {
          Route::get('delete-user-roles/{id}','UsersController@delete_user_roles');
          Route::get('add-users','UsersController@add_users');
          Route::post('store-users','UsersController@store_users')->name('save-add-users');
+         Route::get('edit-user/{id}','UsersController@edit_users')->name('admin.edit-users');
+         Route::post('update-user/{id}','UsersController@update_user')->name('admin.update-users');
          //comment
-         Route::get('list-comments','CommentsController@list_comment')->name('admin.show-list-comment');
-         // Route::get('list-comments','CommentsController@list_comment')->name('admin.list-comments');
-         // Route::get('list-comments','CommentsController@list_comment')->name('admin.list-comments');
-         Route::post('allow-comments','CommentsController@allow_comment')->name('admin.allow-comments');
+         Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comment');
+         Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
          Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
          Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
       });
@@ -91,9 +91,9 @@ Route::namespace('Frontend')->group(function() {
    Route::group(['prefix' => 'home'], function() {
       Route::get('/product-detail/{id}', 'HomeController@product_detail')->name('home.product-detail');
       Route::get('/show-product-category/{id}', 'ProductController@show_product_category')->name('home.show-product-category');
-
       Route::get('/show-product-brand/{id}', 'ProductController@show_product_brand')->name('home.show-product-brand');
-
+      //search trang frontend
+      Route::post('/search-ajax', 'ProductController@autocomplete_ajax')->name('home.search-ajax');
    //login người dùng
       Route::get('/login-register_customer', 'HomeController@login_register_customer')->name('home.login-register-customer');
       Route::get('/logout-customer', 'HomeController@logout')->name('home.logout-customer');
@@ -108,8 +108,7 @@ Route::namespace('Frontend')->group(function() {
       Route::get('/cart', 'ProductController@show_cart')->name('home.show-cart');
    });
 });
-//comment người dùng
-      // Route::get('/load-comment/{id}', 'CommentsController@load_comment')->name('home.load-comments');
+//comment trang frontend
       Route::post('/load-comment', 'CommentsController@load_comment')->name('home.load-comment');
       Route::post('/send-comment', 'CommentsController@send_comment')->name('home.send-comment');
 

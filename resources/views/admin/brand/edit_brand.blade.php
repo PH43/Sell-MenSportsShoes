@@ -34,11 +34,12 @@
                                     <label for="exampleInputPassword1">Mô tả danh mục</label><span style="color:red;"> *</span>
                                     <textarea class="form-control"  style="resize: none;" rows="5" name="desc" id="ckeditor5" placeholder="Mô tả danh mục" >{{$edit_brand->desc}}</textarea>
                                 </div>
-                                <button type="submit" name="update_brand_product" class="btn btn-info">Cập nhập thương hiệu</button>
-
                                 @if ($errors->has('desc'))
                                     <p style="color:red;">{{$errors->first('desc') }}</p>
                                 @endif
+                                <button type="submit" name="update_brand_product" class="btn btn-info">Cập nhập thương hiệu</button>
+
+                                
                             </form>
                             </div>
 

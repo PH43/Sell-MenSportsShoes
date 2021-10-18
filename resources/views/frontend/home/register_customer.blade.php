@@ -35,10 +35,22 @@
 					<h2>Đăng kí</h2>
 					<form action="{{route('home.add-customer')}}" method="post">
 						{{csrf_field()}}
-						<input type="text" placeholder="Name" name="name" required />
-						<input type="email" placeholder="Email" name="email" required />
-						<input type="text" placeholder="Phone" name="phone" required />
+						<input type="text" placeholder="Name" name="name" value="{{ old('name') }}" required />
+						@if ($errors->has('name'))
+              <p style="color:red;">{{$errors->first('name') }}</p>
+            @endif
+						<input type="email" placeholder="Email" name="email" value="{{ old('email') }}" required />
+ 						@if ($errors->has('email'))
+              <p style="color:red;">{{$errors->first('email') }}</p>
+            @endif
+						<input type="text" placeholder="Phone" name="phone" value="{{ old('phone') }}" required />
+						@if ($errors->has('phone'))
+                <p style="color:red;">{{$errors->first('phone') }}</p>
+            @endif
 						<input type="password" placeholder="Password" name="password" required />
+						@if ($errors->has('password'))
+                <p style="color:red;">{{$errors->first('password') }}</p>
+            @endif
 						<button type="submit" class="btn btn-default">Đăng kí</button>
 					</form>
 				</div><!--/sign up form-->
