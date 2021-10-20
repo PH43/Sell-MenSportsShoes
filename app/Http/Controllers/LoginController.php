@@ -23,12 +23,27 @@ class LoginController extends Controller
             'admin_email' => 'required|email|max:255', 
             'admin_password' => 'required|max:255'
         ]);
-        if(Auth::attempt(['email'=>$request->admin_email,'password'=>$request->admin_password,'flag'=>1 ])){
-            Session::put('admin_name', null);
-            return redirect('/admin/dashboard');
+
+        if (Users::where('email','=',$request->admin_email)->get()->toArray()==null) {
+            return redirect('/admin/login')->with('message','Sai Email');
         }else{
-            return redirect('/admin/login')->with('message','Lỗi đăng nhập authentication');
+            if(Users::where('password','=',md5($request->admin_password))->get()->toArray()==null){
+                return redirect('/admin/login')->with('message','Sai mật khẩu');
+            }else{
+                if(Auth::attempt(['email'=>$request->admin_email,'password'=>$request->admin_password,'flag'=>1 ])){
+                    // Session::put('admin_name', null);
+                    return redirect('/admin/dashboard');
+                }else{
+                    return redirect('/admin/login')->with('message','Bạn không có quyền đăng nhập dashboard');
+                }
+            }
         }
+        // if(Auth::attempt(['email'=>$request->admin_email,'password'=>$request->admin_password,'flag'=>1 ])){
+        //     Session::put('admin_name', null);
+        //     return redirect('/admin/dashboard');
+        // }else{
+        //     return redirect('/admin/login')->with('message','Sai mật khẩu');
+        // }
     }
 
     public function logout(){

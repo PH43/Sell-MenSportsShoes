@@ -53,8 +53,8 @@
 				</span>
 			</form>
 			<p><b>Hàng mới 100%</b></p>
-			<p><b>Thương hiệu: </b><a href=""> {{$product_detail->brand->name}}</a></p>
-			<p><b>Danh mục: </b><a href=""> {{$product_detail->category->name}}</a></p>
+			<p><b>Thương hiệu: </b><a href="{{route('home.show-product-brand',$product_detail->brand->id)}}"> {{$product_detail->brand->name}}</a></p>
+			<p><b>Danh mục: </b><a href="{{route('home.show-product-category',$product_detail->category->id)}}"> {{$product_detail->category->name}}</a></p>
 			<a href="#"><img src="{{URL::to('public/frontend/images/share.png')}}" class="share img-responsive"  alt="" /></a>
 		</div><!--/product-information-->
 	</div>
@@ -106,9 +106,7 @@
       
 									<form action="#">
 										<span>
-											@if(Auth::check())
-											<input style="width:100%;margin-left: 0" type="hidden" class="name" value="{{Auth::user()->name}}" />
-											@elseif(Session::get('customer_name'))
+											@if(Session::get('customer_name'))
 
 											<input style="width:100%;margin-left: 0" type="text" class="name" value="{{Session::get('customer_name')}}" />
 											@else

@@ -98,11 +98,15 @@ class UsersController extends Controller
         $edit_user=Users::findorfail($id);
         if ($edit_user->email== $request->email) {
             $data=$request->all();
+            $data['password'] = md5($request->password);
+            $data['flag']=1;
             $edit_user->update($data);
         }else{
             $this->validation($request);
             $data=$request->all();
-            $edit_user->save($data);
+            $data['password'] = md5($request->password);
+            $data['flag']=1;
+            $edit_user->update($data);
         }
         return Redirect::to('admin/all-users')->with('message','Update thành công');
     }

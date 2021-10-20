@@ -66,38 +66,43 @@ class ProductController extends Controller
         }
         return response()->json(['status' => 201, 'message' => 'Sản phẩm không đủ trong kho!']);
     }
+
     public function search_pc(Request $request){
-        $keywords=$request->keywords_submit; 
+        $keywords=$request->keywords_submit;
+        $search_product=Product::where('status',1)->where('name','like','%'.$keywords.'%')->orWhere('desc','like','%'.$keywords.'%')->paginate(6);
         if ($keywords!=null) {
-            $search_product=Product::where('name','like','%'.$keywords.'%')
-                ->paginate(6);
-            return view('frontend.search.search')->with(compact('search_product'));
+            if($search_product->isNotEmpty()){
+                return view('frontend.search.search')->with(compact('search_product')); 
+            }else{
+                return view('frontend.erros.search_ero');  
+            }
         }else{
-            Redirect::to('/');
+            return redirect()->back();
         }
     }
-    public function autocomplete_ajax(Request $request){
+
+    public function timkiem_ajax(Request $request){
         $data = $request->all();
         if($data['query']){
             $product = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->get();
-
-            if ($product) {
-                $output = '
+            $product_ajax = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->get()->toArray();
+            if ($product_ajax==null) {
+                $output ='
+                <ul class="dropdown-menu" style="display:block; position:relative">
+                <li class="li_search_ajax">Không tìm thấy sản phẩm </li>
+                ';
+            }
+            else{
+               $output = '
                 <ul class="dropdown-menu" style="display:block; position:relative">';
                 foreach($product as $key => $val){
                     $output .= '
-                     <li class="li_search_ajax"><img style="width:10px" src="{{'.url('/public/upload/product/',$val->image ).'}}"><a href="{{'.route('home.product-detail',$val->id ).'}}">'.$val->name.'</a></li>
+                     <li class="li_search_ajax"><img style="width:30px" src="'.url('/public/upload/product/',$val->image ).'"><a href="'.route('home.product-detail',$val->id ).'">'.$val->name.'</a></li>
                      ';      
                 } 
                 $output .= '</ul>'; 
-                
             }
-            // else{
-            //     $output ='
-            //     <ul class="dropdown-menu" style="display:block; position:relative">
-            //     <li class="li_search_ajax">Không tìm thấy</li>
-            //     ';
-            // }
+            // dd($output);
             echo $output;  
         }
     }
@@ -109,23 +114,24 @@ class ProductController extends Controller
     }
     
         public function show_product_brand($id){
-        $products=Brand::findorfail($id)->join('products','products.brand_id','=','brands.id')->Where('brands.id',$id)->Where('products.status',1)->paginate(6);
-
+        $products=Product::where('status',1)->where('brand_id',$id)->paginate(6);
         $name=Brand::findorfail($id);
-        if($products){
-            return view('frontend.brand.show_product_brand')->with(compact('products','name')) ;
-        }else{
+
+
+        if( $products->isEmpty()){
             return view('frontend.erros.erros');
-        }
-        
+        }else{
+            return view('frontend.brand.show_product_brand')->with(compact('products','name')) ;
+        } 
     }
     public function show_product_category($id){
-        $products=Category::findorfail($id)->join('products','products.category_id','=','categories.id')->Where('categories.id',$id)->Where('products.status',1)->paginate(6);
+        $products=Product::where('status',1)->where('category_id',$id)->paginate(6);
         $name=Category::findorfail($id);
-        if($products){
-            return view('frontend.category.show_product_category')->with(compact('products','name')) ;
+        if($products->isEmpty()){
+             return view('frontend.erros.erros');
         }else{
-            return view('frontend.erros.erros');
+            return view('frontend.category.show_product_category')->with(compact('products','name')) ;
+           
         }
     }
 
