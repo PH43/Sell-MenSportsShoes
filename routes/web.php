@@ -34,6 +34,10 @@ Route::group(['prefix' => 'admin'], function() {
          Route::post('store-users','UsersController@store_users')->name('save-add-users');
          Route::get('edit-user/{id}','UsersController@edit_users')->name('admin.edit-users');
          Route::post('update-user/{id}','UsersController@update_user')->name('admin.update-users');
+         //Roles
+         Route::get('add-roles','RoleController@add_roles')->name('admin.add-roles');
+         Route::get('edit-roles/{$id}','RoleController@edit_roles')->name('admin.edit-roles');
+         Route::get('delete-roles','RoleController@delete_roles')->name('admin.delete-roles');
          //comment
          Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comment');
          Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
@@ -107,7 +111,8 @@ Route::namespace('Frontend')->group(function() {
       Route::get('/show-product-category/{id}', 'ProductController@show_product_category')->name('home.show-product-category');
       Route::get('/show-product-brand/{id}', 'ProductController@show_product_brand')->name('home.show-product-brand');
       //search trang frontend
-      Route::post('/search-ajax', 'ProductController@autocomplete_ajax')->name('home.search-ajax');
+      Route::post('/search-ajax', 'ProductController@timkiem_ajax')->name('home.search-ajax');
+      Route::post('/search', 'ProductController@search_pc')->name('home.search-pc');
    //login người dùng
       Route::get('/login-register_customer', 'HomeController@login_register_customer')->name('home.login-register-customer');
       Route::get('/logout-customer', 'HomeController@logout')->name('home.logout-customer');

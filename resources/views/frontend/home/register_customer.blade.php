@@ -5,7 +5,8 @@
 	<?php
                 $message=Session::get('message');
                 if ($message) {
-                  echo '<span class="textalert">'.$message.'</span>';
+                  echo '<span style="color:red;font-size: 20px;
+   											 margin-left: 15px;" class="textalert">'.$message.'</span>';
                   Session::put('message',null);
                  } 
                  $i=1;
@@ -17,8 +18,8 @@
 					<h2>Đăng nhập tài khoản của bạn</h2>
 					<form action="{{route('home.login-customer')}}" method="post">
 						{{csrf_field()}}
-						<input type="email" placeholder="Tài khoản" required name="email" />
-						<input type="password" placeholder="Password" required name="password" />
+						<input type="email" placeholder="Tài khoản" required name="email" value="{{ old('name') }}" />
+						<input type="password" placeholder="Password" required name="password" value="{{ old('password') }}" />
 						<span>
 							<input type="checkbox" class="checkbox"> 
 							Ghi nhớ lần đăng nhập

@@ -58,7 +58,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <!-- user login dropdown start-->
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <img alt="" src="{{URL::to('backend/images/2.png')}}">
+                <img alt="" src="{{URL::to('backend/images/254537.png')}}">
                 <span class="username">
  					<?php
                         $name=Auth::user()->name;
@@ -101,7 +101,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Danh mục sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{ route('admin.create-category') }}">Thêm danh mục</a></li>
+						<!-- <li><a href="{{ route('admin.create-category') }}">Thêm danh mục</a></li> -->
 						<li><a href="{{ route('admin.show-category') }}">Liệt kê danh mục</a></li>
                     </ul>
                 </li>
@@ -112,7 +112,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Thương hiệu sản phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{URL::to('/admin/brand/create-brand')}}" >Thêm Thương Hiệu</a></li> 
+						<!-- <li><a href="{{URL::to('/admin/brand/create-brand')}}" >Thêm Thương Hiệu</a></li>  -->
 						<li><a href="{{URL::to('/admin/brand/show-all-brand')}}">Liệt Kê Thương Hiệu </a></li>
                     </ul>
                 </li>
@@ -122,7 +122,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Sản Phẩm</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{route('admin.add-product')}}">Thêm sản phẩm</a></li>
+						<!-- <li><a href="{{route('admin.add-product')}}">Thêm sản phẩm</a></li> -->
 						<li><a href="{{route('admin.show-product')}}">Liệt kê sản phẩm</a></li>
                     </ul>
                 </li>

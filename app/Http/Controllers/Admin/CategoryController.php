@@ -22,7 +22,7 @@ class CategoryController extends Controller
         if (request('search')) {
             $all_category=Category::where('name', 'like', '%'.request('search').'%')->paginate(20);
         } else {
-            $all_category=Category::paginate(20);
+            $all_category=Category::orderBy('id','DESC')->paginate(6);
         }
         return view('admin.category.show_all_category')->with(compact('all_category'));
     }

@@ -21,7 +21,7 @@ class BrandController extends Controller
         if (request('search')) {
             $all_brand=Brand::where('name', 'like', '%'.request('search').'%')->paginate(20);
         } else {
-            $all_brand=Brand::paginate(20);
+            $all_brand=Brand::orderBy('id','DESC')->paginate(6);
         }
         return view('admin.brand.show_all_brand')->with(compact('all_brand'));
     }
@@ -106,9 +106,8 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $brand_delete=Brand::findOrfail($id);
-        $xoa=Product::where('brand_id',$id)->get()->toArray();
-        // dd($xoa);
-        if ($xoa==null) {
+
+        if (Product::where('brand_id',$id)->get()->toArray()==null) {
             $brand_delete->delete();
             return redirect()->back()->with('message','Xóa Thương Hiệu Thành Công');
         } else {

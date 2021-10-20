@@ -24,6 +24,6 @@
                         </div>
                         @endforeach
                     </div><!--features_items-->
-                    {!!$products->render()!!}
+                    {!!$search_product->render()!!}
                           
 @endsection                   

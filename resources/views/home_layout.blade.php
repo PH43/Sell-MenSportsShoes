@@ -64,7 +64,7 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                 @if( (Auth::user()) or Session::get('customer_id') )
+                                 @if( Session::get('customer_id') )
                                 <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i>Tài Khoản</a></li>
                                 @endif
                               <!--   <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Checkout-TT</a></li> -->
@@ -88,7 +88,7 @@
                                 </li>
                                
                                 
-                                @if( (Auth::user()) or Session::get('customer_id') )
+                                @if( Session::get('customer_id') )
                                     <li><a href="{{route('home.logout-customer',Auth::id())}}"><i class="fa fa-lock"></i>Đăng xuất</a></li>
                                 @else
                                     <li><a href="{{route('home.login-register-customer')}}"><i class="fa fa-lock"></i>Đăng nhập</a></li>
@@ -123,12 +123,12 @@
                     </div>
                     <div class="col-sm-5">
                         <div class="search_box pull-right" style="width: 55%;">
-                            <form method="post" action="{{URL::to('/search')}}">
+                            <form method="post" action="{{URL::to('home/search')}}">
                                 {{csrf_field()}}
                             <div class="search_box">
                                 <input style="width: 170px;" type="text" name="keywords_submit" id="keywords" placeholder="Nhập tên sản phẩm"/>
                                 <div id="search_ajax"></div>
-                                <input type="submit" name="submit_search" class="btn btn-primary" style="float: right;margin-top: -35px; color: #666;width: 70px;" value="Tiềm Kiếm" >
+                                <input type="submit" name="submit_search" class="btn btn-primary" style="margin-top: -56px;margin-left: 178px; color: #666;width: 70px;" value="Tiềm Kiếm" >
                              </div>
                             </form>
 

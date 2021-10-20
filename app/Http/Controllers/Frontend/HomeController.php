@@ -29,11 +29,14 @@ class HomeController extends Controller
     }
     public function product_detail($id){
         $product_detail = Product::findOrfail($id);
-        $id_category=$product_detail->category->id;
-        $sizes=Size::all();
-        $product_lienquan=Product::where('category_id',$id_category)->Where('status',1)->whereNotin('id',[$id])->paginate(3);
-        return view('frontend.home.product_detail')->with(compact('product_lienquan','product_detail','sizes'));
-
+        if ($product_detail->status==1) {
+            $id_category=$product_detail->category->id;
+            $sizes=Size::all();
+            $product_lienquan=Product::where('category_id',$id_category)->Where('status',1)->whereNotin('id',[$id])->paginate(3);
+            return view('frontend.home.product_detail')->with(compact('product_lienquan','product_detail','sizes'));
+        }else{
+            return Redirect()->back();
+        }
     }
     
     public function login_register_customer(){
@@ -42,7 +45,7 @@ class HomeController extends Controller
     public function validation($request){
         return $this->validate($request,[
             'name' => 'required|max:50|min:4', 
-            'phone' => 'required|numeric|digits:10', 
+            'phone' => 'required|unique:users,phone|numeric|digits:10', 
             'email' => 'required|email|unique:users,email|max:60', 
             'password' => 'required|max:225|min:6',
         ],
@@ -54,6 +57,7 @@ class HomeController extends Controller
             'phone.required' => 'Bạn chưa nhập số điện thoại',
             'phone.digits' => 'Số điện thoại phải là 10 số',
             'phone.numeric' => 'Số điện thoại không dc nhập chữ',
+            'phone.unique' => 'Số điện thoại đã tồn tại',
             'password.required' => 'Bạn chưa nhập Mật khẩu',
             'password.min' => 'Mật khẩu quá ngắn',
         ]);
@@ -83,23 +87,25 @@ class HomeController extends Controller
             'email.required' => 'Bạn chưa nhập email',
             'password.required' => 'Bạn chưa nhập Mật khẩu',
         ]);
-        
         $email=$request->email;
         $password=md5($request->password);
-        // dd($password);
-        $login=Users::where('email',$email)->Where('password', $password)->first();
-        if($login)
-        {
-            Session::put('customer_id',$login->id);
-            Session::put('customer_name',$login->name);
-            return redirect('/');
+        $kiemtramail=Users::where('email','=',$email)->get()->toArray();
+        if ($kiemtramail==null) {
+            return redirect()->back()->with('message','Email không tồn tại');
         }else{
-            return redirect()->back()->with('message','Sai email hoặc mật khẩu');
+            $login=Users::where('email',$email)->Where('password', $password)->first();
+            if($login){
+                Session::put('customer_id',$login->id);
+                Session::put('customer_name',$login->name);
+                return redirect('/');
+            }else{
+                return redirect()->back()->with('message','Sai mật khẩu');
+            }
         }
     }
 
     public function logout(){
-        Auth::logout();
+        // Auth::logout();
         Session::put('customer_id',null);
         Session::put('customer_name',null);
         return Redirect::to('/');

@@ -7,7 +7,10 @@
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-4 m-b-xs">
-        <a href="{{URL::to('/admin/add-users')}}" class="btn btn-sm btn-success">Thêm User</a>         
+        <a href="{{URL::to('/admin/add-users')}}" class="btn btn-sm btn-success">Thêm Users</a>         
+      </div>
+      <div class="col-sm-4 m-b-xs">
+        <a href="{{('admin.add-roles')}}" class="btn btn-sm btn-success">Thêm Roles</a>         
       </div>
       <div class="col-sm-5">
       </div>
@@ -24,7 +27,7 @@
                       <?php
                             $message = Session::get('message');
                             if($message){
-                                echo '<span class="text-alert" >'.$message.'</span>';
+                                echo '<span style="color:red;font-size: 21px;" class="text-alert" >'.$message.'</span>';
                                 Session::put('message',null);
                             }
                             $i=1;
