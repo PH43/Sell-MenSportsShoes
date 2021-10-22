@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Brand;
 use App\Product;
+use Carbon\Carbon;
 use App\Http\Requests\CreateBrandRequest;
 use App\Http\Requests\EditBrandRequest;
 
@@ -58,7 +59,10 @@ class BrandController extends Controller
     public function store(CreateBrandRequest $request)
     {
         // $this->validation($request);
+        $time=Carbon::now();
+        // dd($time);
         $data = $request->all();
+        $data['created_at']=$time;
         Brand::create($data);
         return redirect('/admin/brand/show-all-brand')->with('message','Thêm Thương Hiệu Mới Thành Công');
     }

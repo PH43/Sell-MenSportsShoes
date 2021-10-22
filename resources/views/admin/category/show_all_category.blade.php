@@ -45,6 +45,7 @@
             <th>Tên danh mục</th>
             <th>Mô tả danh mục</th>
             <th>Ngày thêm</th>
+            <th>Ẩn/Hiện</th>
             <th style="width:30px;"></th>
           </tr>
         </thead>
@@ -55,6 +56,7 @@
             <td>{{$cate_pro->name}}</td>
             <td>{!! $cate_pro->desc !!}</td>
             <td><span class="text-ellipsis">{{$cate_pro->created_at}}</span></td>
+            <td></td>
 
             <!-- Sửa và Xóa -->
             <td>

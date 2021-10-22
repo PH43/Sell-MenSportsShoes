@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
@@ -50,7 +51,10 @@ class CategoryController extends Controller
     }
     public function store(CreateCategoryRequest $request)
     {
+        $time=Carbon::now();
         $data = $request->all();
+        $data['created_at']=$time;
+        // dd($data['created_at']);
         Category::create($data);
         return redirect('/admin/category/show-all-category')->with('message','Thêm Danh Mục Mới Thành Công');
     }
