@@ -51,7 +51,7 @@ Route::group(['prefix' => 'admin'], function() {
       });   
 
       //admin và sub_admin đều vào dc
-      Route::group(['middleware'=>'auth.roles'], function(){
+      // Route::group(['middleware'=>'auth.roles'], function(){
          Route::get('all-users','UsersController@index_users');
          //Controller trong admin
          Route::namespace('Admin')->group(function() {
@@ -82,7 +82,10 @@ Route::group(['prefix' => 'admin'], function() {
                Route::get('/active-product/{id}','ProductController@active_product')->name('admin.active-product');
                Route::get('/unactive-product/{id}','ProductController@unactive_product')->name('admin.unactive-product');
                Route::get('/delete-product/{id}','ProductController@destroy')->name('admin.delete-product');
-               Route::get('/size','ProductController@size')->name('admin.size-product');
+               Route::get('/size/{id}','ProductController@size')->name('admin.size-product');
+               Route::get('/add-size','ProductController@add_size')->name('admin.add-size');
+               Route::post('/create-new-size','ProductController@create_new_size')->name('admin.create-new-size');
+               Route::post('update-size/{id}','ProductController@update_size_quantily')->name('admin.update-size');
             }); //End Product
 
             Route::group(['prefix' => 'order'], function() {
@@ -97,7 +100,7 @@ Route::group(['prefix' => 'admin'], function() {
             }); //End Order
 
          }); //End các controler nằm trong thư mục Admin
-      }); //End Middelware admin và sub_admin
+      // }); //End Middelware admin và sub_admin
 
    }); //End Login mới vào trang Dashboard
 }); //End Trang Admin

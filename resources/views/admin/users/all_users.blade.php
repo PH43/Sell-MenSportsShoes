@@ -6,15 +6,16 @@
       Liệt kê users
     </div>
     <div class="row w3-res-tb">
-      <div class="col-sm-4 m-b-xs">
+      <div class="col-sm-2 m-b-xs">
         <a href="{{URL::to('/admin/add-users')}}" class="btn btn-sm btn-success">Thêm Users</a>         
       </div>
-      <div class="col-sm-4 m-b-xs">
+      <div class="col-sm-2 m-b-xs">
         <a href="{{('admin.add-roles')}}" class="btn btn-sm btn-success">Thêm Roles</a>         
       </div>
-      <div class="col-sm-5">
+      <div class="col-sm-4 m-b-xs">
+            
       </div>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <div class="input-group">
           <input type="text" class="input-sm form-control" placeholder="Search">
           <span class="input-group-btn">

@@ -10,6 +10,7 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddProductRequest;
 
@@ -85,14 +86,44 @@ class ProductController extends Controller
         }
     }
 
-    public function size(){
-        $product=Product::all();
-        foreach ($product as $key => $pro) {
-            foreach ($pro->size as $key => $value) {
+    public function size($id){
+        $product=Product::findOrfail($id);
+        $all_sizes=Size::all();
+            foreach ($product->size as $key => $value) {
                 $quan=$value->pivot->quantity;
-                echo $quan;
             }
-        }
+        return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
+    }
+    public function add_size(){
+        return view('admin.size.add_size');
+    }
+    public function create_new_size(Request $request){
+            $this->validate($request,[
+            'number_size' => 'required|numeric|min:1|unique:sizes,number_size'
+        ],
+        [
+            'number_size.required' => 'Bạn chưa nhập size',
+            'number_size.unique' => 'Size đã có',
+            'number_size.max' => 'Size quá dài',
+            'number_size.numeric' => 'Size là số',
+        ]);
+            $data=$request->all();
+            Size::create($data);
+            return redirect()->back()->with('message','Thêm size thành công');
+    }
+    public function update_size_quantily(Request $request,$id){
+            $product=Product::findOrfail($id);
+        //     $this->validate($request,[
+        //     'number_size' => 'required|max:10|unique:sizes,number_size'
+        // ],
+        // [
+        //     'number_size.required' => 'Bạn chưa nhập size',
+        //     'number_size.unique' => 'Size đã có',
+        //     'number_size.max' => 'Size quá dài',
+        // ]);
+        //     $data=$request->all();
+        //     Size::create($data);
+        // return Redirect()->back()->with('message','Thêm size thành công');
     }
 
     public function active_product($id)

@@ -10,7 +10,7 @@ Use Auth;
 use Illuminate\Support\Facades\Redirect;
 use Session;
 use App\Http\Requests\CreateUserRequest;
-session_start();
+
 
 class UsersController extends Controller
 {
@@ -19,7 +19,7 @@ class UsersController extends Controller
     }
     public function validation($request){
         return $this->validate($request,[
-            'name' => 'required|max:50|min:10', 
+            'name' => 'required|max:50|min:4', 
             'phone' => 'required|max:20|min:8', 
             'email' => 'required|email|unique:users,email|max:60', 
             'password' => 'required|max:225', 

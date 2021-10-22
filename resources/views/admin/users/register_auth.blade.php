@@ -33,11 +33,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	 ?>	
 		<form action="{{URL::to('/admin/register-save')}}" method="post">
 			{{ csrf_field() }}
-			<!-- nay de lay truong token ma hoa md5 -->
-			<input type="text" class="ggg" name="name" placeholder="Điền tên" required="" value="{{old('admin_name')}}">
-			<input type="email" class="ggg" name="email" placeholder="Điền email" required="">
-			<input type="number" class="ggg" name="phone" placeholder="Điền số điện thoại" required="">
-			<input type="password" class="ggg" name="password" placeholder="Điền password" required="">
+			<input type="text" class="ggg" name="name" placeholder="Điền tên" required="" value="{{old('name')}}">
+			@if ($errors->has('name'))
+              <p style="color:red;">{{$errors->first('name') }}</p>
+            @endif
+			<input type="email" class="ggg" name="email" placeholder="Điền email" value="{{old('email')}}" required="">
+			@if ($errors->has('email'))
+              <p style="color:red;">{{$errors->first('email') }}</p>
+            @endif
+			<input type="number" class="ggg" name="phone" placeholder="Điền số điện thoại" value="{{old('phone')}}" required="">
+			@if ($errors->has('phone'))
+              <p style="color:red;">{{$errors->first('phone') }}</p>
+            @endif
+			<input type="password" class="ggg" name="password" value="{{old('password')}}" placeholder="Điền password" required="">
+			@if ($errors->has('password'))
+              <p style="color:red;">{{$errors->first('password') }}</p>
+            @endif
 
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng kí" name="register">
