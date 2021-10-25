@@ -85,7 +85,10 @@ class ProductController extends Controller
             return Redirect::to('/admin/product/show-all-product');
         }
     }
-
+//Thư viện hình ảnh
+    
+//End thư viên   
+//Size sản phẩm.
     public function size($id){
         $product=Product::findOrfail($id);
         $all_sizes=Size::all();
@@ -125,7 +128,9 @@ class ProductController extends Controller
         //     Size::create($data);
         // return Redirect()->back()->with('message','Thêm size thành công');
     }
+//End Size
 
+//Status sản phẩm    
     public function active_product($id)
     {
         Product::findOrfail($id)->update(['status'=>1]);
@@ -138,7 +143,7 @@ class ProductController extends Controller
             Session::put('message','Ẩn Sản Phẩm');
             return Redirect::to('/admin/product/show-all-product'); 
     }
-
+//End Status sản phẩm
     /**
      * Show the form for editing the specified resource.
      *
@@ -152,8 +157,8 @@ class ProductController extends Controller
         $edit_product=Product::findOrfail($id);
         $namecate=$edit_product->category->name;
         return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product'));
-        
     }
+      
 
     /**
      * Update the specified resource in storage.

@@ -86,6 +86,15 @@ Route::group(['prefix' => 'admin'], function() {
                Route::get('/add-size','ProductController@add_size')->name('admin.add-size');
                Route::post('/create-new-size','ProductController@create_new_size')->name('admin.create-new-size');
                Route::post('update-size/{id}','ProductController@update_size_quantily')->name('admin.update-size');
+               //thư viên ảnh Gallery
+               Route::get('/gallery-product/{id}','GalleryController@gallery_product')->name('admin.gallery-product');
+               Route::post('/load-gallery-product','GalleryController@load_gallery')->name('admin.gallery-product');
+               Route::post('/gallery-product/{id}','GalleryController@insert_gallery')->name('admin.insert-gallery');
+               Route::post('/update-name-gallery','GalleryController@update_gallery_name')->name('admin.update-name-gallery');
+               Route::post('/delete-gallery','GalleryController@delete_gallery')->name('admin.delete-gallery');
+               Route::post('/update-image-gallery','GalleryController@update_gallery')->name('admin.update-image-gallery');
+               //end
+
             }); //End Product
 
             Route::group(['prefix' => 'order'], function() {
