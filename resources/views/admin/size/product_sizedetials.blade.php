@@ -30,14 +30,12 @@
                                     {{ csrf_field() }}
                                 @foreach($product->size as $sizes)
                                 <div class="form-group">
-                                    @foreach($all_sizes as $allsize)
-                                    <label for="exampleInputEmail1">Số size:{{$allsize->number_size}}</label>
+                                    <label for="exampleInputEmail1">Số size:{{$sizes->number_size}}</label>
                                     @if($sizes->pivot->quantity)
                                     <input type="number" name="name" value="{{$sizes->pivot->quantity}}" class="form-control" id="exampleInputEmail1" >
                                     @else
                                     <input type="number" name="name" value="0" class="form-control" id="exampleInputEmail1" >
                                     @endif
-                                    @endforeach
                                 </div>
                                 @endforeach
 

@@ -91,11 +91,11 @@ class ProductController extends Controller
 //Size sản phẩm.
     public function size($id){
         $product=Product::findOrfail($id);
-        $all_sizes=Size::all();
+        // $all_sizes=Size::all();
             foreach ($product->size as $key => $value) {
                 $quan=$value->pivot->quantity;
             }
-        return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
+        return view('admin.size.product_sizedetials')->with(compact('product'));
     }
     public function add_size(){
         return view('admin.size.add_size');
