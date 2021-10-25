@@ -36,6 +36,7 @@
             </th>
             <th>Tên sản phẩm</th>
             <th>Hình sản phẩm</th>
+            <th>Thư viện ảnh</th>
             <th>Giá</th>
             <th>Mô tả sản phẩm</th>
             <th>Danh mục</th>
@@ -53,6 +54,8 @@
             <td style="vertical-align: middle;"><a href="{{route('admin.size-product',$product->id)}}">{{$product->name}}</a></td>
 
             <th><img width="80" height="70" src="{{URL::to('/public/upload/product/'.$product->image)}}"></th>
+            <td style="vertical-align: middle;"><a href="{{route('admin.gallery-product',$product->id)}}">Thêm hình ảnh</a></td>
+
             <td style="vertical-align: middle;">{{number_format($product->price).'đ'}}</td>
             <td style="vertical-align: middle;">{!!$product->desc!!}</td>
             <th style="vertical-align: middle;">{{$product->category->name}}</th>

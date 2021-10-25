@@ -97,7 +97,7 @@ class ProductController extends Controller
                 <ul class="dropdown-menu" style="display:block; position:relative">';
                 foreach($product as $key => $val){
                     $output .= '
-                     <li class="li_search_ajax"><img style="width:30px" src="'.url('/public/upload/product/',$val->image ).'"><a href="'.route('home.product-detail',$val->id ).'">'.$val->name.'</a></li>
+                     <li class="li_search_ajax"><img style="width:50px" src="'.url('/public/upload/product/',$val->image ).'"><a style="display:inline" href="'.route('home.product-detail',$val->id ).'">'.$val->name.'</a></li>
                      ';      
                 } 
                 $output .= '</ul>'; 
