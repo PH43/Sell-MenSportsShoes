@@ -42,7 +42,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mô tả sản phẩm</label><span style="color:red;"> *</span>
-                                <textarea class="form-control" style="resize: none;" rows="5" name="product_desc" id="ckeditor2" placeholder="Mô tả sản phẩm">{{$edit_product->desc}}</textarea>
+                                <textarea class="form-control" style="resize: none;" rows="5" name="desc" id="ckeditor2" placeholder="Mô tả sản phẩm">{{$edit_product->desc}}</textarea>
                             </div>  
                             
                             @if ($errors->has('desc'))
@@ -77,6 +77,22 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Số lượngs trong kho:</label><span style="color:red;"> *</span>
                                 <input type="text" name="inventory" value="{{$edit_product->inventory}}" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm trong kho ">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control">Add Size</label>
+                                @foreach($edit_product->size as $item)
+                                <div class="row " id="demo" >
+                                    <div class="col-sm-2">
+                                    <span>Size: </span>
+                                    <p><input type="hidden" name="size[]"  class="form-control col-sm-11"  value="{{ $item->id }}">{{ $item->number_size }}</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <p>Quantity: </p>
+                                    <input type="text" class="form-control" name="quantity[]" value="{{ $item->pivot->quantity}}"
+                                    </div>
+                                    
+                                </div>
+                                @endforeach
                             </div>
 
                             @if ($errors->has('inventory'))
