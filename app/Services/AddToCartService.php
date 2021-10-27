@@ -17,6 +17,7 @@ class AddToCartService
             'subtotal' => $product->price,
             'total' => $product->price,
         ]);
+
         $cartItems = CartItem::create([
             'cart_id' => $cart->id,
             'product_id' => $product->id,
@@ -24,11 +25,23 @@ class AddToCartService
             'price' => $product->price,
             'quantity' => $quantity,
         ]);
+
+        
+        // $cart = session(['cart'=> ['subtotal' => $product->price,
+        //                             'total' => $product->price]]);
+        
+        // $cartItems = session(['cartItems'=> ['cart_id' => $cart->id,
+        //                                     'product_id' => $product->id,
+        //                                     'name' => $product->name,
+        //                                     'price' => $product->price,
+        //                                     'quantity' => $quantity]]);
         return $cart;
     }
 
     public function updateCart($productId, $quantity = 1, $cart)
     {
+        
+
         
         $cartItems = $cart->cartItems()->get();
         foreach ($cartItems as $item) {
@@ -55,4 +68,23 @@ class AddToCartService
             }
         }
     }
+
+    // $cartItems = $cart->cartItems()->get();
+        // foreach ($cartItems as $item) {
+        //     if ($item->product_id == $productId) {
+        //         // Update quantity
+        //         $item->quantity = ($item->quantity + $quantity);
+        //         $cart->subtotal = $cart->subtotal + ($item->price * $quantity);
+        //         $cart->total = $item->total + ($item->price * $quantity);
+        //         break;
+        //     } else {
+        //         $product = Product::find($productId);
+        //         session(['cartItems'=> ['cart_id' => $cart->id,
+        //                                 'product_id' => $product->id,
+        //                                 'name' => $product->name,
+        //                                 'price' => $product->price,
+        //                                 'quantity' => $quantity]]);
+        //         break;
+        //     }
+        // }
 }
