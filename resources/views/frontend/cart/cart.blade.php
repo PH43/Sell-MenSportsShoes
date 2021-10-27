@@ -43,16 +43,14 @@
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<a class="cart_quantity_up" href=""> + </a>
-									<input class="cart_quantity_input" type="text" name="quantity" value="{{$cartItem->quantity}}" autocomplete="off" size="2">
-									<a class="cart_quantity_down" href=""> - </a>
+									<span class="cart_quantity_up" data-cart-item-id="{{ $cartItem->id }}" data-selector="up"> + </span>
+									<input class="cart_quantity_input-{{ $cartItem->id }}" type="text" name="quantity" value="{{$cartItem->quantity}}" autocomplete="off" size="2">
+									<span class="cart_quantity_down"  data-cart-item-id="{{ $cartItem->id }}" data-selector="down"> - </span>
 								</div>
 							</td>
-                        
-  
 							<td class="cart_total">
-                               
-								<p class="cart_total_price">{{number_format($cartItem->price * $cartItem->quantity).'  đ'}}</p>
+								<span class="cart_total_price-{{ $cartItem->id }}">{{number_format($cartItem->price * $cartItem->quantity)}}</span> <span>đ</span>
+								<input type="hidden" id="total-amount-{{ $cartItem->id }}" value="{{ $cartItem->price }}"/>
 							</td>
 
                         
@@ -156,3 +154,6 @@
 @endsection 
 	
 
+@section('scripts')
+    <script src="{{ asset('public/js/update-cart-quantity.js') }}"></script>
+@endsection 

@@ -606,5 +606,6 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('public/js/add-to-cart.js') }}"> </script>
+    @yield('scripts')
 </body>
 </html>

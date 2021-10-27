@@ -1,6 +1,7 @@
 @extends('home_layout')
 @section('conten')
 
+
 	<section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -38,6 +39,7 @@
 			@php
 			echo session("error")
 			@endphp
+
 			<div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-3">

@@ -9,7 +9,9 @@ $(document).ready(function() {
     $('.add-to-cart').click(function(e) {
         e.preventDefault();
         let productId =$(this).data('product-id');
+        console.log(productId);
         let quantity = $('#quantity').val() ? $('#quantity').val() : 1;
+        console.log(quantity);
         $.ajax({
             url: '/home/add-to-cart',
             method: 'POST',
@@ -20,6 +22,9 @@ $(document).ready(function() {
             success: function(data) {
                 console.log(data);
                 if (data.status == 200) {
+                    if ($('#product_detail_page').length > 0) {
+                        location.href = '/home/cart'
+                    }
                     swal({icon: "success", title: "Thông báo!", text: data.message});
                     let currentQuantity = $('#cartQuantity').text();
                     $('#cartQuantity').text(parseInt(currentQuantity) + parseInt(quantity));
