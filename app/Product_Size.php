@@ -12,4 +12,8 @@ class Product_Size extends Model
     ];
     protected $primaryKey = 'id';
     protected $table = 'products_sizes';
+
+    public function size(){
+        return $this->belongsTo(Size::class, 'size_id', 'id');
+    }
 }

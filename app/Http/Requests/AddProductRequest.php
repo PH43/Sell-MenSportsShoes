@@ -28,6 +28,11 @@ class AddProductRequest extends FormRequest
             'price' => 'required|min:3|max:255',
             'desc' => 'required|min:3|max:1000',
             'image' => 'required|min:3|max:255',
+            'size' => 'required|array|min:1',
+            'size.*' => 'int|exists:sizes,id',
+            'quantity' => 'required|array|min:1',
+            'quantity.*' => 'required|int'
+
         ];
     }
 
