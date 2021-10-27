@@ -33,7 +33,7 @@
 							@endphp
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href=""><img width="70px" height="70px" src="{{asset('public/upload/product/'.$cartItem->image)}}" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href="">{{$cartItem->name}}</a></h4>
@@ -43,14 +43,14 @@
 							</td>
 							<td class="cart_quantity">
 								<div class="cart_quantity_button">
-									<span class="cart_quantity_up" data-cart-item-id="{{ $cartItem->id }}" data-selector="up"> + </span>
+									<span style="cursor: pointer" class="cart_quantity_up" data-cart-item-id="{{ $cartItem->id }}" data-selector="up"> + </span>
 									<input class="cart_quantity_input-{{ $cartItem->id }}" type="text" name="quantity" value="{{$cartItem->quantity}}" autocomplete="off" size="2">
-									<span class="cart_quantity_down"  data-cart-item-id="{{ $cartItem->id }}" data-selector="down"> - </span>
+									<span style="cursor: pointer" class="cart_quantity_down"  data-cart-item-id="{{ $cartItem->id }}" data-selector="down"> - </span>
 								</div>
 							</td>
 							<td class="cart_total">
-								<span class="cart_total_price-{{ $cartItem->id }}">{{number_format($cartItem->price * $cartItem->quantity)}}</span> <span>đ</span>
-								<input type="hidden" id="total-amount-{{ $cartItem->id }}" value="{{ $cartItem->price }}"/>
+								<span class="cart-total-item cart_total_price-{{ $cartItem->id }}">{{number_format($cartItem->price * $cartItem->quantity)}}</span> <span>đ</span>
+								<input type="hidden"  id="total-amount-{{ $cartItem->id }}" value="{{ $cartItem->price }}"/>
 							</td>
 
                         
@@ -139,10 +139,10 @@
 				<div class="col-sm-6">
 					<div class="total_area">
 						<ul>
-							<li>Ước tính: <span>{{ number_format($subtotal)}}đ</span></li>
+							<li>Ước tính: <span id="amount-estimate">{{ number_format($subtotal)}}đ</span></li>
 							<!-- <li>Eco Tax <span></span></li> -->
 							<li>Phí Ship: <span>Free</span></li>
-							<li>Tổng: <span>{{ number_format($subtotal)}}đ</span></li>
+							<li>Tổng: <span id="total_cart_amount">{{ number_format($subtotal)}}đ</span></li>
 						</ul>
 							<!-- <a class="btn btn-default update" href="">Update</a> -->
 							<a class="btn btn-default check_out" href="{{route('orders.create')}}">Đặt Hàng</a>

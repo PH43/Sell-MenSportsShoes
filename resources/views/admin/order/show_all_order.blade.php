@@ -32,7 +32,7 @@
         <thead>
           <tr>
             <th style="width:10px;">
-              Stt
+              ID
             </th>
             <th>Tên</th>
             <th>Email</th>
@@ -47,7 +47,7 @@
         <tbody>
            @foreach($orders as $order) 
           <tr>
-            <td style="vertical-align: middle;"><?= $i++;  ?></td>
+            <td style="vertical-align: middle;">{{ $order->id }}</td>
 
 
             <!-- <th><img width="80" height="70" src="{{URL::to('/public/upload/order/'.$order->image)}}"></th> -->
@@ -56,7 +56,6 @@
             <th style="vertical-align: middle;">{{$order->phone}}</th>
             <th style="vertical-align: middle;">{{$order->address}}</th>
             <th style="vertical-align: middle;">{{ App\Order::ORDER_STATUS_MAPPING[($order->status)] }}</th>
-            <th style="vertical-align: middle;"></th>
         
              <!-- End Ẩn hiện -->
 
