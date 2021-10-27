@@ -15,6 +15,16 @@ $(document).ready(function() {
         let quantity = $(selector + itemId).val();
         let money = quantity * parseFloat(cart_total_price);
         $('.cart_total_price-' + itemId).text( (money.format()));
+
+        let amount = 0;
+        for(let i = 0; i < $('tr .cart-total-item').length; i++) {
+            const beforeReplace = $($('tr .cart-total-item')[i]).text();
+            const afterReplace = beforeReplace.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, '');
+            amount += parseFloat(afterReplace);
+        }
+        $('#total_cart_amount').text(amount.format() + 'đ');
+        $('#amount-estimate').text(amount.format() + 'đ');
+       
     });
 });
 

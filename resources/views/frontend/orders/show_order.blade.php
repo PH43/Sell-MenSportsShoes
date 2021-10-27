@@ -59,7 +59,7 @@
                                 @endphp
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href=""><img  width="70px" height="70px" src="{{asset('public/upload/product/'.$orderItem->image)}}" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href="">{{$orderItem->product_name}}</a></h4>
@@ -70,7 +70,7 @@
 							</td>
 							<td class="cart_quantity">
 								
-									<input class="cart_quantity_input" type="text" name="quantity" value="{{$orderItem->quantity}}" autocomplete="off" size="2">
+							<p>{{$orderItem->quantity}}</p>
 					
 								</div>
 							</td>

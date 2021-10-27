@@ -176,7 +176,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <!-- footer -->
 		  <div class="footer">
 			<div class="wthree-copyright">
-			  <p>© 2021 Hello Phạm Văn Cường <a href="http://w3layouts.com">W3layouts</a></p>
+			  <p>© 2021 Hello <strong>  {{ auth()->user()->name }} </strong> </p>
 			</div>
 		  </div>
   <!-- / footer -->
