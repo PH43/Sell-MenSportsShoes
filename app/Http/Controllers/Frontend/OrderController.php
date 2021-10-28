@@ -8,7 +8,8 @@ use Session;
 use App\User;
 use App\Order;
 use App\OrderItem;
-use App\Product;    
+use App\Product; 
+use App\Cart;   
 
 class OrderController extends Controller
 {
@@ -52,6 +53,7 @@ class OrderController extends Controller
                     'quantity' =>  $item->quantity,
                     'price' => $item->price,
                     'order_id' => $order->id,
+                    'image' => $item->image,
                 ] ;
                 $pd = Product::find($item->product_id);
 
@@ -83,7 +85,10 @@ class OrderController extends Controller
 
                 
                 session()->forget('cart');
-                 return 'Bạn đã đặt hàng thành công!';
+                $cart_delete= Cart::findOrfail($cart->id);
+                $cart_delete->delete();
+                return redirect()->route('orders.show-order', $order->id)->with(['message' => 'Bạn đã đặt hàng thành công!']);
+
             }
         } catch (\Exception $ex) {
             \DB::rollback();
@@ -103,12 +108,20 @@ class OrderController extends Controller
         //
     }
 
+    public function show_order($id)
+    {
+        $order = Order::findOrFail($id);
+        return view('frontend.orders.show_order')->with(compact('order'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    
     public function edit($id)
     {
         //

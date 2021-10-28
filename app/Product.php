@@ -9,7 +9,7 @@ class Product extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'name', 'price', 'desc','status','image','category_id','brand_id'
+        'name', 'price', 'desc','status','image','category_id','brand_id','inventory'
     ];
     protected $primaryKey = 'id';
     protected $table = 'products';

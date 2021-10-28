@@ -57,8 +57,11 @@ class ProductController extends Controller
         $product = Product::find($productId);
         if ($product->inventory > 0 && $quantity < $product->inventory) {
             if (session()->has('cart')) {
+             
+            
                 $cartService->updateCart($productId, $quantity, session('cart'));
             } else {
+             
                 $cart = $cartService->addToCart($productId, $quantity);
                 session(['cart' => $cart]);
             }

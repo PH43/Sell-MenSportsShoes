@@ -5,6 +5,7 @@ use App\Brand;
 use App\Category;
 use App\Product;
 use App\Size;
+use App\Product_Size;
 use Session;
 use DB;
 use Illuminate\Http\Request;
@@ -62,7 +63,8 @@ class ProductController extends Controller
     {
         $cate_product=Category::all();
         $brand_product=Brand::all();
-        return view('admin.product.add_product')->with(compact('cate_product','brand_product'));
+        $sizes = Size::all();
+        return view('admin.product.add_product')->with(compact('cate_product','brand_product', 'sizes'));
     }
     
     public function store(AddProductRequest $request)
@@ -73,27 +75,52 @@ class ProductController extends Controller
         $data['brand_id']=$request->brand;
         $data['status']=$request->status;
         $get_img= $request-> file('image');
-        if ($get_img) {
-            $get_img_name=$get_img->getClientOriginalName();
-            $name_img=current(explode('.',$get_img_name));
-            $new_image=$name_img.rand(0,99).'.'.$get_img->getClientOriginalExtension();
-            $get_img->move('public/upload/product',$new_image);
-            $data['image']=$new_image;
-            Product::create($data);
-        // cau lech dua du lieu vao DB;
-            Session::put('message','Thêm sản phẩm thành công');
-            return Redirect::to('/admin/product/show-all-product');
+        \DB::beginTransaction();
+        try {
+            if ($get_img) {
+                $get_img_name=$get_img->getClientOriginalName();
+                $name_img=current(explode('.',$get_img_name));
+                $new_image=$name_img.rand(0,99).'.'.$get_img->getClientOriginalExtension();
+                $get_img->move('public/upload/product',$new_image);
+                $data['image']=$new_image;
+                $product=  Product::create($data);
+                //add product size
+                $listSize = $request->size;
+                $listQuantity = $request->quantity;
+                $data = [];
+                foreach($listSize as $key => $value){
+                    $data[] = [
+                        'size_id' => $value,
+                        'product_id' => $product->id,
+                        'quantity' => $listQuantity[$key]
+                    ];
+                }
+                Product_Size::insert($data);
+            // cau lech dua du lieu vao DB;
+            \DB::commit();
+                Session::put('message','Thêm sản phẩm thành công');
+                return Redirect::to('/admin/product/show-all-product');
+            }
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return Redirect()->back()->with('message', 'erorr');
         }
+        
     }
 //Thư viện hình ảnh
     
 //End thư viên   
 //Size sản phẩm.
-    public function size($id){
-        $product=Product::findOrfail($id);
-        $all_sizes=Size::all();
+//     public function size($id){
+//         $product=Product::findOrfail($id);
+// <<<<<<< home_cuong
+//         $all_sizes=Size::all();
 
-        return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
+//         return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
+// =======
+//         $sizes=Size::all();
+//         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
+// >>>>>>> master
     }
     public function add_size(){
         return view('admin.size.add_size');
@@ -122,11 +149,30 @@ class ProductController extends Controller
             Size::create($data);
             return Redirect::back()->with('message','Thêm size thành công');
     }
-    public function update_size_quantily(Request $request,$id){
-            $product=Product::findOrfail($id);
+//     public function update_size_quantily(Request $request,$id){
+// <<<<<<< home_cuong
+//             $product=Product::findOrfail($id);
 
-        // return Redirect()->back()->with('message','Thêm size thành công');
-    }
+//         // return Redirect()->back()->with('message','Thêm size thành công');
+// =======
+//             $product = Product::findOrfail($id);
+//             $listSize = $request->size;
+//             $listQuantity = $request->quantity;
+//             // dd($listSize,$listQuantity);
+//             $data = [];
+//             foreach($listSize as $key => $value){
+//                 $data[] = [
+//                     'size_id' => $value,
+//                     'product_id' => $id,
+//                     'quantity' => $listQuantity[$key]
+//                 ];
+//             }
+//             // dd($data);
+//             Product_Size::insert($data);
+        
+//         return redirect()->back()->with('message','Thêm size thành công');
+// >>>>>>> master
+//     }
 //End Size
 
 //Status sản phẩm    
@@ -153,7 +199,8 @@ class ProductController extends Controller
     {   
         $cate_product=Category::all();
         $brand_product=Brand::all();
-        $edit_product=Product::findOrfail($id);
+        $edit_product=Product::with('size')->findOrfail($id);
+        // dd($edit_product->toArray());
         $namecate=$edit_product->category->name;
         return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product'));
     }
@@ -180,6 +227,21 @@ class ProductController extends Controller
             $get_img->move('public/upload/product',$new_image);
             $data['image']=$new_image;
             Product::findOrfail($id)->update($data);
+            //update product size
+            $listSize = $request->size;
+            $listQuantity = $request->quantity;
+            $data = [];
+            foreach($listSize as $key => $value){
+                $data = [
+                    'size_id' => $value,
+                    'product_id' => $id,
+                    'quantity' => $listQuantity[$key]
+                ];
+                Product_Size::updateOrCreate([
+                    'size_id' => $value,
+                    'product_id' => $id
+                ],$data);
+            }
             Session::put('message','Update Sản Phẩm Thành Công');
             return Redirect::to('/admin/product/show-all-product');
         }

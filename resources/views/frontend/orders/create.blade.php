@@ -1,6 +1,7 @@
 @extends('home_layout')
 @section('conten')
 
+
 	<section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -38,6 +39,7 @@
 			@php
 			echo session("error")
 			@endphp
+
 			<div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-3">
@@ -139,7 +141,7 @@
                                 @endphp
 						<tr>
 							<td class="cart_product">
-								<a href=""><img src="images/cart/one.png" alt=""></a>
+								<a href=""><img  width="70px" height="70px" src="{{asset('public/upload/product/'.$cartItem->image)}}" alt=""></a>
 							</td>
 							<td class="cart_description">
 								<h4><a href="">{{$cartItem->name}}</a></h4>

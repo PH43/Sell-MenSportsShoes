@@ -30,9 +30,8 @@
 		<div class="product-information"><!--/product-information-->
 			<!-- <img src="{{URL::to('public/frontend/images/new.jpg')}}" class="newarrival" alt="" /> -->
 			<h2>{{$product_detail->name}}</h2>
-			<form method="POST" action="{{URL::to('/home/show-cart')}}">
-				{{ csrf_field() }}
-				<!-- {{ method_field('POST') }} -->
+			<form method="POST" action="{{route('home.show-cart')}}">
+			@csrf
 				<span>
 					<span>{{number_format($product_detail->price).' '.'đ'}}</span><br><br>
 
@@ -44,9 +43,9 @@
 					</select>
 					<br><br>
 					<label id="size">Số lượng:</label>
-					<input name="qty" type="number" min="1" max="10" value="1" required="">
-					<input type="hidden" name="ProductId_hidden" value="{{$product_detail->id}}"><br><br>
-					<button type="submit" class="btn btn-fefault cart">
+					<input name="quantity" id="quantity" type="number" min="1" max="10" value="1" required="">
+					<input type="hidden" id="product_detail_page" >
+					<button type="button" class="add-to-cart"  data-product-id="{{ $product_detail->id }}">
 						<i class="fa fa-shopping-cart"></i>
 						Add to cart
 					</button>
@@ -159,6 +158,11 @@
 		</div>
 		 {!!$product_lienquan->render()!!}			
 	</div>
-</div><!--/recommended_items-->
+</div>
+
+<!--/recommended_items-->
+
+
 @endsection
+
 

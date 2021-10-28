@@ -48,11 +48,11 @@ class Order extends Model
         5 => 'Completed',
     ];
 
-    protected $casts = [
-        'total_amount' => 'float',
-        'sub_amount' => 'float',
-        'shipping_fee' => 'float',
-    ]; // 100000 => 100.000
+    // protected $casts = [
+    //     'total_amount' => 'float',
+    //     'sub_amount' => 'float',
+    //     'shipping_fee' => 'float',
+    // ]; // 100000 => 100.000
 
     public function orderItems()
     {

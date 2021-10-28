@@ -4,14 +4,11 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                           Chi Tiết Size Sản phẩm
+                           Cập nhật Size Sản phẩm
                         </header>
                        <div class="row w3-res-tb">
                           <div class="col-sm-4 m-b-xs">
-                            <a href="{{route('admin.add-size')}}" class="btn btn-sm btn-success">Thêm Size</a>         
-                          </div>
-                          <div class="col-sm-4 m-b-xs">
-                            <label>ID Sản phẩm:{{$product->id}}</label>
+                            <label>ID Sản phẩm : {{$product->name}}</label>
                           </div>
                           <div class="col-sm-4">
                           </div>
@@ -26,29 +23,30 @@
                                  $i=1;
                                ?> 
                             <div class="position-center">
-                                <form role="form" action="{{route('admin.update-size',$product->id)}}" method="post">
-                                    {{ csrf_field() }}
-                                @foreach($all_sizes as $number_size)   
-                                @foreach($product->size as $sizes)
                                 
-                                
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Số size:{{$sizes->number_size}}</label>
-                                    @if($sizes->pivot->quantity)
-                                    <input type="number" name="name" value="{{$sizes->pivot->quantity}}" class="form-control" id="exampleInputEmail1" >
-                                    @else
-                                    <input type="number" name="name" value="0" class="form-control" id="exampleInputEmail1" >
-                                    @endif
-                                </div>
-
-                                @endforeach
-                                @endforeach
-
-                                <button type="submit" name="update_size" class="btn btn-info">update size</button>
-                                </form>
                             </div>
                         </div>
                     </section>
 
             </div>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>
+
+              $(document).ready(function(){
+                $('#add').on('click', function(e){
+                  e.preventDefault();
+                  var id =$('form div').length;
+                  console.log(id);
+                  $("#demo").clone().attr('id', 'demo'+id ).insertAfter("div.row:last");
+                  // $('#demo'+id).children('div:last span').attr('id', 'demo'+id);
+                })
+
+                $(document).on('click', '#remove', function(e){
+                  e.preventDefault();
+                  if ($('form > div').length > 1){
+                    $(this).parent().parent().remove();
+                  }
+                })
+              })
+            </script>
 @endsection

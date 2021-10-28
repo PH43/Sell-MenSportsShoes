@@ -136,13 +136,14 @@ Route::namespace('Frontend')->group(function() {
 
 
 
-
+      //cart
       Route::post('/add-to-cart', 'ProductController@addToCart')->name('home.add-to-cart');
       Route::get('/delete-cart-item/{id}', 'ProductController@delete_cart_item')->name('home.delete_cart_item');
       Route::get('/cart', 'ProductController@show_cart')->name('home.show-cart');
-      
+      //order
       Route::get('/orders', 'OrderController@create')->name('orders.create');
       Route::post('/orders', 'OrderController@store')->name('orders.store');
+      Route::get('/show-order/{id}', 'OrderController@show_order')->name('orders.show-order');
    });
 });
 //comment trang frontend
@@ -152,15 +153,15 @@ Route::namespace('Frontend')->group(function() {
 
 Route::get('/products', [ProductController::class, 'search']);
 
-// Route::get('test', function() {
-//    $cart = session('cart');
-//    // dd($cart->cartItems()->get()->toArray());
-//    dd($cart->toArray());
-// });
+Route::get('test', function() {
+   $cart = session('cart');
+   dd($cart->cartItems()->get()->toArray());
+   // dd($cart->toArray());
+});
 
-// Route::get('test', function() {
-//    // $cart = session('cart')
-//    // session()->forget('cart');
-//    dd(session('cart')->id);
-// });
+Route::get('test1', function() {
+   // $cart = session('cart')
+   session()->forget('cart');
+   // dd(session('cart')->id);
+});
 
