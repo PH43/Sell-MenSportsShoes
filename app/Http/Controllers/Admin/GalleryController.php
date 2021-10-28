@@ -106,7 +106,7 @@ class GalleryController extends Controller
         }else{ 
             $output.='
                     <tr>
-                       <td colspan="4">Sản phẩm chưa thư viện ảnh</td>
+                       <td colspan="4">Sản phẩm chưa có thư viện ảnh</td>
                                        
                     </tr>
                 ';

@@ -91,14 +91,22 @@ class ProductController extends Controller
 //Size sản phẩm.
     public function size($id){
         $product=Product::findOrfail($id);
-        // $all_sizes=Size::all();
-            foreach ($product->size as $key => $value) {
-                $quan=$value->pivot->quantity;
-            }
-        return view('admin.size.product_sizedetials')->with(compact('product'));
+        $all_sizes=Size::all();
+
+        return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
     }
     public function add_size(){
         return view('admin.size.add_size');
+    }
+    public function add_qly_size(){
+        $data=array();
+        $data['product_id']=12;
+        $data['size_id']=40;
+        $data['quantity']=12;
+        DB::table('products_sizes')->insert($data);
+        // $quanly=Product::join('products_sizes','products_sizes.product_id','=','products.id')->join('sizes','products_sizes.size_id','=','sizes.id')->get()->toArray();
+        dd('thanhcong');
+
     }
     public function create_new_size(Request $request){
             $this->validate($request,[
@@ -112,20 +120,11 @@ class ProductController extends Controller
         ]);
             $data=$request->all();
             Size::create($data);
-            return redirect()->back()->with('message','Thêm size thành công');
+            return Redirect::back()->with('message','Thêm size thành công');
     }
     public function update_size_quantily(Request $request,$id){
             $product=Product::findOrfail($id);
-        //     $this->validate($request,[
-        //     'number_size' => 'required|max:10|unique:sizes,number_size'
-        // ],
-        // [
-        //     'number_size.required' => 'Bạn chưa nhập size',
-        //     'number_size.unique' => 'Size đã có',
-        //     'number_size.max' => 'Size quá dài',
-        // ]);
-        //     $data=$request->all();
-        //     Size::create($data);
+
         // return Redirect()->back()->with('message','Thêm size thành công');
     }
 //End Size

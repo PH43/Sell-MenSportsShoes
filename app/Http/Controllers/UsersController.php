@@ -44,6 +44,10 @@ class UsersController extends Controller
          $admin = Users::with('roles')->where('flag',1)->orderBy('id','DESC')->paginate(4);
         return view('admin.users.all_users')->with(compact('admin'));
     }
+    public function index_customer(){
+         $admin = Users::where('flag',0)->orderBy('id','DESC')->paginate(4);
+        return view('admin.customer.all_customer')->with(compact('admin'));
+    }
     public function delete_user_roles($admin_id){
         if(Auth::id()==$admin_id){
             return redirect()->back()->with('message','Bạn không được quyền xóa chính mình');

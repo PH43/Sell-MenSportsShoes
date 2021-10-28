@@ -28,7 +28,10 @@
                             <div class="position-center">
                                 <form role="form" action="{{route('admin.update-size',$product->id)}}" method="post">
                                     {{ csrf_field() }}
+                                @foreach($all_sizes as $number_size)   
                                 @foreach($product->size as $sizes)
+                                
+                                
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Số size:{{$sizes->number_size}}</label>
                                     @if($sizes->pivot->quantity)
@@ -37,6 +40,8 @@
                                     <input type="number" name="name" value="0" class="form-control" id="exampleInputEmail1" >
                                     @endif
                                 </div>
+
+                                @endforeach
                                 @endforeach
 
                                 <button type="submit" name="update_size" class="btn btn-info">update size</button>

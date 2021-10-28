@@ -24,10 +24,10 @@ class LoginController extends Controller
             'admin_password' => 'required|max:255'
         ]);
 
-        if (Users::where('email','=',$request->admin_email)->get()->toArray()==null) {
+        if (Users::where('email','=',$request->admin_email)->isEmpty()) {
             return redirect('/admin/login')->with('message','Sai Email');
         }else{
-            if(Users::where('password','=',md5($request->admin_password))->get()->toArray()==null){
+            if(Users::where('password','=',md5($request->admin_password))->isEmpty()){
                 return redirect('/admin/login')->with('message','Sai mật khẩu');
             }else{
                 if(Auth::attempt(['email'=>$request->admin_email,'password'=>$request->admin_password,'flag'=>1 ])){

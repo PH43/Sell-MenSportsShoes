@@ -66,18 +66,15 @@
               <td style="vertical-align: middle;" ><input style="width: 40px" type="number" name="'size_{{$sizes->number_size}}" value="<?=  $qly=($sizes->number_size)?$sizes->pivot->quantity : 0 ?>" ></td>
             @endforeach -->
 
-
-
-
             <!-- Ẩn hiện -->
 	            <td style="vertical-align: middle;"><span class="text-ellipsis">
 	              <?php 
 	                if ($product->status == 0) {
 	              ?>    
-	                  <a href="{{route('admin.active-product',$product->id)}}"><span class="fa fa-thumb-styling fa fa-thumbs-down"></span></a>
+	                  <a href="{{route('admin.active-product',$product->id)}}"><span style="padding:3px" class="btn-danger">Ẩn</span></a>
 
 	              <?php  } else { ?>
-	              <a href="{{route('admin.unactive-product',$product->id)}}"><span class="fa-thumb-styling fa fa-thumbs-up"></span></a>
+	              <a href="{{route('admin.unactive-product',$product->id)}}"><span style="padding:3px;border-radius: 5px;" class="btn-success">Hiện</span></a>
 	              <?php    
 	                }
 	               ?>

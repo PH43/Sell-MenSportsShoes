@@ -84,9 +84,9 @@ class ProductController extends Controller
     public function timkiem_ajax(Request $request){
         $data = $request->all();
         if($data['query']){
-            $product = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->get();
+            $product = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->paginate(6);
             $product_ajax = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->get()->toArray();
-            if ($product_ajax==null) {
+            if ($product->isEmpty()) {
                 $output ='
                 <ul class="dropdown-menu" style="display:block; position:relative">
                 <li class="li_search_ajax">Không tìm thấy sản phẩm </li>
