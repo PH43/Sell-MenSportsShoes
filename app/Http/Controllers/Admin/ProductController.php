@@ -111,13 +111,29 @@ class ProductController extends Controller
     
 //End thư viên   
 //Size sản phẩm.
-    public function size($id){
-        $product=Product::findOrfail($id);
-        $sizes=Size::all();
-        return view('admin.size.product_sizedetials', compact('product', 'sizes'));
+//     public function size($id){
+//         $product=Product::findOrfail($id);
+// <<<<<<< home_cuong
+//         $all_sizes=Size::all();
+
+//         return view('admin.size.product_sizedetials')->with(compact('product','all_sizes'));
+// =======
+//         $sizes=Size::all();
+//         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
+// >>>>>>> master
     }
     public function add_size(){
         return view('admin.size.add_size');
+    }
+    public function add_qly_size(){
+        $data=array();
+        $data['product_id']=12;
+        $data['size_id']=40;
+        $data['quantity']=12;
+        DB::table('products_sizes')->insert($data);
+        // $quanly=Product::join('products_sizes','products_sizes.product_id','=','products.id')->join('sizes','products_sizes.size_id','=','sizes.id')->get()->toArray();
+        dd('thanhcong');
+
     }
     public function create_new_size(Request $request){
             $this->validate($request,[
@@ -131,26 +147,32 @@ class ProductController extends Controller
         ]);
             $data=$request->all();
             Size::create($data);
-            return redirect()->back()->with('message','Thêm size thành công');
+            return Redirect::back()->with('message','Thêm size thành công');
     }
-    public function update_size_quantily(Request $request,$id){
-            $product = Product::findOrfail($id);
-            $listSize = $request->size;
-            $listQuantity = $request->quantity;
-            // dd($listSize,$listQuantity);
-            $data = [];
-            foreach($listSize as $key => $value){
-                $data[] = [
-                    'size_id' => $value,
-                    'product_id' => $id,
-                    'quantity' => $listQuantity[$key]
-                ];
-            }
-            // dd($data);
-            Product_Size::insert($data);
+//     public function update_size_quantily(Request $request,$id){
+// <<<<<<< home_cuong
+//             $product=Product::findOrfail($id);
+
+//         // return Redirect()->back()->with('message','Thêm size thành công');
+// =======
+//             $product = Product::findOrfail($id);
+//             $listSize = $request->size;
+//             $listQuantity = $request->quantity;
+//             // dd($listSize,$listQuantity);
+//             $data = [];
+//             foreach($listSize as $key => $value){
+//                 $data[] = [
+//                     'size_id' => $value,
+//                     'product_id' => $id,
+//                     'quantity' => $listQuantity[$key]
+//                 ];
+//             }
+//             // dd($data);
+//             Product_Size::insert($data);
         
-        return redirect()->back()->with('message','Thêm size thành công');
-    }
+//         return redirect()->back()->with('message','Thêm size thành công');
+// >>>>>>> master
+//     }
 //End Size
 
 //Status sản phẩm    

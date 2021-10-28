@@ -23,24 +23,7 @@
                                  $i=1;
                                ?> 
                             <div class="position-center">
-                                <form role="form" action="{{route('admin.update-size',$product->id)}}" method="post">
-                                    {{ csrf_field() }}
-                                  <label class="form-control">Choose Size</label>
-                                  @foreach($sizes as $item)
-                                  <div class="row " id="demo" >
-                                    <div class="col-sm-2">
-                                      <span>Size: </span>
-                                      <p><input type="text" name="size[]"  class="form-control col-sm-11"  value="{{ $item->id }}">{{ $item->number_size }}</p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                      <p>Quantity: </p>
-                                    <input type="text" class="form-control" name="quantity[]" >
-                                    </div>
-                                    
-                                  </div>
-                                  @endforeach
-                                  <button type="submit" class="btn btn-info">Submit</button>
-                                </form>
+                                
                             </div>
                         </div>
                     </section>

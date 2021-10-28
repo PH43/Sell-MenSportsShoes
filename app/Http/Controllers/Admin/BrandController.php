@@ -111,7 +111,7 @@ class BrandController extends Controller
     {
         $brand_delete=Brand::findOrfail($id);
 
-        if (Product::where('brand_id',$id)->get()->toArray()==null) {
+        if (Product::where('brand_id',$id)->isEmpty()) {
             $brand_delete->delete();
             return redirect()->back()->with('message','Xóa Thương Hiệu Thành Công');
         } else {

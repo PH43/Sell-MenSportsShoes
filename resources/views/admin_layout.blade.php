@@ -190,16 +190,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('backend/js/jquery.nicescroll.js')}}"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
 
-	<script src="{{asset('public/backend/js/jquery.form-validator.min.js')}}"></script>
-	<script>
+	<!-- <script src="{{asset('public/backend/js/jquery.form-validator.min.js')}}"></script> -->
+	<!-- <script>
 
 		$.validate({
 		});
 
-	</script>
+	</script> -->
 
 	<script src="{{asset('frontend/ckeditor/ckeditor.js')}}"></script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	    CKEDITOR.replace('exampleInputPassword1');
 	    CKEDITOR.replace('ckeditor1');
 	    CKEDITOR.replace('ckeditor2');
@@ -209,7 +209,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	    CKEDITOR.replace('ckeditor6');
 	    CKEDITOR.replace('ckeditor7');
 	</script>
-
+ -->
 <!-- File thư mục hình ảnh -->
 <script type="text/javascript">
         load_gallery();
@@ -329,7 +329,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           $.ajax({
                 url:"{{url('/admin/allow-comments')}}",
                 method:"POST",
-
                 headers:{
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
