@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\Category;
 use App\Brand;
+use App\Gallery;
 use App\Users;
 use App\Size;
 use Auth;
@@ -30,10 +31,11 @@ class HomeController extends Controller
     public function product_detail($id){
         $product_detail = Product::findOrfail($id);
         if ($product_detail->status==1) {
+            $gallery=Gallery::where('product_id','=',$id)->get();
             $id_category=$product_detail->category->id;
             $sizes=Size::all();
             $product_lienquan=Product::where('category_id',$id_category)->Where('status',1)->whereNotin('id',[$id])->paginate(3);
-            return view('frontend.home.product_detail')->with(compact('product_lienquan','product_detail','sizes'));
+            return view('frontend.home.product_detail')->with(compact('product_lienquan','product_detail','sizes','gallery'));
         }else{
             return Redirect()->back();
         }
@@ -88,12 +90,25 @@ class HomeController extends Controller
             'password.required' => 'Bạn chưa nhập Mật khẩu',
         ]);
         $email=$request->email;
-        $password=md5($request->password);
+        // $password=($request->password);
+        // dd($password);
         $kiemtramail=Users::where('email','=',$email)->get()->toArray();
+        // if (!Users::where('email','=',$request->email)->first()) {
+        //     return redirect()->back()->with('message','Email không đúng');
+        // } else {
+        //     if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
+        //         return redirect('/');
+        //         Session::put('customer_id',$login->id);
+        //         Session::put('customer_name',$login->name);
+        //     }else{
+        //         return redirect()->back()->with('message','Password không đúng');
+        //     }
+        // }
         if ($kiemtramail==null) {
             return redirect()->back()->with('message','Email không tồn tại');
         }else{
-            $login=Users::where('email',$email)->Where('password', $password)->first();
+            $login=Users::where('email','=',$email)->Where('password','=',md5($request->password))->first();
+            // dd($login);
             if($login){
                 Session::put('customer_id',$login->id);
                 Session::put('customer_name',$login->name);

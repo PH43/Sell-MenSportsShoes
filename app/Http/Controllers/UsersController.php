@@ -35,7 +35,7 @@ class UsersController extends Controller
         $this->validation($request);
         $data = $request->all();
         $data['flag'] =1;
-        $data['password'] = md5($data['password']);
+        $data['password'] = bcrypt($data['password']);
         Users::create($data);
         return redirect('/admin/login')->with('message','Đăng ký thành công');
     }
@@ -84,7 +84,7 @@ class UsersController extends Controller
     }
     public function store_users(CreateUserRequest $request){
         $data = $request->all();
-        $data['password'] = md5($request->password);
+        $data['password'] = bcrypt($request->password);
         $data['flag']=1;
         Users::create($data);
         Session::put('message','Thêm users thành công');

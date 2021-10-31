@@ -88,7 +88,7 @@ class ProductController extends Controller
         $data = $request->all();
         if($data['query']){
             $product = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->paginate(6);
-            $product_ajax = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->get()->toArray();
+            // $product_ajax = Product::where('status',1)->where('name','LIKE','%'.$data['query'].'%')->orWhere('desc', 'like','%'.$data['query'].'%')->get()->toArray();
             if ($product->isEmpty()) {
                 $output ='
                 <ul class="dropdown-menu" style="display:block; position:relative">
@@ -105,7 +105,6 @@ class ProductController extends Controller
                 } 
                 $output .= '</ul>'; 
             }
-            // dd($output);
             echo $output;  
         }
     }
