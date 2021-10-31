@@ -24,6 +24,7 @@ class AddToCartService
             'name' => $product->name,
             'price' => $product->price,
             'quantity' => $quantity,
+            'image'=> $product->image,
         ]);
 
         
@@ -63,6 +64,7 @@ class AddToCartService
                     'name' => $product->name,
                     'price' => $product->price,
                     'quantity' => $quantity,
+                    'image'=> $product->image,
                 ]);
                 break;
             }

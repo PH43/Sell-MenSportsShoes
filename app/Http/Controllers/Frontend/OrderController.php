@@ -53,6 +53,7 @@ class OrderController extends Controller
                     'quantity' =>  $item->quantity,
                     'price' => $item->price,
                     'order_id' => $order->id,
+                    'image' => $item->image,
                 ] ;
                 $pd = Product::find($item->product_id);
 
