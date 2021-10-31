@@ -16,6 +16,9 @@
     <link href="{{asset('frontend/css/main.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{URL::asset('frontend/css/main.css')}}">
     <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/lightgallery.min.css')}}" rel="stylesheet">
+    <link href="{{asset('frontend/css/lightslider.css')}}" rel="stylesheet">
+
     
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -65,7 +68,7 @@
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
                                  @if( Session::get('customer_id') )
-                                <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i>Tài Khoản</a></li>
+                                <li><a href="{{URL::to('/login-checkout')}}"><i class="fa fa-user"></i>Tài Khoản-{{Session::get('customer_name')}}</a></li>
                                 @endif
                               <!--   <li><a href="{{URL::to('/checkout')}}"><i class="fa fa-crosshairs"></i> Checkout-TT</a></li> -->
 
@@ -461,6 +464,10 @@
     <script src="{{asset('frontend/js/jquery.prettyPhoto.js')}}"></script>
     <script src="{{asset('frontend/js/main.js')}}"></script>
     <script src="{{asset('frontend/ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('frontend/js/lightslider.js')}}"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
+    <script src="{{asset('frontend/js/lightgallery-all.min.js')}}"></script>
+    
     <script type="text/javascript">
         CKEDITOR.replace('ckeditor1');
     </script>
@@ -597,6 +604,25 @@
         $('#keywords').val($(this).text());  
         $('#search_ajax').fadeOut();  
     }); 
+</script>
+<script type="text/javascript">
+     $(document).ready(function() {
+        $('#imageGallery').lightSlider({
+            gallery:true,
+            item:1,
+            loop:true,
+            thumbItem:3,
+            slideMargin:0,
+            enableDrag: false,
+            currentPagerPosition:'left',
+            onSliderLoad: function(el) {
+                el.lightGallery({
+                    selector: '#imageGallery .lslide'
+                });
+            }
+
+        });  
+      });
 </script>
 
     <div id="fb-root"></div>

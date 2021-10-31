@@ -39,7 +39,7 @@ Route::group(['prefix' => 'admin'], function() {
          Route::get('edit-roles/{$id}','RoleController@edit_roles')->name('admin.edit-roles');
          Route::get('delete-roles','RoleController@delete_roles')->name('admin.delete-roles');
          //comment
-         Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comment');
+         Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comments');
          Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
          Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
          Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
