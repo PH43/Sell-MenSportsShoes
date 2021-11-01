@@ -4,7 +4,7 @@
       Liệt kê sản phẩm!
     </div>
 </div>
-    <div class="row w3-res-tb">
+    <!-- <div class="row w3-res-tb">
      
       <div class="col-sm-4">
          <a href="{{ route('admin.add-product') }}" class="btn btn-sm btn-success">Thêm Sản Phẩm</a>
@@ -18,10 +18,9 @@
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="table-responsive">
-      <table class="table table-striped b-t b-light">
-              <?php
+       <?php
                 $message=Session::get('message');
                 if ($message) {
                   echo '<span class="textalert">'.$message.'</span>';
@@ -29,6 +28,7 @@
                  } 
                  $i=1;
                ?> 
+      <table class="table table-striped b-t b-light" id="myTable"> 
         <thead>
           <tr>
             <th style="width:10px;">
@@ -97,7 +97,7 @@
         </tbody>
       </table>
     </div>
-    <footer class="panel-footer">
+    {{--<footer class="panel-footer">
       <div class="row">
         <div class="col-sm-5 text-center">
         </div>
@@ -107,7 +107,7 @@
           </ul>
         </div>
       </div>
-    </footer>
+    </footer>--}}
   </div>
 </div>
 

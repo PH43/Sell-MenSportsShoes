@@ -2,7 +2,7 @@
 @section('conten') 
 <div class="product-details"><!--product-details-->
 	<div class="col-sm-5">
-		<div class="view-product">
+		{{--<div class="view-product">
 			<img src="{{URL::to('public/upload/product/'.$product_detail->image)}}" alt="" />
 			<h3>ZOOM</h3>
 		</div>
@@ -24,7 +24,15 @@
 			  <a class="right item-control" href="#similar-product" data-slide="next">
 				<i class="fa fa-angle-right"></i>
 			  </a>
-		</div>
+		</div>--}}
+
+		<ul id="imageGallery">
+			@foreach($gallery as $key => $gal)
+			  <li data-thumb="{{asset('public/upload/gallery/'.$gal->gallery_image)}}" data-src="{{asset('public/upload/gallery/'.$gal->gallery_image)}}">
+			    <img width="100%" alt="{{$gal->gallery_name}}"  src="{{asset('public/upload/gallery/'.$gal->gallery_image)}}"/>
+			  </li>
+			 @endforeach			 
+		</ul>
 	</div>
 	<div class="col-sm-7">
 		<div class="product-information"><!--/product-information-->
@@ -35,8 +43,8 @@
 				<span>
 					<span>{{number_format($product_detail->price).' '.'đ'}}</span><br><br>
 
-					<label id="size">Size:</label>
-					<select style="width: 50px" name="number_size">
+					<label id="size" style="margin-top: 10px;margin-left: -155px;" >Size:</label>
+					<select style="width: 50px;background-color: white;border: 1px solid #00000026; " name="number_size">
 						@foreach($sizes as $size )
 						<option  value="{{$size->id}}">{{$size->number_size}}</option>
 						@endforeach
@@ -44,7 +52,7 @@
 					<br><br>
 					<label id="size">Số lượng:</label>
 					<input name="quantity" id="quantity" type="number" min="1" max="10" value="1" required="">
-					<input type="hidden" id="product_detail_page" >
+					<input type="hidden" id="product_detail_page" ><br><br>
 					<button type="button" class="add-to-cart"  data-product-id="{{ $product_detail->id }}">
 						<i class="fa fa-shopping-cart"></i>
 						Add to cart

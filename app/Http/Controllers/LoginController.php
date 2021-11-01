@@ -21,16 +21,17 @@ class LoginController extends Controller
     {
         $this->validate($request,[
             'admin_email' => 'required|email|max:255', 
-            'admin_password' => 'required|max:255'
+            'password' => 'required|max:255'
         ]);
 
         if (!Users::where('email','=',$request->admin_email)->first()) {
-            return redirect('/admin/login')->with('message','Username hoặc password không đúng');
+            return redirect('/admin/login')->with('message','Email không đúng');
         } else {
-            if(Auth::attempt(['email'=>$request->admin_email, 'password'=> $request->admin_password, 'flag'=>1 ])){
+            if(Auth::attempt(['email'=>$request->admin_email, 'password'=> $request->password, 'flag'=>1 ])){
                 return redirect('/admin/dashboard');
             }else{
-                return redirect('/admin/login')->with('message','Username hoac password khong dung')->withInput(['admin_email' => $request->admin_email]);
+                return redirect('/admin/login')->with('message','Password không đúng')->withInput(['admin_email' => $request->admin_email]);
+
             }
         }
     }

@@ -17,6 +17,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- font CSS -->
 <link href='//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
 <!-- font-awesome icons -->
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"/>
 <link rel="stylesheet" href="{{asset('backend/css/font.css')}}" type="text/css"/>
 <link href="{{asset('backend/css/font-awesome.css')}}" rel="stylesheet"> 
 <link rel="stylesheet" href="{{asset('backend/css/morris.css')}}" type="text/css"/>
@@ -132,7 +133,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Bình luân</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{route('admin.show-list-comment')}}">Liệt kê bình luận</a></li>
+						<li><a href="{{route('admin.show-list-comments')}}">Liệt kê bình luận</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -172,7 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- //market-->
 		@yield('admin_conten')
 		<!-- //market-->
-</section>
+    </section>
  <!-- footer -->
 		  <div class="footer">
 			<div class="wthree-copyright">
@@ -188,28 +189,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('backend/js/scripts.js')}}"></script>
 <script src="{{asset('backend/js/jquery.slimscroll.js')}}"></script>
 <script src="{{asset('backend/js/jquery.nicescroll.js')}}"></script>
-<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
-
-	<!-- <script src="{{asset('public/backend/js/jquery.form-validator.min.js')}}"></script> -->
-	<!-- <script>
-
-		$.validate({
-		});
-
-	</script> -->
-
-	<script src="{{asset('frontend/ckeditor/ckeditor.js')}}"></script>
-	<!-- <script type="text/javascript">
-	    CKEDITOR.replace('exampleInputPassword1');
-	    CKEDITOR.replace('ckeditor1');
-	    CKEDITOR.replace('ckeditor2');
-	    CKEDITOR.replace('ckeditor3');
-	    CKEDITOR.replace('ckeditor4');
-	    CKEDITOR.replace('ckeditor5');
-	    CKEDITOR.replace('ckeditor6');
-	    CKEDITOR.replace('ckeditor7');
-	</script>
- -->
+<script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
+    $('#myTable').DataTable().reload();
+</script>
 <!-- File thư mục hình ảnh -->
 <script type="text/javascript">
         load_gallery();

@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function index()
     {
         $all_size=Size::all();
-        $all_product=Product::with('brand','category','size')->orderBy('id','DESC')->paginate(5);
+        $all_product=Product::with('brand','category','size')->orderBy('id','DESC')->get();
         return view('admin.product.show_all_product')->with(compact('all_product','all_size'));
     }
 
@@ -53,7 +53,13 @@ class ProductController extends Controller
 
         $products = $query->get();
     }
-
+    public function search_ajax(Request $request){
+        // $gallery = Gallery::where('product_id',$product_id)->get();
+        // //update views 
+        // $product = Product::where('product_id',$product_id)->first();
+        // $product->product_views = $product->product_views + 1;
+        // $product->save();
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -107,9 +113,7 @@ class ProductController extends Controller
         }
         
     }
-//Thư viện hình ảnh
-    
-//End thư viên   
+
 //Size sản phẩm.
 //     public function size($id){
 //         $product=Product::findOrfail($id);
@@ -122,19 +126,9 @@ class ProductController extends Controller
 //         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
 // >>>>>>> master
     // }
-    public function add_size(){
-        return view('admin.size.add_size');
-    }
-    public function add_qly_size(){
-        $data=array();
-        $data['product_id']=12;
-        $data['size_id']=40;
-        $data['quantity']=12;
-        DB::table('products_sizes')->insert($data);
-        // $quanly=Product::join('products_sizes','products_sizes.product_id','=','products.id')->join('sizes','products_sizes.size_id','=','sizes.id')->get()->toArray();
-        dd('thanhcong');
 
-    }
+    
+
     public function create_new_size(Request $request){
             $this->validate($request,[
             'number_size' => 'required|numeric|min:1|unique:sizes,number_size'
@@ -149,30 +143,29 @@ class ProductController extends Controller
             Size::create($data);
             return Redirect::back()->with('message','Thêm size thành công');
     }
-//     public function update_size_quantily(Request $request,$id){
-// <<<<<<< home_cuong
-//             $product=Product::findOrfail($id);
+    public function update_size_quantily(Request $request,$id){
 
-//         // return Redirect()->back()->with('message','Thêm size thành công');
-// =======
-//             $product = Product::findOrfail($id);
-//             $listSize = $request->size;
-//             $listQuantity = $request->quantity;
-//             // dd($listSize,$listQuantity);
-//             $data = [];
-//             foreach($listSize as $key => $value){
-//                 $data[] = [
-//                     'size_id' => $value,
-//                     'product_id' => $id,
-//                     'quantity' => $listQuantity[$key]
-//                 ];
-//             }
-//             // dd($data);
-//             Product_Size::insert($data);
-        
-//         return redirect()->back()->with('message','Thêm size thành công');
-// >>>>>>> master
-//     }
+            $product=Product::findOrfail($id);
+
+        // return Redirect()->back()->with('message','Thêm size thành công');
+
+            $product = Product::findOrfail($id);
+            $listSize = $request->size;
+            $listQuantity = $request->quantity;
+            // dd($listSize,$listQuantity);
+            $data = [];
+            foreach($listSize as $key => $value){
+                $data[] = [
+                    'size_id' => $value,
+                    'product_id' => $id,
+                    'quantity' => $listQuantity[$key]
+                ];
+            }
+            // dd($data);
+            Product_Size::insert($data);
+        return redirect()->back()->with('message','Thêm size thành công');
+
+    }
 //End Size
 
 //Status sản phẩm    
@@ -213,7 +206,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(AddProductRequest $request,$id)
+    public function update(Request $request,$id)
     {
         // $this->validation($request);
         $data=$request->all();
