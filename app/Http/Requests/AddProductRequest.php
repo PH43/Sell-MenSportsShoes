@@ -31,7 +31,7 @@ class AddProductRequest extends FormRequest
             'size' => 'required|array|min:1',
             'size.*' => 'int|exists:sizes,id',
             'quantity' => 'required|array|min:1',
-            'quantity.*' => 'required|int'
+            'quantity.*' => 'required|numeric|between:0,100|int'
 
         ];
     }
@@ -44,6 +44,10 @@ class AddProductRequest extends FormRequest
             'price.required' => 'Bạn chưa nhập giá tiền',
             'desc.required' => 'Bạn chưa nhập Mô Tả',
             'image.required' => 'Bạn chưa chọn Hình Ảnh',
+            'quantity.*.required' => 'Bạn chưa nhập số lượng của size',
+            'quantity.*.numeric' => 'Nhập số',
+            'quantity.*.between' => 'Nhập số từ 0-100',
+
         ];
     }
 }

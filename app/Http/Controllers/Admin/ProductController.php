@@ -189,10 +189,11 @@ class ProductController extends Controller
     {   
         $cate_product=Category::all();
         $brand_product=Brand::all();
+        $all_sizes=Size::all();
         $edit_product=Product::with('size')->findOrfail($id);
         // dd($edit_product->toArray());
         $namecate=$edit_product->category->name;
-        return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product'));
+        return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product','all_sizes'));
     }
       
 
@@ -205,7 +206,26 @@ class ProductController extends Controller
      */
     public function update(Request $request,$id)
     {
-        // $this->validation($request);
+        $this->validate($request,[
+            'name' => 'required|min:3|max:255',
+            'price' => 'required|min:3|max:255',
+            'desc' => 'required|min:3|max:1000',
+            'image' => 'min:3|max:255',
+            'size' => 'required|array|min:1',
+            'size.*' => 'int|exists:sizes,id',
+            'quantity' => 'required|array|min:1',
+            'quantity.*' => 'required|numeric|between:0,100|int'
+        ],
+        [
+            'name.required' => 'Bạn chưa nhập tên sản phẩm',
+            'name.unique' => 'Tên sản phẩm này đã tồn tại',
+            'price.required' => 'Bạn chưa nhập giá tiền',
+            'desc.required' => 'Bạn chưa nhập Mô Tả',
+            'quantity.*.required' => 'Bạn chưa nhập số lượng của size',
+            'quantity.*.numeric' => 'Nhập số',
+            'quantity.*.between' => 'Nhập số từ 0-100',
+
+        ]);
         $data=$request->all();
         $data['category_id']=$request->category;
         $data['brand_id']=$request->brand;
@@ -232,8 +252,24 @@ class ProductController extends Controller
                     'product_id' => $id
                 ],$data);
             }
-            Session::put('message','Update Sản Phẩm Thành Công');
-            return Redirect::to('/admin/product/show-all-product');
+            return Redirect::to('/admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
+        }else{
+            Product::findOrfail($id)->update($data);
+            $listSize = $request->size;
+            $listQuantity = $request->quantity;
+            $data = [];
+            foreach($listSize as $key => $value){
+                $data = [
+                    'size_id' => $value,
+                    'product_id' => $id,
+                    'quantity' => $listQuantity[$key]
+                ];
+                Product_Size::updateOrCreate([
+                    'size_id' => $value,
+                    'product_id' => $id
+                ],$data);
+            }
+            return Redirect::to('/admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
         }
     }    
 
@@ -246,6 +282,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $delete_product=Product::findOrfail($id);
+        $delete_product->size()->detach();
         $delete_product->delete();
         Session::put('message','Xóa Phẩm Thành Công');
         return Redirect::to('/admin/product/show-all-product');

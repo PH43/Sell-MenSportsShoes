@@ -4,21 +4,21 @@
       Liệt kê sản phẩm!
     </div>
 </div>
-    <!-- <div class="row w3-res-tb">
+    <div class="row w3-res-tb">
      
       <div class="col-sm-4">
          <a href="{{ route('admin.add-product') }}" class="btn btn-sm btn-success">Thêm Sản Phẩm</a>
       </div>
       <div class="col-sm-4"></div>
       <div class="col-sm-4">
-        <div class="input-group">
+        <!-- <div class="input-group">
           <input type="text" class="input-sm form-control" placeholder="Search">
           <span class="input-group-btn">
             <button class="btn btn-sm btn-default" type="button">Go!</button>
           </span>
-        </div>
+        </div> -->
       </div>
-    </div> -->
+    </div><br>
     <div class="table-responsive">
        <?php
                 $message=Session::get('message');

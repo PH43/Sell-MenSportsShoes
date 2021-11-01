@@ -81,10 +81,6 @@
 			                            <option value="1">Hiện</option>
 		                       		 </select>
                                 </div>
-                                @php
-                                // dd($errors->all());
-                                //            dd($errors->first('quantity.0')); 
-                                        @endphp
                                 <div class="form-group">
                                     <label class="form-control">Add Size</label>
                                     @foreach($sizes as $key => $item)
@@ -96,10 +92,11 @@
                                         <div class="col-sm-6">
                                         <p>Quantity: </p>
                                         <input type="text" class="form-control" name="quantity[]" value="{{old('quantity.'.$key)}}" >
-                                        @if ($errors->first('quantity.'.$key))
+
+                                    @if ($errors->first('quantity.'.$key))
                                         
                                     <p style="color:red;">{{$errors->first('quantity.'.$key) }}</p>
-                                @endif
+                                    @endif
                                         </div>
                                         
                                     </div>
