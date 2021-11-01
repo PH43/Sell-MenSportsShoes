@@ -121,7 +121,7 @@ class ProductController extends Controller
 //         $sizes=Size::all();
 //         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
 // >>>>>>> master
-    }
+    // }
     public function add_size(){
         return view('admin.size.add_size');
     }
