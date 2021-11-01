@@ -46,13 +46,18 @@ class UsersController extends Controller
     }
     public function index_customer(){
          $admin = Users::where('flag',0)->orderBy('id','DESC')->paginate(4);
-        return view('admin.customer.all_customer')->with(compact('admin'));
+        return view('customer.all_customer')->with(compact('admin'));
     }
-    public function delete_user_roles($admin_id){
-        if(Auth::id()==$admin_id){
+    public function delete_customer($id){
+        $users = Users::find($id);
+        $users->delete();
+        return redirect()->back()->with('message','Xóa user thành công');
+    }
+    public function delete_user_roles($id){
+        if(Auth::id()==$id){
             return redirect()->back()->with('message','Bạn không được quyền xóa chính mình');
         }
-        $users = Users::find($admin_id);
+        $users = Users::find($id);
         if($users){
             $users->roles()->detach();
             $users->delete();

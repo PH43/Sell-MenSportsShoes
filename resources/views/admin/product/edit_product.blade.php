@@ -42,7 +42,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Mô tả sản phẩm</label><span style="color:red;"> *</span>
-                                <textarea class="form-control" style="resize: none;" rows="5" name="desc" id="ckeditor2" placeholder="Mô tả sản phẩm">{{$edit_product->desc}}</textarea>
+                                <textarea class="form-control" rows="5" name="desc"  placeholder="Mô tả sản phẩm">{!!$edit_product->desc!!}</textarea>
                             </div>  
                             
                             @if ($errors->has('desc'))
@@ -88,13 +88,12 @@
                                     </div>
                                     <div class="col-sm-6">
                                     <p>Quantity: </p>
-                                    <input type="text" class="form-control" name="quantity[]" value="{{ $item->pivot->quantity}}"
+                                    <input type="text" class="form-control" name="quantity[]" value="{{ $item->pivot->quantity}}">
                                     </div>
-                                    
-                                </div>
+                                </div>    
                                 @endforeach
+                            
                             </div>
-
                             @if ($errors->has('inventory'))
                                 <p style="color:red;">{{$errors->first('inventory') }}</p>
                             @endif

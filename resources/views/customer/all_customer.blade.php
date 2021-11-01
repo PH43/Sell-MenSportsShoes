@@ -55,9 +55,9 @@
                 <td>{{ $user->phone }}</td>
                 <!-- <td>{{ $user->password }}</td> -->
               <td>
-                 <a href="{{route('admin.edit-users',$user->id)}}" class="active" ui-toggle-class="">
+                 <!-- <a href="{{route('admin.edit-users',$user->id)}}" class="active" ui-toggle-class=""> -->
                   <i class="fa fa-pencil-square-o text-success text-active"></i></a><br>
-                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{URL::to('/admin/delete-user-roles',$user->id)}}">
+                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{route('admin.delete-customer',$user->id)}}">
                   <i style="text-align: center;" class="fa fa-times text-danger text"></i></a>
               </td> 
               </tr>

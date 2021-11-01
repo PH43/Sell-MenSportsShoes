@@ -38,11 +38,7 @@ Route::group(['prefix' => 'admin'], function() {
          Route::get('add-roles','RoleController@add_roles')->name('admin.add-roles');
          Route::get('edit-roles/{$id}','RoleController@edit_roles')->name('admin.edit-roles');
          Route::get('delete-roles','RoleController@delete_roles')->name('admin.delete-roles');
-         //comment
-         Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comments');
-         Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
-         Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
-         Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
+         
       });
 
       Route::namespace('Admin')->group(function() {
@@ -54,6 +50,14 @@ Route::group(['prefix' => 'admin'], function() {
       // Route::group(['middleware'=>'auth.roles'], function(){
          Route::get('all-users','UsersController@index_users');
          Route::get('all-customer','UsersController@index_customer')->name('admin.all-customer');
+         Route::get('delete-customer/{id}','UsersController@delete_customer')->name('admin.delete-customer');
+         //comment
+         Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comments');
+         Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
+         Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
+         Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
+
+         
          //Controller trong admin
          Route::namespace('Admin')->group(function() {
             Route::group(['prefix' => 'category'], function() {
