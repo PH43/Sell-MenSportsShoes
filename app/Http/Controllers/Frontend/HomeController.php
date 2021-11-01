@@ -111,6 +111,8 @@ class HomeController extends Controller
             // dd($login);
             if($login){
                 Session::put('customer_id',$login->id);
+                Session::put('customer_email',$login->email);
+                Session::put('customer_phone',$login->phone);
                 Session::put('customer_name',$login->name);
                 return redirect('/');
             }else{
