@@ -126,6 +126,9 @@ class ProductController extends Controller
 //         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
 // >>>>>>> master
     // }
+
+    
+
     public function create_new_size(Request $request){
             $this->validate($request,[
             'number_size' => 'required|numeric|min:1|unique:sizes,number_size'
