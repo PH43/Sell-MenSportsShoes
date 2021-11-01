@@ -39,7 +39,11 @@
 			@php
 			echo session("error")
 			@endphp
-
+			<?php 
+				$name=Session::get('customer_name');
+				$email=Session::get('customer_email');
+				$phone=Session::get('customer_phone');
+			 ?>
 			<div class="shopper-informations">
 				<div class="row">
 					<div class="col-sm-3">
@@ -47,10 +51,10 @@
 							<p>Thông tin mua hàng</p>
 							<form method="post" action="{{route('orders.store')}}">
 							@csrf
-								<label>Tên:</label><input type="text" name="name"  value="{{auth()->user()?auth()->user()->name:''}}" placeholder="Nhập tên">
-								<label>Email:</label><input type="email" name="email" value="{{auth()->user()?auth()->user()->email:''}}" placeholder="Nhập Email">
-								<label>Địa chỉ:</label><input type="text" name="address" value="{{auth()->user()?auth()->user()->address:''}}" placeholder="Nhập địa chỉ">
-								<label>Số điện thoại:</label><input type="number" name="phone" value="{{auth()->user()?auth()->user()->phone:''}}" placeholder="Nhập số điện thoại">
+								<label>Tên:</label><input type="text" name="name"  value="{{$name?$name:''}}" placeholder="Nhập tên">
+								<label>Email:</label><input type="email" name="email" value="{{$email?$email:''}}" placeholder="Nhập Email">
+								<label>Địa chỉ:</label><input type="text" name="address" placeholder="Nhập địa chỉ">
+								<label>Số điện thoại:</label><input type="number" name="phone" value="{{$phone?$phone:''}}" placeholder="Nhập số điện thoại">
                             
                             <input class="btn btn-primary" type="submit" value="Xác nhận mua hàng">
                             </form>
