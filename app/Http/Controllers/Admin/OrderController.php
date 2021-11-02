@@ -15,7 +15,20 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::orderBy('id','DESC')->paginate(20);
+        if (request('search')) {
+            $orders=Order::where('name', 'like', '%'.request('search').'%')
+            ->orWhere('address', 'like', '%'.request('search').'%')
+            ->orWhere('phone', 'like', '%'.request('search').'%')
+            ->orWhere('email', 'like', '%'.request('search').'%')
+            ->orWhere('created_at', 'like', '%'.request('search').'%');
+        } else {
+            $orders=Order::orderBy('id','DESC');
+        }
+        if (request('status')) {
+            $orders->where('status', request('status'));
+        }
+        $orders = $orders->paginate(20);
+      
         return view('admin.order.show_all_order', compact('orders'));
     }
 
@@ -90,4 +103,6 @@ class OrderController extends Controller
     {
         //
     }
+
+
 }

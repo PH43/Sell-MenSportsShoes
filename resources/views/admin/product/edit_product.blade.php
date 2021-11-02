@@ -79,7 +79,7 @@
                                 <input type="text" name="inventory" value="{{$edit_product->inventory}}" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm trong kho ">
                             </div>
                             <div class="form-group">
-                                <label class="form-control">Add Size</label>
+                                <label >Add Size</label>
                                 @foreach($edit_product->size as $item)
                                 <div class="row " id="demo" >
                                     <div class="col-sm-2">

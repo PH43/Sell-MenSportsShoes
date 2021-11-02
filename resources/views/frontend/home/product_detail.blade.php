@@ -44,7 +44,7 @@
 					<span>{{number_format($product_detail->price).' '.'đ'}}</span><br><br>
 
 					<label id="size" style="margin-top: 10px;margin-left: -155px;" >Size:</label>
-					<select style="width: 50px;background-color: white;border: 1px solid #00000026; " name="number_size">
+					<select id="number_size" style="width: 50px;background-color: white;border: 1px solid #00000026; " name="number_size">
 						@foreach($sizes as $size )
 						<option  value="{{$size->id}}">{{$size->number_size}}</option>
 						@endforeach

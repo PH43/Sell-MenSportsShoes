@@ -12,12 +12,15 @@ $(document).ready(function() {
         console.log(productId);
         let quantity = $('#quantity').val() ? $('#quantity').val() : 1;
         console.log(quantity);
+        let size = $('#number_size').val();
+        console.log(size);
         $.ajax({
             url: '/home/add-to-cart',
             method: 'POST',
             data: {
                 productId,
-                quantity
+                quantity,
+                size
             },
             success: function(data) {
                 console.log(data);

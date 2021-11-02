@@ -9,7 +9,7 @@ class CartItem extends Model
     protected $table = 'cart_items';
 
     protected $fillable = [
-        'cart_id', 'product_id', 'name', 'price', 'image', 'quantity'
+        'cart_id', 'product_id', 'name', 'price', 'image', 'quantity','size'
     ];
 
     protected $casts = [
@@ -19,5 +19,13 @@ class CartItem extends Model
     public function cart()
     {
         return $this->belongsTo(Cart::class);
+    }
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+    public function size() {
+        return $this->hasOne(Size::class, 'id', 'size');
     }
 }
