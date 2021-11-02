@@ -14,6 +14,7 @@
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description"></td>
+							<td>Size</td>
 							<td class="price">Price</td>
 							<td class="quantity">Quantity</td>
 							<td class="total">Total</td>
@@ -36,7 +37,18 @@
 								<a href=""><img width="70px" height="70px" src="{{asset('public/upload/product/'.$cartItem->image)}}" alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">{{$cartItem->name}}</a></h4>
+								<h4><a href="{{route('home.product-detail',$cartItem->product_id)}}">{{$cartItem->name}}</a></h4>
+							</td>
+							<td>
+								<p>
+									{{ $cartItem->size()->first() ? $cartItem->size()->first()->number_size : null }}
+									<!-- @foreach($cartItem->product()->first()->size()->get() as $item)
+									  @if ($item->id == $cartItem->size)
+										{{ $item->number_size }}
+										@break
+									  @endif
+									@endforeach -->
+								</p>
 							</td>
 							<td class="cart_price">
 								<p>{{number_format($cartItem->price).'  đ'}}</p>

@@ -12,6 +12,7 @@ use App\Services\AddToCartService;
 use App\Http\Requests\AddToCartRequest;
 use App\Cart;
 use App\CartItem;
+use App\Product_Size;
 
 class ProductController extends Controller
 {
@@ -54,20 +55,22 @@ class ProductController extends Controller
     {
         $productId = $request->productId;
         $quantity = $request->quantity ?? 1;
+        $size = $request->size;
         $product = Product::find($productId);
-        if ($product->inventory > 0 && $quantity < $product->inventory) {
-            if (session()->has('cart')) {
-             
-            
-                $cartService->updateCart($productId, $quantity, session('cart'));
-            } else {
-             
-                $cart = $cartService->addToCart($productId, $quantity);
-                session(['cart' => $cart]);
+        $isEnough = Product_Size::where(['product_id' => $productId, 'size_id' => $size,])->first();
+        if ($isEnough) {
+            if ($isEnough->quantity > 0 && $quantity < $isEnough->quantity ) {
+                if (session()->has('cart')) {
+                    $cartService->updateCart($productId, $quantity, session('cart'), $size);
+                } else {
+                    $cart = $cartService->addToCart($productId, $quantity, $size);
+                    session(['cart' => $cart]);
+                }
+                return response()->json(['status' => 200, 'message' => 'Thêm vào giỏ hàng thành công!']);
             }
-            return response()->json(['status' => 200, 'message' => 'Thêm vào giỏ hàng thành công!']);
+            return response()->json(['status' => 201, 'message' => 'Sản phẩm không đủ trong kho!']);
         }
-        return response()->json(['status' => 201, 'message' => 'Sản phẩm không đủ trong kho!']);
+        return response()->json(['status' => 201, 'message' => 'Sản phẩm không tồn tại!']);
     }
 
     public function search_pc(Request $request){

@@ -8,7 +8,7 @@ use App\CartItem;
 
 class AddToCartService
 {
-    public function addToCart($productId, $quantity = 1)
+    public function addToCart($productId, $quantity = 1, $size)
     {
         $product = Product::find($productId);
         // $subtotal += $product->price * $quantity;
@@ -25,6 +25,7 @@ class AddToCartService
             'price' => $product->price,
             'quantity' => $quantity,
             'image'=> $product->image,
+            'size' => $size,
         ]);
 
         
@@ -39,11 +40,8 @@ class AddToCartService
         return $cart;
     }
 
-    public function updateCart($productId, $quantity = 1, $cart)
+    public function updateCart($productId, $quantity = 1, $cart, $size)
     {
-        
-
-        
         $cartItems = $cart->cartItems()->get();
         foreach ($cartItems as $item) {
             if ($item->product_id == $productId) {
@@ -65,6 +63,7 @@ class AddToCartService
                     'price' => $product->price,
                     'quantity' => $quantity,
                     'image'=> $product->image,
+                    'size' => $size
                 ]);
                 break;
             }

@@ -80,7 +80,8 @@ class ProductController extends Controller
         $data['category_id']=$request->category;
         $data['brand_id']=$request->brand;
         $data['status']=$request->status;
-        $get_img= $request-> file('image');
+        $get_img= $request->file('image');
+        dd($get_img);
         \DB::beginTransaction();
         try {
             if ($get_img) {
