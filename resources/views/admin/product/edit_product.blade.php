@@ -5,6 +5,8 @@
                 <section class="panel">
                     <header class="panel-heading">
                         Update sản phẩm
+
+                        <a class="btn btn-primary" href="{{ route('admin.gallery-product', $edit_product->id) }}">Add gallery</a>
                     </header>
                     <div class="panel-body">
                        
@@ -78,6 +80,15 @@
                                 <label for="exampleInputEmail1">Số lượngs trong kho:</label><span style="color:red;"> *</span>
                                 <input type="text" name="inventory" value="{{$edit_product->inventory}}" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm trong kho ">
                             </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Hiển thị</label>
+                                <select name="status" class="form-control input-sm m-bot15">
+                                    <option @if ($edit_product->status == 0) selected="selected" @endif value="0">Ẩn</option>
+                                    <option @if ($edit_product->status == 1) selected="selected" @endif value="1">Hiện</option>
+                                    </select>
+                            </div>
+
                             <div class="form-group">
                                 <label >Add Size</label>
                                 @foreach($edit_product->size as $item)
