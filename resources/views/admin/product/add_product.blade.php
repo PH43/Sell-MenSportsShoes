@@ -32,7 +32,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh sản phẩm</label><span style="color:red;"> *</span>
-                                    <input type="file" name="image[]" multiple="multiple" class="form-control" id="exampleInputEmail1">
+                                    <input type="file" name="image" class="form-control" id="exampleInputEmail1">
                                 </div>
 
                                 @if ($errors->has('image'))
@@ -82,7 +82,7 @@
 		                       		 </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Add Size</label>
+                                    <label class="form-control">Add Size</label>
                                     @foreach($sizes as $key => $item)
                                     <div class="row " id="demo" >
                                         <div class="col-sm-2">
