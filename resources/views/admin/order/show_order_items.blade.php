@@ -56,9 +56,10 @@
        
           <tr>
             <th style="width:10px;">
-              Stt
+              ID
             </th>
             <th>Tên sản phẩm</th>
+            <th>Size</th>
             <th>Quantity</th>
             <th>Price</th>
             
@@ -71,9 +72,10 @@
             
            @foreach($order->orderItems()->get() as $orderItem)
             <tr>
-                <td style="vertical-align: middle;"><?= $i++;  ?></td>
+                <td style="vertical-align: middle;">{{$orderItem->id}}</td>
                 <!-- <th><img width="80" height="70" src="{{URL::to('/public/upload/order/'.$order->image)}}"></th> -->
                 <th style="vertical-align: middle;">{{$orderItem->product_name}}</th>
+                <th style="vertical-align: middle;">{{ $orderItem->size()->first() ? $orderItem->size()->first()->number_size : null }}</th>
                 <th style="vertical-align: middle;">{{ $orderItem->quantity }}</th>
                 <th style="vertical-align: middle;">{{ $orderItem->price }}</th>
 
