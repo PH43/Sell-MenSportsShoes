@@ -41,6 +41,7 @@
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description"></td>
+							<td>Size</td>
 							<td class="price">Price</td>
 							<td class="quantity">Quantity</td>
 							<td class="total">Total</td>
@@ -63,6 +64,10 @@
 							</td>
 							<td class="cart_description">
 								<h4><a href="">{{$orderItem->product_name}}</a></h4>
+								
+							</td>
+							<td >
+								{{ $orderItem->size()->first() ? $orderItem->size()->first()->number_size : null }}
 								
 							</td>
 							<td class="cart_price">

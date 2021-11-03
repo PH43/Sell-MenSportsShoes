@@ -10,6 +10,9 @@ use App\Order;
 use App\OrderItem;
 use App\Product; 
 use App\Cart;   
+use App\Product_Size;
+use App\Http\Requests\CreateOrderRequest;
+
 
 class OrderController extends Controller
 {
@@ -36,7 +39,7 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOrderRequest $request)
     {
         \DB::beginTransaction();
         try {
@@ -54,10 +57,14 @@ class OrderController extends Controller
                     'price' => $item->price,
                     'order_id' => $order->id,
                     'image' => $item->image,
+                    'created_at' => $item->created_at,
+                    'updated_at' => $item->updated_at,
+                    'size' => $item->size
                 ] ;
-                $pd = Product::find($item->product_id);
+                $pd = Product_Size::where(['product_id' => $item->product_id, 'size_id' => $item->size,])->first();
+                // $pd = Product::find($item->product_id);
 
-                $pd->update(['inventory' => $pd->inventory -  $item->quantity]);
+                $pd->update(['quantity' => $pd->quantity -  $item->quantity]);
             }
             //Cập nhật lại số lượng sp trong bảng Product
             // dd($data);
