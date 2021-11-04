@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class role_permission extends Model
+class Roles_Permissions extends Model
 {
     public $timestamps = false; //set time to false
     protected $fillable = [
@@ -12,4 +12,7 @@ class role_permission extends Model
     ];
     protected $primaryKey = 'id';
     protected $table = 'roles_permissions';
+    public function role(){
+        return $this->belongsTo(Roles::class, 'role_id', 'id');
+    }
 }

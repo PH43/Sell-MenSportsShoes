@@ -155,7 +155,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Users</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{URL::to('admin/all-users')}}">Liệt kê Users</a></li>
+                        <li><a href="{{route('admin.all-roles')}}">Liệt kê Roles</a></li><li><a href="{{route('all-users-new')}}">Liệt kê Users</a></li>
+						<!-- <li><a href="{{URL::to('admin/all-users')}}">Liệt kê Users</a></li> -->
                         <li><a href="{{route('admin.all-customer')}}">Liệt kê Tk.Đăng kí</a></li>
                     </ul>
                 </li>

@@ -18,7 +18,7 @@
                       <?php
                             $message = Session::get('message');
                             if($message){
-                                echo '<span class="text-alert" >'.$message.'</span>';
+                                echo '<span style="color:red" class="text-alert" >'.$message.'</span>';
                                 Session::put('message',null);
                             }
                             $i=1;
@@ -34,8 +34,7 @@
         </thead>
         <tbody>
           @foreach($roles as $key => $role)
-            <form action="{{ route('admin.assign') }}" method="POST">
-              @csrf
+
               <tr>
                 <td><?= $i++;  ?></td>
                 <td>{{ $role->roles_name }}</td>
@@ -47,7 +46,7 @@
                   <i style="text-align: center;" class="fa fa-times text-danger text"></i></a>
                 </td> 
               </tr>
-            </form>
+
           @endforeach
         </tbody>
       </table>
@@ -59,7 +58,7 @@
         </div>
         <div class="col-sm-7 text-right text-center-xs">                
           <ul class="pagination pagination-sm m-t-none m-b-none">
-            {!!$admin->render()!!}
+            {{-- {!!$roles->render()!!} --}}
           </ul>
         </div>
       </div>

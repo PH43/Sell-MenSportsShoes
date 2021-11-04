@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Admin;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Users;
 use App\Roles;
@@ -44,66 +44,6 @@ class UsersController extends Controller
         return redirect('/admin/login')->with('message','Đăng ký thành công');
     }
     
-    //users chưa có permission----------------------------------------------------
-    public function index_users(){
-         $admin = Users::with('roles')->where('flag',1)->orderBy('id','DESC')->paginate(4);
-        return view('admin.users.all_users')->with(compact('admin'));
-    }
-    public function assign_roles(Request $request){
-        if(Auth::id()==$request->admin_id){
-            return redirect()->back()->with('message','Bạn không được phân quyền chính mình');
-        }
-        $user = Users::where('email',$request->admin_email)->first();
-        $user->roles()->detach();
-
-        if($request->sub_admin_role){
-            // detach()->ngược lại với attach()
-           $user->roles()->attach(Roles::where('roles_name','sub_admin')->first());     
-        }
-        if($request->shipper_role){
-           $user->roles()->attach(Roles::where('roles_name','shipper')->first());     
-        }
-        if($request->admin_role){
-           $user->roles()->attach(Roles::where('roles_name','admin')->first());     
-        }
-        return redirect()->back()->with('message','Cấp quyền thành công');
-    }
-     public function add_users(){
-        return view('admin.users.add_users');
-    }
-    public function store_users(CreateUserRequest $request){
-        $data = $request->all();
-        $data['password'] = bcrypt($request->password);
-        $data['flag']=1;
-        Users::create($data);
-        Session::put('message','Thêm users thành công');
-        return Redirect::to('admin/all-users');
-    }
-     public function edit_users($id){
-
-        $edit_user=Users::findorfail($id);
-
-        return view('admin.users.edit_user')->with(compact('edit_user'));
-    }
-    public function update_user(Request $request,$id){
-
-        
-        $edit_user=Users::findorfail($id);
-        if ($edit_user->email== $request->email) {
-            $data=$request->all();
-            $data['password'] = md5($request->password);
-            $data['flag']=1;
-            $edit_user->update($data);
-        }else{
-            $this->validation($request);
-            $data=$request->all();
-            $data['password'] = md5($request->password);
-            $data['flag']=1;
-            $edit_user->update($data);
-        }
-        return Redirect::to('admin/all-users')->with('message','Update thành công');
-    }
-    //end-users chưa có permission----------------------------------------------------
     public function index_customer(){
          $admin = Users::where('flag',0)->orderBy('id','DESC')->paginate(4);
         return view('customer.all_customer')->with(compact('admin'));
@@ -114,8 +54,6 @@ class UsersController extends Controller
         return redirect()->back()->with('message','Xóa user thành công');
     }
     
-    
-
     //user-roles new-----------------------------------------------------
     public function index_users_new(){
         $users=Users::with('roles')->where('flag',1)->orderBy('id','DESC')->paginate(6);
@@ -206,3 +144,4 @@ class UsersController extends Controller
     }
     //end users-roles-new---------------------------------------------------------------------
 }
+

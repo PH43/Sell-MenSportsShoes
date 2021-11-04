@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Brand;
+use App\Comment;
+use App\Gallery;
 use App\Category;
 use App\Product;
 use App\Size;
@@ -230,6 +232,8 @@ class ProductController extends Controller
         $data['category_id']=$request->category;
         $data['brand_id']=$request->brand;
         $get_img= $request-> file('image');
+        // \DB::beginTransaction();
+        // try {
         if ($get_img) {
             $get_img_name=$get_img->getClientOriginalName();
             $name_img=current(explode('.',$get_img_name));
@@ -271,6 +275,11 @@ class ProductController extends Controller
             }
             return Redirect::to('/admin/product/show-all-product')->with('message','Update Sản Phẩm Thành Công');
         }
+         // \DB::commit();
+        //  } catch (\Exception $e) {
+        //     \DB::rollback();
+        //     return Redirect()->back()->with('message', 'erorr');
+        // }
     }    
 
     /**
@@ -281,10 +290,19 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $delete_product=Product::findOrfail($id);
-        $delete_product->size()->detach();
-        $delete_product->delete();
-        Session::put('message','Xóa Phẩm Thành Công');
-        return Redirect::to('/admin/product/show-all-product');
-    }
+        try {
+            DB::beginTransaction();
+            $delete_product=Product::findOrfail($id);
+            $delete_product->size()->detach();
+            
+            $comment=Comment::where('product_id',$id)->delete();
+            $comment=Gallery::where('product_id',$id)->delete();
+            $delete_product->delete();
+            DB::commit();
+            return Redirect::to('/admin/product/show-all-product')->with('message','Xóa Phẩm Thành Công');
+         }catch (\Exception $exception) {
+            DB::rollBack();
+            \Log::error('Loi:' . $exception->getMessage() . $exception->getLine());
+        }
+    }    
 }
