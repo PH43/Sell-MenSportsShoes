@@ -14,7 +14,7 @@
 use App\Http\Controllers\Frontend\ProductController;
 
 
-//Trang Admin 
+//-Trang Admin 
 Route::group(['prefix' => 'admin'], function() {
    //Login và đăng kí
    Route::get('login','LoginController@index')->name('admin.show-form-login'); // => admin/login
@@ -25,51 +25,67 @@ Route::group(['prefix' => 'admin'], function() {
 
    //Middelware khi login mới dc vào
    Route::group(['middleware'=>'admin_login'], function() {
-       
-      //Users và phân quyền chỉ có Admin mới dc quyền này
-      Route::group(['middleware'=>'admin.roles'],function(){
-         Route::post('assign-roles','UsersController@assign_roles')->name('admin.assign');
-         Route::get('delete-user-roles/{id}','UsersController@delete_user_roles');
-         Route::get('add-users','UsersController@add_users');
-         Route::post('store-users','UsersController@store_users')->name('save-add-users');
-         Route::get('edit-user/{id}','UsersController@edit_users')->name('admin.edit-users');
-         Route::post('update-user/{id}','UsersController@update_user')->name('admin.update-users');
-         //Roles
-         Route::get('add-roles','RoleController@add_roles')->name('admin.add-roles');
-         Route::get('edit-roles/{$id}','RoleController@edit_roles')->name('admin.edit-roles');
-         Route::get('delete-roles','RoleController@delete_roles')->name('admin.delete-roles');
-         
-      });
-
+      
+      //Admin/Controller-------------------------------------------------
       Route::namespace('Admin')->group(function() {
-         Route::get('/','DashboardController@index')->name('dashboard.index'); // => admin
-         Route::get('dashboard', 'DashboardController@index')->name('dashboard.dashboard'); // =>admin/dashboard
-      });   
 
-      //admin và sub_admin đều vào dc
-      // Route::group(['middleware'=>'auth.roles'], function(){
-         Route::get('all-users','UsersController@index_users');
-         Route::get('all-customer','UsersController@index_customer')->name('admin.all-customer');
-         Route::get('delete-customer/{id}','UsersController@delete_customer')->name('admin.delete-customer');
-         //comment
-         Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comments');
-         Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
-         Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
-         Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
+         Route::get('/','DashboardController@index')->name('dashboard.index'); // => admin
+         Route::get('dashboard', 'DashboardController@index')->name('dashboard.dashboard'); 
+         // =>admin/dashboard
+         Route::group(['middleware'=>'check_per:customer'],function(){
+            Route::get('all-customer','UsersController@index_customer')->name('admin.all-customer');
+            Route::get('delete-customer/{id}','UsersController@delete_customer')->name('admin.delete-customer');
+         });
+         
+
+      // Route::group(['middleware'=>'admin.roles'],function(){
+
+         // Route::post('assign-roles','UsersController@assign_roles')->name('admin.assign');
+         // Route::get('delete-user-roles/{id}','UsersController@delete_user_roles');
+         // Route::get('add-users','UsersController@add_users');
+         // Route::post('store-users','UsersController@store_users')->name('save-add-users');
+         // Route::get('edit-user/{id}','UsersController@edit_users')->name('admin.edit-users');
+         // Route::post('update-user/{id}','UsersController@update_user')->name('admin.update-users');
+         // Route::get('all-users','UsersController@index_users');
+         Route::group(['middleware'=>'check_per:roles'],function(){
+            //Roles
+            Route::get('all-roles','RoleController@index')->name('admin.all-roles');
+            Route::get('add-roles','RoleController@add_roles')->name('admin.add-roles');
+            // Route::get('test','RoleController@test')->name('admin.test');
+            Route::post('save-roles','RoleController@save_roles')->name('admin.save-roles');
+            Route::get('edit-roles/{id}','RoleController@edit_roles')->name('admin.edit-roles');
+            Route::post('update-roles/{id}','RoleController@update_roles')->name('admin.update-roles');
+            Route::get('delete-roles/{id}','RoleController@delete_roles')->name('admin.delete-roles');
+         });
+         //users-role-permission
+         Route::group(['middleware'=>'check_per:users'],function(){
+            Route::get('all-users-new','UsersController@index_users_new')->name('all-users-new');
+            Route::get('add-users-new','UsersController@add_users_new')->name('add-users-new');
+            Route::post('save-users-new','UsersController@save_users_new')->name('save-users-new');
+            Route::get('edit-users-new/{id}','UsersController@edit_user_new')->name('edit-users-new');
+            Route::post('update-users-new/{id}','UsersController@update_user_new')->name('update-users-new');
+         });
+
 
          
-         //Controller trong admin
-         Route::namespace('Admin')->group(function() {
-            Route::group(['prefix' => 'category'], function() {
-               Route::get('/show-all-category', 'CategoryController@index')->name('admin.show-category'); // =>admin/category
-               Route::get('create-category', 'CategoryController@create')->name('admin.create-category');
-               Route::post('save-category', 'CategoryController@store')->name('save-new-category-product');
-               Route::get('/edit-category/{id}', 'CategoryController@edit');
-               Route::post('/update-category/{id}', 'CategoryController@update')->name('update-category');
-               Route::get('/delete-category/{id}', 'CategoryController@destroy')->name('delete-category');
-            }); //End Category
+         Route::group(['middleware'=>'check_per:comments'],function(){
+            //comment
+            Route::get('list-comments','CommentsController@show_list_comment')->name('admin.show-list-comments');
+            Route::post('allow-comments','CommentsController@duyet_comment')->name('admin.allow-comments');
+            Route::post('reply-comment','CommentsController@reply_comment')->name('admin.reply-comments');
+            Route::get('delete-comments/{id}','CommentsController@delete_comment')->name('admin.delete-comments');
+         });
+         
+         Route::group(['prefix' => 'category','middleware'=>'check_per:category'], function() {
+            Route::get('/show-all-category', 'CategoryController@index')->name('admin.show-category'); // =>admin/category
+            Route::get('create-category', 'CategoryController@create')->name('admin.create-category');
+            Route::post('save-category', 'CategoryController@store')->name('save-new-category-product');
+            Route::get('/edit-category/{id}', 'CategoryController@edit');
+            Route::post('/update-category/{id}', 'CategoryController@update')->name('update-category');
+            Route::get('/delete-category/{id}', 'CategoryController@destroy')->name('delete-category');
+         }); //End Category
 
-            Route::group(['prefix' => 'brand'], function() {
+            Route::group(['prefix' => 'brand','middleware'=>'check_per:brand'], function() {
                Route::get('/show-all-brand', 'BrandController@index')->name('admin.show-brand'); // =>admin/brand
                Route::get('create-brand', 'BrandController@create'); // =>admin/brand/create
                Route::post('save-brand', 'BrandController@store')->name('save-new-brand-product');
@@ -78,7 +94,7 @@ Route::group(['prefix' => 'admin'], function() {
                Route::get('/delete-brand/{id}', 'BrandController@destroy')->name('delete-brand');
             }); //End Brand
 
-            Route::group(['prefix' => 'product'], function() {
+            Route::group(['prefix' => 'product','middleware'=>'check_per:product'], function() {
                Route::get('/show-all-product', 'ProductController@index')->name('admin.show-product'); // =>admin/product
                Route::get('/add-product','ProductController@create')->name('admin.add-product');
                Route::post('/save-product','ProductController@store')->name('admin.save-new-product');
@@ -114,11 +130,11 @@ Route::group(['prefix' => 'admin'], function() {
                
             }); //End Order
 
-         }); //End các controler nằm trong thư mục Admin
-      // }); //End Middelware admin và sub_admin
+         }); //End Admin/Controller------------------------------------------
+      //-1 }); //End Middelware admin và sub_admin
 
    }); //End Login mới vào trang Dashboard
-}); //End Trang Admin
+});//-End Trang Admin
 
 
 //Trang Fronend

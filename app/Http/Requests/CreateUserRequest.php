@@ -24,9 +24,9 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:10|max:255',
+            'name' => 'required|min:3|max:255',
             'email' => 'required|unique:users,email|min:3|max:255',
-            'phone' => 'required|min:9|max:11',
+            'phone' => 'required|numeric|unique:users,phone|digits:10',
             'password' => 'required|min:3|max:255',
         ];
     }
@@ -37,6 +37,10 @@ class CreateUserRequest extends FormRequest
             'name.required' => 'Bạn chưa nhập tên thành viên',
             'email.required' => 'Bạn chưa nhập email',
             'email.unique' => 'Email này đã tồn tại',
+            'phone.unique' => 'SDT này đã tồn tại',
+            'phone.numeric' => 'SDT là số',
+            'phone.required' => 'Nhập số điện thoại',
+            'phone.digits' => 'Nhập đúng số điện thoại 10 số',
             'password.required' => 'Bạn chưa nhập Mật khẩu',
         ];
     }

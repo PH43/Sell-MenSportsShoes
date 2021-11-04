@@ -6,7 +6,11 @@
       Liệt kê users
     </div>
     <div class="row w3-res-tb">
-      <div class="col-sm-2 m-b-xs">     
+      <div class="col-sm-2 m-b-xs">
+        <a href="{{route('add-users-new')}}" class="btn btn-sm btn-success">Thêm Users</a>         
+      </div>
+      <div class="col-sm-2 m-b-xs">
+      <!--   <a href="{{('admin.add-roles')}}" class="btn btn-sm btn-success">Thêm Roles</a>   -->       
       </div>
       <div class="col-sm-4 m-b-xs">
             
@@ -33,29 +37,37 @@
         <thead>
           <tr>
             <th style="width:15px;">Stt</th>
-            <th>Tên người dùng</th>
+          
+            <th>Tên user</th>
             <th>Email</th>
             <th>Phone</th>
-            <!-- <th>Password</th> -->
+            <th>Địa chỉ</th>
+            <th>Roles</th>
+            <!-- <th>Password</th> -->  
             <th style="width:30px;"></th>
           </tr>
         </thead>
         <tbody>
-          @foreach($admin as $key => $user)
+          @foreach($users as $key => $user)
               <tr>
                 <td><?= $i++;  ?></td>
                 <td>{{ $user->name }}</td>
                 <td>
                   {{ $user->email }} 
-                  <input type="hidden" name="admin_email" value="{{ $user->email }}">
-                  <input type="hidden" name="admin_id" value="{{ $user->id }}">
+                  <!-- <input type="hidden" name="admin_email" value="{{ $user->email }}">
+                  <input type="hidden" name="admin_id" value="{{ $user->id }}"> -->
                 </td>
                 <td>{{ $user->phone }}</td>
-                <!-- <td>{{ $user->password }}</td> -->
-              <td>
-                 {{-- <a href="{{route('admin.edit-users',$user->id)}}" class="active" ui-toggle-class=""> --}}
+                <td>Địa chỉ</td>
+                <td>
+                  @foreach($user->roles as $key => $role)
+                  <a href="{{route('admin.edit-roles',$role->id)}}">{{$role->roles_name}}</a>,
+                  @endforeach
+                </td>
+                <td>
+                 <a href="{{route('edit-users-new',$user->id)}}" class="active" ui-toggle-class="">
                   <i class="fa fa-pencil-square-o text-success text-active"></i></a><br>
-                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{route('admin.delete-customer',$user->id)}}">
+                <a  onclick="return confirm('Bạn muốn xóa Users này?')" href="{{URL::to('/admin/delete-user-roles',$user->id)}}">
                   <i style="text-align: center;" class="fa fa-times text-danger text"></i></a>
               </td> 
               </tr>
@@ -70,7 +82,7 @@
         </div>
         <div class="col-sm-7 text-right text-center-xs">                
           <ul class="pagination pagination-sm m-t-none m-b-none">
-            {!!$admin->render()!!}
+            {!!$users->render()!!}
           </ul>
         </div>
       </div>

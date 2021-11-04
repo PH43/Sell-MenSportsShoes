@@ -17,7 +17,10 @@ class Product extends Model
         'price' => 'float',
     ];
     public function comment(){
-        return $this->hasMany(Comments::class,'product_id','id');
+        return $this->hasMany(Comment::class,'product_id','id');
+    }
+    public function gallery(){
+        return $this->hasMany(Gallery::class,'product_id','id');
     }
     public function brand(){
         return $this->belongsto(Brand::class,'brand_id','id');
