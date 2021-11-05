@@ -5,6 +5,8 @@
                 <section class="panel">
                     <header class="panel-heading">
                         Update sản phẩm
+
+                        <a class="btn btn-primary" href="{{ route('admin.gallery-product', $edit_product->id) }}">Add gallery</a>
                     </header>
                     <div class="panel-body">
                        
@@ -78,23 +80,22 @@
                                 <label for="exampleInputEmail1">Số lượngs trong kho:</label><span style="color:red;"> *</span>
                                 <input type="text" name="inventory" value="{{$edit_product->inventory}}" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm trong kho ">
                             </div>
+
                             <div class="form-group">
-                                <label class="form-control">Add Size</label>
+                                <label for="exampleInputPassword1">Hiển thị</label>
+                                <select name="status" class="form-control input-sm m-bot15">
+                                    <option @if ($edit_product->status == 0) selected="selected" @endif value="0">Ẩn</option>
+                                    <option @if ($edit_product->status == 1) selected="selected" @endif value="1">Hiện</option>
+                                    </select>
+                            </div>
 
-                               {{-- @foreach($all_sizes as $key => $number_size)
-                                <div class="row " id="demo" >
-                                    <div class="col-sm-2">
-                                    <span>Size: </span>
-                                    <p><input type="hidden" name="size[]"  class="form-control col-sm-11"  value="{{ $number_size->id }}">{{ $number_size->number_size }}</p>
-                                    </div>
-                                    <div class="col-sm-6">
-                                    <p>Quantity: </p>
-                                    <input type="text" class="form-control" name="quantity[]" value="{{$size_id->contains($number_size->id) ? "$size_qty" : ''}}">
-                                    </div>
-                                </div>
-                                @endforeach  --}}  
+                            <div class="form-group">
 
-                               @foreach($edit_product->size as $item)
+                       
+
+                                <label >Add Size</label>
+                                @foreach($edit_product->size as $item)
+
                                 <div class="row " id="demo" >
                                     <div class="col-sm-2">
                                     <span>Size: </span>

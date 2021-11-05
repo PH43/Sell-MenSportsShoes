@@ -11,12 +11,23 @@
       </div> -->
       <div class="col-sm-4"></div>
       <div class="col-sm-4">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
-          </span>
-        </div>
+      <form method="get">
+          <div class="input-group">
+            <input type="text" class="input-sm form-control"  name="search" value="{{ request('search') }}" placeholder="Search">
+          <p>Status:</p>
+           <select class="form-control" name="status">
+              <option >Vui lòng chọn</option>
+                @foreach(App\Order::ORDER_STATUS_MAPPING as $key => $status)
+                  <option @if(request('status') == $key) selected @endif value="{{ $key }}" >{{$status}}</option>
+                @endforeach
+              
+            </select>
+
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-default" type="submit">Go!</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
     <div class="table-responsive">

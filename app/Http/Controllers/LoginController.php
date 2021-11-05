@@ -23,6 +23,7 @@ class LoginController extends Controller
             'admin_email' => 'required|email|max:255', 
             'password' => 'required|max:255'
         ]);
+
         if (!Users::where('email','=',$request->admin_email)->first()) {
             return redirect('/admin/login')->with('message','Email không đúng');
         } else {
@@ -30,6 +31,7 @@ class LoginController extends Controller
                 return redirect('/admin/dashboard');
             }else{
                 return redirect('/admin/login')->with('message','Password không đúng')->withInput(['admin_email' => $request->admin_email]);
+
             }
         }
     }

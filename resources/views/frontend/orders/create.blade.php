@@ -51,11 +51,26 @@
 							<p>Thông tin mua hàng</p>
 							<form method="post" action="{{route('orders.store')}}">
 							@csrf
-								<label>Tên:</label><input type="text" name="name"  value="{{$name?$name:''}}" placeholder="Nhập tên">
-								<label>Email:</label><input type="email" name="email" value="{{$email?$email:''}}" placeholder="Nhập Email">
-								<label>Địa chỉ:</label><input type="text" name="address" placeholder="Nhập địa chỉ">
-								<label>Số điện thoại:</label><input type="number" name="phone" value="{{$phone?$phone:''}}" placeholder="Nhập số điện thoại">
-                            
+								<label>Tên:</label><span style="color:red;"> *</span>
+								<input type="text" name="name"  value="{{$name?$name:''}}" placeholder="Nhập tên">
+								@if ($errors->has('name'))
+                            		<p style="color:red;">{{$errors->first('name') }}</p>
+                        		@endif
+								<label>Email:</label><span style="color:red;"> *</span>
+								<input type="email" name="email" value="{{$email?$email:''}}" placeholder="Nhập Email">
+								@if ($errors->has('email'))
+                            		<p style="color:red;">{{$errors->first('email') }}</p>
+                        		@endif
+								<label>Địa chỉ:</label>
+								<input type="text" name="address" placeholder="Nhập địa chỉ">
+								@if ($errors->has('address'))
+                            		<p style="color:red;">{{$errors->first('address') }}</p>
+                        		@endif
+								<label>Số điện thoại:</label><span style="color:red;"> *</span>
+								<input type="number" name="phone" value="{{$phone?$phone:''}}" placeholder="Nhập số điện thoại">
+								@if ($errors->has('phone'))
+                            		<p style="color:red;">{{$errors->first('phone') }}</p>
+                        		@endif
                             <input class="btn btn-primary" type="submit" value="Xác nhận mua hàng">
                             </form>
 						</div>
@@ -127,6 +142,7 @@
 						<tr class="cart_menu">
 							<td class="image">Item</td>
 							<td class="description"></td>
+							<td>Size</td>
 							<td class="price">Price</td>
 							<td class="quantity">Quantity</td>
 							<td class="total">Total</td>
@@ -150,6 +166,11 @@
 							<td class="cart_description">
 								<h4><a href="">{{$cartItem->name}}</a></h4>
 								
+							</td>
+							<td>
+								<p>
+									{{ $cartItem->size()->first() ? $cartItem->size()->first()->number_size : null }}
+								</p>
 							</td>
 							<td class="cart_price">
 								<p>{{number_format($cartItem->price).'  đ'}}</p>

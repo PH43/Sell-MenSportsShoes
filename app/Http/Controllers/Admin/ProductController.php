@@ -82,7 +82,7 @@ class ProductController extends Controller
         $data['category_id']=$request->category;
         $data['brand_id']=$request->brand;
         $data['status']=$request->status;
-        $get_img= $request-> file('image');
+        $get_img= $request->file('image');
         \DB::beginTransaction();
         try {
             if ($get_img) {
@@ -128,6 +128,9 @@ class ProductController extends Controller
 //         return view('admin.size.product_sizedetials', compact('product', 'sizes'));
 // >>>>>>> master
     // }
+
+    
+
     public function create_new_size(Request $request){
             $this->validate($request,[
             'number_size' => 'required|numeric|min:1|unique:sizes,number_size'
