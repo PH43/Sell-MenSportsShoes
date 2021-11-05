@@ -90,8 +90,12 @@
                             </div>
 
                             <div class="form-group">
+
+                       
+
                                 <label >Add Size</label>
                                 @foreach($edit_product->size as $item)
+
                                 <div class="row " id="demo" >
                                     <div class="col-sm-2">
                                     <span>Size: </span>
@@ -100,14 +104,16 @@
                                     <div class="col-sm-6">
                                     <p>Quantity: </p>
                                     <input type="text" class="form-control" name="quantity[]" value="{{ $item->pivot->quantity}}">
-                                    </div>
+                                    
+
+                                    @if ($errors->first('quantity.'.$key))
+                                        <p style="color:red;">{{$errors->first('quantity.'.$key) }}</p>
+                                    @endif
+                                    </div> 
+                                    
                                 </div>    
-                                @endforeach
-                            
+                                @endforeach                             
                             </div>
-                            @if ($errors->has('inventory'))
-                                <p style="color:red;">{{$errors->first('inventory') }}</p>
-                            @endif
                             <button type="submit" name="update_product" class="btn btn-info">Cập nhập sản phẩm</button>
                         </form>
                         </div>
