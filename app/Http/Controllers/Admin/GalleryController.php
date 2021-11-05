@@ -25,6 +25,7 @@ class GalleryController extends Controller
     }
     public function insert_gallery(Request $request,$pro_id){
         $get_image = $request->file('file');
+
         if($get_image){
             foreach($get_image as $image){
                 $get_name_image = $image->getClientOriginalName();
@@ -37,8 +38,11 @@ class GalleryController extends Controller
                 $gallery->product_id = $pro_id;
                 $gallery->save();
             }
+            Session::put('message','Thêm thư viện ảnh thành công');    
+        }else{
+            Session::put('message','Chưa có ảnh tải lên');
         }
-        Session::put('message','Thêm thư viện ảnh thành công');
+        
         return redirect()->back();
 
     }

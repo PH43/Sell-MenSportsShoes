@@ -71,7 +71,7 @@ class ProductController extends Controller
     {
         $cate_product=Category::all();
         $brand_product=Brand::all();
-        $sizes = Size::all();
+        $sizes = Size::orderBy('number_size','DESC')->get();
         return view('admin.product.add_product')->with(compact('cate_product','brand_product', 'sizes'));
     }
     
@@ -191,11 +191,14 @@ class ProductController extends Controller
     {   
         $cate_product=Category::all();
         $brand_product=Brand::all();
-        $all_sizes=Size::all();
+        $all_sizes=Size::orderBy('number_size','DESC')->get();
         $edit_product=Product::with('size')->findOrfail($id);
-        // dd($edit_product->toArray());
-        $namecate=$edit_product->category->name;
-        return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product','all_sizes'));
+        $size_id=Product_Size::where('product_id',$id)->pluck('size_id');
+        // dd($size_id);
+        $size_qty=Product_Size::where('product_id',$id)->pluck('quantity');
+        // dd($size_id);
+        // $namecate=$edit_product->category->name;
+        return view('admin.product.edit_product')->with(compact('edit_product','cate_product','brand_product','all_sizes','size_qty','size_id'));
     }
       
 
@@ -226,9 +229,9 @@ class ProductController extends Controller
             'quantity.*.required' => 'Bạn chưa nhập số lượng của size',
             'quantity.*.numeric' => 'Nhập số',
             'quantity.*.between' => 'Nhập số từ 0-100',
-
         ]);
         $data=$request->all();
+        // dd($errors);
         $data['category_id']=$request->category;
         $data['brand_id']=$request->brand;
         $get_img= $request-> file('image');
@@ -241,7 +244,6 @@ class ProductController extends Controller
             $get_img->move('public/upload/product',$new_image);
             $data['image']=$new_image;
             Product::findOrfail($id)->update($data);
-            //update product size
             $listSize = $request->size;
             $listQuantity = $request->quantity;
             $data = [];
