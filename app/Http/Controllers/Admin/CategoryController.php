@@ -27,6 +27,7 @@ class CategoryController extends Controller
         }
         return view('admin.category.show_all_category')->with(compact('all_category'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
