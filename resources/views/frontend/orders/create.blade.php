@@ -61,8 +61,8 @@
 								@if ($errors->has('email'))
                             		<p style="color:red;">{{$errors->first('email') }}</p>
                         		@endif
-								<label>Địa chỉ:</label>
-								<input type="text" name="address" placeholder="Nhập địa chỉ">
+								<label>Địa chỉ:</label><span style="color:red;"> *</span>
+								<input type="text" name="address"  placeholder="Nhập địa chỉ">
 								@if ($errors->has('address'))
                             		<p style="color:red;">{{$errors->first('address') }}</p>
                         		@endif

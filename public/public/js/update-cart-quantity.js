@@ -10,7 +10,9 @@ $(document).ready(function() {
         e.preventDefault();
         const itemId = $(this).data('cart-item-id');    //data-cart-item-id="{{ $cartItem->id }}"
         let selector = '.cart_quantity_input-';     //<input class="cart_quantity_input-{{ $cartItem->id }}"
-        $(selector + itemId).val($(this).data('selector') == 'up' ? parseInt($(selector + itemId).val()) + 1 : ($(selector + itemId).val() <= 1 ? 1 : parseInt($(selector + itemId).val()) - 1) )
+        $(selector + itemId).val(
+            $(this).data('selector') == 'up' ? parseInt($(selector + itemId).val()) == 10 ? 10: parseInt($(selector + itemId).val()) + 1 : ($(selector + itemId).val() <= 1 ? 1 : parseInt($(selector + itemId).val()) - 1)
+        );
         let cart_total_price = $('#total-amount-' + itemId).val();  //<span class="cart_total_price-{{ $cartItem->id }}">
         let quantity = $(selector + itemId).val();
         let money = quantity * parseFloat(cart_total_price);

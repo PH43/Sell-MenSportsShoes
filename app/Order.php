@@ -29,7 +29,7 @@ class Order extends Model
         'address',
         'phone',
         'email',
-        'status'
+        'status',
     ];
 
     const ORDER_STATUS = [
